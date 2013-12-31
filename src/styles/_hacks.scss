@@ -1,0 +1,21 @@
+//@include sticky-footer(72px);
+ 
+#header {
+  background: #999999;
+  height: 72px;
+}
+ 
+#footer {
+  background: #cccccc;
+  position: fixed;
+  z-index: 10000;
+  left:0px; right:0px; bottom: 0px;
+}
+ 
+.example {
+  height: 500px;
+  border: 3px solid red;
+  p {
+    margin: 1em 0.5em;
+  }
+}
