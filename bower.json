@@ -1,0 +1,26 @@
+{
+  "name": "thealphanerd.io",
+  "version": "0.0.1",
+  "homepage": "http://www.thealphanerd.io",
+  "authors": [
+    "Myles Borins <myles.borins@gmail.com>"
+  ],
+  "description": "thealphanerd.io website",
+  "main": "Gruntfile.js",
+  "keywords": [
+    "thealphanerd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/scripts",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sticky-kit": "~1.0.2"
+  }
+}
