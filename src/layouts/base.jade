@@ -28,7 +28,6 @@ html
         #big-guy.light-grey
         #medium-guy.dark-grey
         #tiny-guy.almost-black
-      #links
     
     - if (currentIndex === 0) {
       #header-image
@@ -68,3 +67,12 @@ html
               a(href="#{data.baseUrl}projects.html") projects
             li.text-link
               a(href="#{data.baseUrl}archives.html") archives
+      #optional-nav.center
+        nav.group
+          ul.nav-links
+            li.text-link
+              a(href="#http://www.github.com/thealphanerd") github
+            li.text-link
+              a(href="#{data.baseUrl}projects.html") linkedIn
+            li.text-link
+              a(href="#{data.baseUrl}archives.html") curriculum vitae

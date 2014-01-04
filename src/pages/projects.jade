@@ -4,4 +4,7 @@ block head
   title= "Projects"
 
 block content
-  p I do  lots of things OMG
+  each post in posts
+    if(post.type === "project")
+      mixin postHead(post)
+

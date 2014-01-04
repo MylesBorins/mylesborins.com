@@ -5,4 +5,5 @@ block head
 
 block content
   each post in posts
-    mixin postHead(post)
+    if(post.type === "blog")
+      mixin postHead(post)
