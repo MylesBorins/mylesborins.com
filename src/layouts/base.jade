@@ -19,6 +19,14 @@ html
     block head
       title= "thealphanerd.io"
   body
+    #big-guy.light-grey
+    #medium-guy.dark-grey
+    #tiny-guy.almost-black
+    
+
+    
+    //- #middle
+      
     .center
       nav.group
         h1.name
@@ -27,10 +35,15 @@ html
           li.text-link
             a(href="#{data.baseUrl}about.html") about
           li.text-link
+            a(href="#{data.baseUrl}projects.html") projects
+          li.text-link
             a(href="#{data.baseUrl}archives.html") archives
       block content
       
     #footer
+      #tiny-guy.almost-black
+      #medium-guy.dark-grey
+      #big-guy.light-grey
       .center
         p
           | Welcome to thealphanerd.io

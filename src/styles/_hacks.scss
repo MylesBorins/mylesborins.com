@@ -1,21 +1,32 @@
 //@include sticky-footer(72px);
- 
-#header {
-  background: #999999;
-  height: 72px;
+.light-grey {
+  background: #dddddd;
 }
- 
+
+.dark-grey {
+  background: #999999;
+}
+
+.almost-black {
+  background: #666666;
+}
+#big-guy {
+  
+  height: 10px;
+}
+
+#medium-guy {
+  height: 5px;
+}
+
+#tiny-guy {
+  
+  height: 2.5px;
+}
+
 #footer {
   background: #cccccc;
   position: fixed;
   z-index: 10000;
   left:0px; right:0px; bottom: 0px;
-}
- 
-.example {
-  height: 500px;
-  border: 3px solid red;
-  p {
-    margin: 1em 0.5em;
-  }
 }
