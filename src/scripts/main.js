@@ -19,11 +19,11 @@
     
   children.each(function (i) {
     var icon = $(children[i]);
-    icon.fadeTo(0, 0.2);
+    icon.fadeTo(0, 0.5);
     icon.hover(function (e) {
       icon.fadeTo('fast', 1.0);
     }, function (e) {
-      icon.fadeTo('slow', 0.2);
+      icon.fadeTo('slow', 0.5);
     });
   });
 }(jQuery));
