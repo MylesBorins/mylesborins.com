@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         src: 'posts',
         dest: 'dist',
         layout: 'src/layouts/post.jade',
-        url: 'posts/:title/',
+        url: ':type/:title/',
         options: {
           pageSrc: 'src/pages',
           data: {

@@ -1,6 +1,7 @@
 {
   title: "My cool blog post",
-  date:  "2013-6-3"
+  date:  "2013-6-3",
+  type: "blog"
 }
 
 # Some [Cupake Ipsum](http://cupcakeipsum.com) to brighten your day!

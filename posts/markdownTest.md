@@ -1,7 +1,8 @@
 {
   title: "Markdown Test",
   date:   "2013-08-3",
-  description: "Posting using all supported markdown features"
+  description: "Posting using all supported markdown features",
+  type: "blog"
 }
 
 ## Unordered list
