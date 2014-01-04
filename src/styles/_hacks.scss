@@ -1,5 +1,6 @@
 //@include sticky-footer(72px);
 .light-grey {
+  z-index:100;
   background: #dddddd;
 }
 
@@ -11,7 +12,6 @@
   background: #666666;
 }
 #big-guy {
-  
   height: 10px;
 }
 
@@ -32,7 +32,7 @@
 
 .meta-white {
   background-color: white;
-//  margin-top: -18px;
+  margin-top: -2em;
 }
 
 .shift-up-body {
@@ -55,4 +55,8 @@ img.buffer {
 
 #optional-nav {
   margin-top: -17.5px;
+}
+
+#header {
+  z-index: 5;
 }
