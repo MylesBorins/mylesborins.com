@@ -20,7 +20,6 @@
 }
 
 #tiny-guy {
-  
   height: 2.5px;
 }
 
@@ -29,4 +28,8 @@
   position: fixed;
   z-index: 10000;
   left:0px; right:0px; bottom: 0px;
+}
+
+.shift-up-body {
+  margin-bottom: 80px;
 }
