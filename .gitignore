@@ -19,4 +19,5 @@ node_modules
 # Cabin-specific ignored files
 dist
 .grunt
-src/scripts/
+src/scripts/jquery
+src/scripts/sticky-kit

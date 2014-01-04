@@ -2,7 +2,11 @@
 mixin postHead(post)
   .post-head.group
     a(href="#{data.baseUrl}#{post.url}")
-      h1.post-title= post.title
+      - if (currentIndex !== 0) {
+      //- This is where the image will go for posts
+      - }
+        h1.post-title= post.title
+      
     span.post-date!= 'Published ' + post.date.toLocaleDateString().split(',').slice(1).join(',')
 
 mixin post(post)
@@ -25,10 +29,19 @@ html
         #medium-guy.dark-grey
         #tiny-guy.almost-black
       #links
-
-    .center.shift-up-body
-      block content
     
+    - if (currentIndex === 0) {
+      #header-image
+        img(src="/images/theremax.png")
+      img.buffer(src="/images/theremax.png")
+    - }
+    .meta-white
+      .center.shift-up-body 
+        br
+        block content
+    script(src="/scripts/jquery/jquery.min.js")
+    script(src="/scripts/sticky-kit/jquery.sticky-kit.min.js")
+    script(src="/scripts/main.js")
     script.
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-46827582-1']);
