@@ -1,7 +1,6 @@
 nav {
 //  border-bottom: 1px solid gainsboro;
   margin-top: 0.4em;
-  margin-bottom: 0.8em;
 
   a {
     color: $offBlack;
@@ -33,4 +32,23 @@ nav {
     float: left;
     padding-right: 1.7em;
   }
+}
+
+
+nav.group.small {
+  margin-top: 0.0em;
+  margin-bottom: 0.8em;
+  text-align: center;
+  li {
+    margin-top: 0.0em;
+    display: inline;
+    padding-right: 1.7em;
+    a {
+      display: inline-block;
+    }
+  }
+}
+
+.post-head.group {
+  display: inline-block;
 }

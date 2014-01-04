@@ -51,5 +51,107 @@ you can use the generic selector below, but it's slower:
   -webkit-font-smoothing: antialiased;
 }
 .icon-link:before {
-  content: "\e000";
+  content: "\e600";
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-soundcloud:before {
+	content: "\e601";
+}
+.icon-link:before {
+	content: "\e600";
+}
+.icon-soundcloud2:before {
+	content: "\e602";
+}
+.icon-github:before {
+	content: "\e603";
+}
+.icon-github2:before {
+	content: "\e604";
+}
+.icon-github3:before {
+	content: "\e605";
+}
+.icon-github4:before {
+	content: "\e606";
+}
+.icon-github5:before {
+	content: "\e607";
+}
+.icon-vimeo:before {
+	content: "\e608";
+}
+.icon-vimeo2:before {
+	content: "\e609";
+}
+.icon-vimeo3:before {
+	content: "\e60a";
+}
+.icon-linkedin:before {
+	content: "\e60b";
+}
+.icon-reddit:before {
+	content: "\e60c";
+}
+.icon-profile:before {
+	content: "\e60d";
+}
+.icon-twitter:before {
+	content: "\e60e";
+}
+.icon-twitter2:before {
+	content: "\e60f";
+}
+.icon-twitter3:before {
+	content: "\e610";
+}
+.icon-file-css:before {
+	content: "\e611";
+}
+.icon-file-xml:before {
+	content: "\e612";
+}
+.icon-cc:before {
+	content: "\e613";
+}
+.icon-vimeo4:before {
+	content: "\e614";
+}
+.icon-vimeo5:before {
+	content: "\e615";
+}
+.icon-linkedin2:before {
+	content: "\e616";
+}
+.icon-linkedin3:before {
+	content: "\e617";
+}
+.icon-twitter4:before {
+	content: "\e618";
+}
+.icon-twitter5:before {
+	content: "\e619";
+}
+.icon-github6:before {
+	content: "\e61a";
+}
+.icon-github7:before {
+	content: "\e61b";
+}
+.icon-soundcloud3:before {
+	content: "\e61c";
 }
