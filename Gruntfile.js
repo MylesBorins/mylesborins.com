@@ -1,4 +1,5 @@
 module.exports = function (grunt) {
+  'use strict';
 
   grunt.initConfig({
     pages: {
@@ -14,7 +15,25 @@ module.exports = function (grunt) {
           },
           pagination: {
             postsPerPage: 1,
-            listPage: 'src/pages/index.jade'
+            listPage: 'src/pages/index.jade',
+            getPostGroups: function (postCollection, pagination) {
+              var postsPerPage = pagination.postsPerPage;
+              var postGroups   = [];
+              var i            = 0;
+              var postGroup;
+              
+              postCollection.forEach(function (post) {
+                if (post.type === "blog") {
+                  postGroups.push({
+                    id: i,
+                    posts: [post]
+                  });
+                  i++;
+                }
+              });
+
+              return postGroups;
+            }
           }
         }
       }
@@ -37,7 +56,7 @@ module.exports = function (grunt) {
             'images/**',
             'scripts/**',
             'styles/**.css',
-            'styles/fonts/**',
+            'styles/fonts/**'
           ]
         }]
       }
@@ -88,7 +107,7 @@ module.exports = function (grunt) {
     },
     clean: {
       dist: 'dist'
-    },
+    }
   });
 
   grunt.registerTask('build', [
