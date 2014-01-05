@@ -1,0 +1,17 @@
+#header-image {
+  img {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+  }
+  width: 100%;
+}
+
+img.buffer {
+  opacity: 0;
+  width:100%;
+}
+
+#header {
+  z-index: 5;
+}

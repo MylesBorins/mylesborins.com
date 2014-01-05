@@ -11,6 +11,7 @@
 .almost-black {
   background: #666666;
 }
+
 #big-guy {
   height: 10px;
 }
@@ -23,12 +24,6 @@
   height: 2.5px;
 }
 
-#footer {
-  background: #cccccc;
-  position: fixed;
-  z-index: 10000;
-  left:0px; right:0px; bottom: 0px;
-}
 
 .meta-white {
   background-color: white;
@@ -38,26 +33,3 @@
 .shift-up-body {
   margin-bottom: 120px;
 }
-
-#header-image {
-  img {
-    z-index: -1;
-    position: fixed;
-    width: 100%;
-  }
-  width: 100%;
-}
-
-img.buffer {
-  opacity: 0;
-  width:100%;
-}
-
-#optional-nav {
-  margin-top: -17.5px;
-}
-
-#header {
-  z-index: 5;
-}
-
