@@ -8,7 +8,12 @@
 #header-image
   img(src="/images/theremax.png")
 img.buffer(src="/images/theremax.png")
+- } else if (post && post.bigImage) {
+#header-image
+  img(src=post.bigImage)
+img.buffer(src=post.bigImage)
 - }
+
 
 nav#social-links.group.small
   ul.nav-links-social

@@ -56,7 +56,8 @@ module.exports = function (grunt) {
             'images/**',
             'scripts/**',
             'styles/**.css',
-            'styles/fonts/**'
+            'styles/fonts/**',
+            'files/**'
           ]
         }]
       }
@@ -64,7 +65,7 @@ module.exports = function (grunt) {
     watch: {
       pages: {
         files: [
-          'posts/**',
+          'content/**/**',
           'src/layouts/**',
           'src/pages/**'
         ],
@@ -79,7 +80,9 @@ module.exports = function (grunt) {
           'src/images/**',
           'src/scripts/**',
           'src/styles/**.css',
-          'src/styles/fonts/**'
+          'src/styles/fonts/**',
+          'src/files/**'
+          
         ],
         tasks: ['copy']
       },

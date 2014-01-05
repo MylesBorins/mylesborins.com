@@ -6,8 +6,13 @@ mixin postHead(post)
       //- This is where the image will go for posts
       - }
         h1.post-title= post.title
-      
-    span.post-date!= 'Published ' + post.date.toLocaleDateString().split(',').slice(1).join(',')
+    - if (post.type && post.type === 'project') {
+      span.post-date= post.quarter
+    - }
+    - else {
+      span.post-date!= 'Published ' + post.date.toLocaleDateString().split(',').slice(1).join(',')
+    - } 
+    
 
 mixin post(post)
   mixin postHead(post)
