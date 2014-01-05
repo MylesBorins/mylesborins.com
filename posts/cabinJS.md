@@ -1,13 +1,13 @@
 {
   title: "Static Sites with CabinJS",
-  date:  "2014-1-4",
+  date:  "2014-1-5",
   description: "Description of Canvas's features",
   type: "blog"
 }
 
 This will be a post about how I use cabinJS to statically compile this entire site
 
-Literally kitsch bespoke, wayfarers Brooklyn butcher YOLO cred chia put a bird on it tofu synth next level Terry Richardson. Plaid photo booth VHS pour-over. Ethical Helvetica Godard chia, swag ethnic keffiyeh hashtag Pitchfork readymade iPhone Banksy meh slow-carb. Shoreditch 3 wolf moon butcher, chillwave fap keffiyeh Bushwick viral. Banh mi slow-carb squid Neutra deep v narwhal. +1 Tonx roof party, keytar fingerstache selfies four loko bespoke lomo 3 wolf moon readymade cliche stumptown. Meggings Wes Anderson hoodie, banh mi viral pour-over street art chambray swag.
+Literally bespoke, wayfarers Brooklyn butcher YOLO cred chia put a bird on it tofu synth next level Terry Richardson. Plaid photo booth VHS pour-over. Ethical Helvetica Godard chia, swag ethnic keffiyeh hashtag Pitchfork readymade iPhone Banksy meh slow-carb. Shoreditch 3 wolf moon butcher, chillwave fap keffiyeh Bushwick viral. Banh mi slow-carb squid Neutra deep v narwhal. +1 Tonx roof party, keytar fingerstache selfies four loko bespoke lomo 3 wolf moon readymade cliche stumptown. Meggings Wes Anderson hoodie, banh mi viral pour-over street art chambray swag.
 
 Paleo hoodie food truck cred. Schlitz 90's Wes Anderson, banjo put a bird on it food truck Brooklyn viral Banksy beard leggings iPhone yr. Bicycle rights meh direct trade, leggings hoodie stumptown raw denim retro. Church-key roof party fixie, gastropub selfies cardigan ethical food truck lo-fi ugh selvage fanny pack sartorial Neutra chambray. Kogi farm-to-table Terry Richardson fap literally flannel. Try-hard gentrify readymade banjo, Carles tousled drinking vinegar chia typewriter Godard fanny pack. Helvetica bespoke banh mi, literally slow-carb squid cred biodiesel American Apparel pickled XOXO chillwave twee.
 
