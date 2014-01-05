@@ -119,7 +119,7 @@ module.exports = function (grunt) {
           authKey: 'privateKey'
         },
         src: 'dist',
-        dest: '../thealphanerd.io',
+        dest: '../thealphanerd.io/public_html',
         simple: true,
         exclusions: ['**.DS_Store']
       }
