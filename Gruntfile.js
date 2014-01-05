@@ -23,7 +23,7 @@ module.exports = function (grunt) {
               var postGroup;
               
               postCollection.forEach(function (post) {
-                if (post.type === "blog") {
+                if (post.type === 'blog') {
                   postGroups.push({
                     id: i,
                     posts: [post]
@@ -107,6 +107,19 @@ module.exports = function (grunt) {
     },
     clean: {
       dist: 'dist'
+    },
+    'sftp-deploy': {
+      build: {
+        auth: {
+          host: 'thealphanerd.io',
+          port: 22,
+          authKey: 'privateKey'
+        },
+        src: 'dist',
+        dest: '../thealphanerd.io',
+        simple: true,
+        exclusions: ['**.DS_Store']
+      }
     }
   });
 
@@ -117,7 +130,7 @@ module.exports = function (grunt) {
     'copy'
   ]);
 
-  
+  grunt.registerTask('deploy', ['build', 'sftp-deploy']);
 
   grunt.registerTask('server', [
     'build',

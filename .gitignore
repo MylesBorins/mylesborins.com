@@ -21,3 +21,4 @@ dist
 .grunt
 src/scripts/jquery
 src/scripts/sticky-kit
+.ftppass
