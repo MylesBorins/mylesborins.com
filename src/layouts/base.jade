@@ -23,62 +23,14 @@ html
     block head
       title= "thealphanerd.io"
   body
-    #header
-      #header-accent
-        #big-guy.light-grey
-        #medium-guy.dark-grey
-        #tiny-guy.almost-black
-    
-    - if (currentIndex === 0) {
-      #header-image
-        img(src="/images/theremax.png")
-      img.buffer(src="/images/theremax.png")
-    - }
-      nav#social-links.group.small
-        ul.nav-links-social
-          li.text-link
-            a.icon-github3(href="https://www.github.com/thealphanerd")
-          li.text-link
-            a.icon-soundcloud(href="https://www.soundcloud.com/thealphanerd")
-          li.text-link
-            a.icon-linkedin(href="https://www.linkedin.com/in/thealphanerd")
-          li.text-link
-            a.icon-vimeo2(href="https://vimeo.com/thealphanerd")
-          li.text-link
-            a.icon-twitter2(href="https://www.twitter.com/the_alpha_nerd")
+    include header.jade
     
     .meta-white
       br
       .center.shift-up-body 
-        
         block content
-    script(src="/scripts/jquery/jquery.min.js")
-    script(src="/scripts/sticky-kit/jquery.sticky-kit.min.js")
-    script(src="/scripts/main.js")
-    script.
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-46827582-1']);
-      _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    include scripts.jade
       
-    #footer
-      #tiny-guy.almost-black
-      #medium-guy.dark-grey
-      #big-guy.light-grey
-      .center
-        nav.group
-          h1.name
-            a(href="#{data.baseUrl}") Myles Borins
-          ul.nav-links
-            li.text-link
-              a(href="#{data.baseUrl}about.html") about
-            li.text-link
-              a(href="#{data.baseUrl}projects.html") projects
-            li.text-link
-              a(href="#{data.baseUrl}archives.html") archives
+    include footer.jade
       
