@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pages: {
       posts: {
-        src: 'posts',
+        src: 'content',
         dest: 'dist',
         layout: 'src/layouts/post.jade',
         url: ':type/:title/',
