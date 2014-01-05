@@ -10,11 +10,14 @@
   });
   
   $('#social-links').stick_in_parent({
-
+    
   }).on('sticky_kit:stick', function (e) {
-    smally.fadeTo('slow', 1);
+    setTimeout(function (e) {
+      smally.fadeTo('slow', 1);
+    }, 100);
+    
   }).on('sticky_kit:unstick', function (e) {
-    smally.fadeTo('slow', 0.0);
+    smally.fadeTo(0, 0);
   });
     
   children.each(function (i) {

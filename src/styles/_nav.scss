@@ -13,6 +13,9 @@ nav {
     }
   }
   &#social-links {
+    &.is_stuck {
+     background: rgba(255,255,255,0.99);
+    }
     z-index: 2;
     background: white;
     padding-top: 0.4em;

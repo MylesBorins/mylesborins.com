@@ -7,10 +7,10 @@ mixin postHead(post)
       - }
         h1.post-title= post.title
     - if (post.type && post.type === 'project') {
-      span.post-date= post.quarter
+      div.post-date= post.quarter
     - }
     - else {
-      span.post-date!= 'Published ' + post.date.toLocaleDateString().split(',').slice(1).join(',')
+      div.post-date!= 'Published ' + post.date.toLocaleDateString().split(',').slice(1).join(',')
     - } 
     
 
@@ -31,7 +31,6 @@ html
     include header.jade
     
     .meta-white
-      br
       .center.shift-up-body 
         block content
 
