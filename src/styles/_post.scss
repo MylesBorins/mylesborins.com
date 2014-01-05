@@ -1,4 +1,7 @@
 .post-head {
+  &.group {
+  display: inline-block;
+  }
   padding-bottom: 5px;
 
   a {

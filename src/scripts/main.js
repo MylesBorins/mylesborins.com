@@ -1,7 +1,7 @@
 (function ($) {
   'use strict';
   
-  var smally = $('.nav-links-bottom');
+  var smally = $('.nav-links-social');
   var children = smally.children();
   smally.fadeTo(0, 0);
   

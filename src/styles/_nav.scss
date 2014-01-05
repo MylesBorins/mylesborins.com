@@ -12,6 +12,28 @@ nav {
       text-decoration: underline;
     }
   }
+  &#social-links {
+    z-index: 2;
+    background: white;
+    padding-top: 0.4em;
+    margin-top: -1px;
+    margin-bottom: 0em;
+    text-align: center;
+    ul {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+    li {
+      margin-top: 0.0em;
+      display: inline;
+      padding-right: 1.7em;
+      a {
+        display: inline-block;
+        text-decoration: none;
+        color: #2A2A64;
+      }
+    }
+  }
 }
 
 .name {
@@ -35,30 +57,6 @@ nav {
   }
 }
 
-.nav-links-bottom {
-  margin-bottom: 10px;
-  font-size: 1.2em;
-}
-
-nav.group.small {
-  z-index: 2;
-  background: white;
-  padding-top: 0.4em;
-  margin-top: -1px;
-  margin-bottom: 0em;
-  text-align: center;
-  li {
-    margin-top: 0.0em;
-    display: inline;
-    padding-right: 1.7em;
-    a {
-      display: inline-block;
-      text-decoration: none;
-    }
-  }
-}
+//nav
 
 
-.post-head.group {
-  display: inline-block;
-}
