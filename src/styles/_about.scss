@@ -1,0 +1,20 @@
+#about {
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    &.frame {
+      outline: darkslategrey;
+      outline-style: double;
+      outline-width: 10px;
+      padding: 1em;
+    }
+  }
+  .buffer-me {
+    padding: 1em;
+  }
+  p {
+    text-align: center;
+  }
+}

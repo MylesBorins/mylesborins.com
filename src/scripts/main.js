@@ -9,17 +9,24 @@
     parent: $('body')
   });
   
-  bigguy.stick_in_parent({
+  if(!$('ul.nav-links-social.show').length){
+    bigguy.stick_in_parent({
     
-  }).on('sticky_kit:stick', function (e) {
-    setTimeout(function (e) {
-      bigguy.fadeTo('slow',1)
-      smally.fadeTo('slow', 1);
-    }, 200);
+    }).on('sticky_kit:stick', function (e) {
+      setTimeout(function (e) {
+        bigguy.fadeTo('slow',1)
+        smally.fadeTo('slow', 1);
+      }, 200);
     
-  }).on('sticky_kit:unstick', function (e) {
-    smally.fadeTo(5, 0);
-  });
+    }).on('sticky_kit:unstick', function (e) {
+      smally.fadeTo(5, 0);
+    });
+  }
+  else {
+    setTimeout(function () {
+      $('ul.nav-links-social.show').fadeTo(1000,1)
+    }, 1000);
+  }
     
   children.each(function (i) {
     var icon = $(children[i]);
@@ -30,4 +37,5 @@
       icon.fadeTo('slow', 0.5);
     });
   });
+  
 }(jQuery));

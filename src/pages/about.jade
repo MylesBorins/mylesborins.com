@@ -4,4 +4,30 @@ block head
   title= "thealphanerd.io | about"
 
 block content
-  p A little about me... this definitely needs to be fleshed out
+  #about
+    .buffer-me
+      img.frame(src="#{data.baseUrl}images/me.jpg")
+    :markdown
+      Myles Borins is a second year graduate student
+      
+      he studies at ccrma
+      
+      (The Center for Computer Research in Music and Acoustics)
+      
+      Located in beautiful Stanford, California
+      
+      You can find his cv as a pdf [here](https://github.com/TheAlphaNerd/curriculum_vitae/raw/master/cv.pdf)
+
+  nav#social-links.group.small
+    ul.nav-links-social.show
+      li.text-link
+        a.icon-github3(href="https://www.github.com/thealphanerd")
+      li.text-link
+        a.icon-soundcloud(href="https://www.soundcloud.com/thealphanerd")
+      li.text-link
+        a.icon-linkedin(href="https://www.linkedin.com/in/thealphanerd")
+      li.text-link
+        a.icon-vimeo2(href="https://vimeo.com/thealphanerd")
+      li.text-link
+        a.icon-twitter2(href="https://www.twitter.com/the_alpha_nerd")
+
