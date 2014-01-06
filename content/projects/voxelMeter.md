@@ -11,3 +11,7 @@
 </div>
 
 voxelMeter is an audio visualizer that uses the Fast Fourier Transform to visualize the frequency spectrum using cubes! It was built using cross platform open source software, and will compile/run on mac and linux... isn't that grand?
+
+Find out more about the application on the [project site](https://ccrma.stanford.edu/~mborins/256a/voxelMeter/) 
+
+Find the source on [github](https://github.com/TheAlphaNerd/voxelMeter)
