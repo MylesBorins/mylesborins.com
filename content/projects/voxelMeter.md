@@ -6,5 +6,8 @@
   type: "project",
   project: "voxelMeter"
 }
+<div class="videoWrapper">
+  <iframe src="//player.vimeo.com/video/78612677?title=0&amp;byline=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
 
-This is to be filled in
+voxelMeter is an audio visualizer that uses the Fast Fourier Transform to visualize the frequency spectrum using cubes! It was built using cross platform open source software, and will compile/run on mac and linux... isn't that grand?

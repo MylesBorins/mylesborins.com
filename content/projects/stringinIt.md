@@ -9,8 +9,9 @@
 }
 
 ---
-
-<iframe width="420" height="315" src="//www.youtube.com/embed/X96E2jjCfC8" frameborder="0" allowfullscreen></iframe>
+<div class="videoWrapper">
+  <iframe width="420" height="315" src="//www.youtube.com/embed/X96E2jjCfC8" frameborder="0" allowfullscreen></iframe>
+</div>
 
 ---
 
