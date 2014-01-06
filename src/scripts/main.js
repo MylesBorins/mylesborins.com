@@ -1,6 +1,6 @@
 (function ($) {
   'use strict';
-  
+  var bigguy = $('#social-links')
   var smally = $('.nav-links-social');
   var children = smally.children();
   smally.fadeTo(0, 0);
@@ -9,15 +9,16 @@
     parent: $('body')
   });
   
-  $('#social-links').stick_in_parent({
+  bigguy.stick_in_parent({
     
   }).on('sticky_kit:stick', function (e) {
     setTimeout(function (e) {
+      bigguy.fadeTo('slow',1)
       smally.fadeTo('slow', 1);
-    }, 100);
+    }, 200);
     
   }).on('sticky_kit:unstick', function (e) {
-    smally.fadeTo(0, 0);
+    smally.fadeTo(5, 0);
   });
     
   children.each(function (i) {
