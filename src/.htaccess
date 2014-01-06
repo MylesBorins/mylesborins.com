@@ -1,6 +1,6 @@
 Options +FollowSymLinks
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^yoursite.com
-RewriteRule (.*) http://www.yoursite.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^thealphanerd.io
+RewriteRule (.*) http://www.thealphanerd.io/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9} /index.html HTTP/
-RewriteRule ^index.html$ http://www.yoursite.com/ [R=301,L]
+RewriteRule ^index.html$ http://www.thealphanerd.io/ [R=301,L]
