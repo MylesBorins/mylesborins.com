@@ -4,7 +4,8 @@
   quarter: "Fall 2013",
   description: "voxelMeter yo",
   type: "project",
-  project: "voxelMeter"
+  project: "voxelMeter",
+  bigImage: "/images/voxel-header.png"
 }
 <div class="videoWrapper">
   <iframe src="//player.vimeo.com/video/78612677?title=0&amp;byline=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
