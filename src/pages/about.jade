@@ -3,20 +3,22 @@ extends ../layouts/base
 block head
   title= "thealphanerd.io | about"
 
+//- block headImage
+//-   each post in posts
+//-     if(post.type === "about")
+//-       #header-image
+//-         img(src=post.bigImage, alt="Header image of flocking simulation")
+//- 
+//-       img.buffer(src=post.bigImage, alt="This is a buffer image that can be ignored")
+
 block content
   #about
     .buffer-me
       img.frame(src="#{data.baseUrl}images/me.jpg")
-    :markdown
-      Myles Borins is a second year graduate student
-      
-      he studies at ccrma
-      
-      (The Center for Computer Research in Music and Acoustics)
-      
-      Located in beautiful Stanford, California
-      
-      You can find his cv as a pdf [here](https://github.com/TheAlphaNerd/curriculum_vitae/raw/master/cv.pdf)
+    each post in posts
+      if(post.type === "about")
+        .post-body.markdown!= post.content
+        
 
   nav#social-links.group.small
     ul.nav-links-social.show
