@@ -110,19 +110,6 @@ module.exports = function (grunt) {
     },
     clean: {
       dist: 'public_html'
-    },
-    'sftp-deploy': {
-      build: {
-        auth: {
-          host: 'thealphanerd.io',
-          port: 22,
-          authKey: 'privateKey'
-        },
-        src: 'public_html',
-        dest: '../thealphanerd.io/public_html',
-        simple: true,
-        exclusions: ['**.DS_Store']
-      }
     }
   });
 
@@ -132,8 +119,6 @@ module.exports = function (grunt) {
     'compass',
     'copy'
   ]);
-
-  grunt.registerTask('deploy', ['build', 'sftp-deploy']);
 
   grunt.registerTask('server', [
     'build',
