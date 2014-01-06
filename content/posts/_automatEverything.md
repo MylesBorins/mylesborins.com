@@ -5,4 +5,4 @@
   type: "blog"
 }
 
-This will be a post about using grunt to do the dirty work for you!!!
+I really like to use grunt.
