@@ -46,10 +46,11 @@ body {
 
 .center {
   margin: 0 auto;
-  max-width: 620px;
+  
   width: 55%;
-
+  max-width: 750px;
   @include breakpoint(big-phone) {
+    max-width: 620px;
     width: 88%;
   }
 }
