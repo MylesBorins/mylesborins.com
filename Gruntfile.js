@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     pages: {
       posts: {
         src: 'content',
-        dest: 'dist',
+        dest: 'public_html',
         layout: 'src/layouts/post.jade',
         url: ':type/:title/',
         options: {
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           sassDir: 'src/styles',
-          cssDir: 'dist/styles'
+          cssDir: 'public_html/styles'
         }
       }
     },
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'src',
-          dest: 'dist',
+          dest: 'public_html',
           src: [
             'images/**',
             'scripts/**',
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
         tasks: ['copy']
       },
       dist: {
-        files: ['dist/**'],
+        files: ['public_html/**'],
         options: {
           livereload: true
         }
@@ -98,7 +98,7 @@ module.exports = function (grunt) {
         options: {
           port: 5455,
           hostname: '0.0.0.0',
-          base: 'dist',
+          base: 'public_html',
           livereload: true
         }
       }
@@ -109,7 +109,7 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dist: 'dist'
+      dist: 'public_html'
     },
     'sftp-deploy': {
       build: {
@@ -118,7 +118,7 @@ module.exports = function (grunt) {
           port: 22,
           authKey: 'privateKey'
         },
-        src: 'dist',
+        src: 'public_html',
         dest: '../thealphanerd.io/public_html',
         simple: true,
         exclusions: ['**.DS_Store']
