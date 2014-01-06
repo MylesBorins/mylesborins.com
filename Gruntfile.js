@@ -53,7 +53,6 @@ module.exports = function (grunt) {
           cwd: 'src',
           dest: 'public_html',
           src: [
-            '.htaccess',
             'images/**',
             'scripts/**',
             'styles/**.css',
