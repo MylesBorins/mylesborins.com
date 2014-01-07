@@ -3,24 +3,14 @@ extends ../layouts/base
 block head
   title= "thealphanerd.io | about"
 
-//- block headImage
-//-   each post in posts
-//-     if(post.type === "about")
-//-       #header-image
-//-         img(src=post.bigImage, alt="Header image of flocking simulation")
-//- 
-//-       img.buffer(src=post.bigImage, alt="This is a buffer image that can be ignored")
-
 block content
   #about
-    //- .buffer-me
-    //-       img.frame(src="#{data.baseUrl}images/me.jpg")
     each post in posts
       if(post.type === "about")
         .post-body.markdown!= post.content
         
   
-  nav#social-links.group.small
+  nav.social-links.group.small
    ul.nav-links-social.show
      li.text-link
        a.icon-github3(href="https://www.github.com/thealphanerd")
