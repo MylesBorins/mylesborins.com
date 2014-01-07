@@ -1,7 +1,6 @@
 {
   title: "thealphanerd.io | about",
-  type: "about",
-  bigImage: "/images/about-header.png"
+  type: "about"
 }
 #code | music | art
 ![a picture of Myles](/images/me.jpg)

@@ -12,8 +12,8 @@ img.buffer(src="/images/theremax.png", alt="This is a buffer image that can be i
 
 - } else if (post && post.bigImage) {
 #header-image
-  img(src=post.bigImage)
+  img(src=post.bigImage, alt=post.bigImageAlt)
 
-img.buffer(src=post.bigImage)
+img.buffer(src=post.bigImage, alt="ignore me, I'm a buffer")
 
 - }

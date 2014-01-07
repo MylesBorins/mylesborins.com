@@ -5,7 +5,8 @@
   description: "voxelMeter yo",
   type: "project",
   project: "voxelMeter",
-  bigImage: "/images/voxel-header.png"
+  bigImage: "/images/voxel-header.png",
+  bigImageAlt: "A screenshot of the application, lots of voxels showing sound with color and volume"
 }
 <div class="videoWrapper">
   <iframe src="//player.vimeo.com/video/78612677?title=0&amp;byline=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

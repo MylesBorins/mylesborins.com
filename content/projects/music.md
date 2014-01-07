@@ -4,8 +4,7 @@
   quarter: "Ongoing",
   description: "I like to play",
   type: "project",
-  project: "music",
-  <!-- bigImage: "/images/theremax-noname.png" -->
+  project: "music"
 }
 
 ___

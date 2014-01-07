@@ -5,7 +5,8 @@
   description: "compiling from faust2webaudio",
   type: "project",
   project: "faust2webaudio",
-  bigImage: "/images/faust-to-webaudio/faust-header.png"
+  bigImage: "/images/faust-to-webaudio/faust-header.png",
+  bigImageAlt: "http://faust.grame.fr/"
 }
 
 A compiler to take code written in the faust signal processing language and create web audio unit generators that work cross platform. The compilation process looks something like

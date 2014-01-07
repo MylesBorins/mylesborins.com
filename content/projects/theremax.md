@@ -5,7 +5,8 @@
   description: "theremin to the max!",
   type: "project",
   project: "theremax",
-  bigImage: "/images/theremax-noname.png"
+  bigImage: "/images/theremax-noname.png",
+  bigImageAlt: "A screenshot of the app, a beautiful flocking simulation"
 }
 
 A fully featured cross platform native application that lets you control sound and graphics with movement. All libraries used are cross platform including openGL, GLUT, openCV, and rt-audio. 

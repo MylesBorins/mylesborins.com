@@ -5,7 +5,8 @@
   description: "stringin' it",
   type: "project",
   project: "stringin-it",
-  bigImage: "/images/stringin-it/header.jpg"
+  bigImage: "/images/stringin-it/header.jpg",
+  bigImageAlt: "From Hand Made Music / Monome Tour 2010"
 }
 
 
