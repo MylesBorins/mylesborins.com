@@ -23,7 +23,18 @@
 }
 
 .post-body {
-  h1 {
+  hr {
+    &.top-one, &.bottom-one {
+      width: 90%;
+    }
+    &.top-two, &.bottom-two {
+      width: 80%;
+    }
+    &.top-three, &.bottom-three {
+      width: 70%;
+    }
+  }
+  h1, h2, h3 {
     text-align: center;
   }
   margin-bottom: 1.2em;
@@ -55,6 +66,7 @@
     outline: darkslategrey;
     outline-style: double;
     outline-width: 10px;
-    padding: 1em;
+    outline-offset: -1em;
+    padding: 2em;
   }
 }
