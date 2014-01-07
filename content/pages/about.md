@@ -4,11 +4,15 @@
   bigImage: "/images/about-header.png"
 }
 
+#code | music | art
+
+![a picture of Myles](/images/me.jpg)
+
 Myles Borins is a second year graduate student
 
-He studies at ccrma
+he studies at ccrma
 
- a.k.a The Center for Computer Research in Music and Acoustics 
+ a.k.a 1he center for computer research in music and acoustics 
 
 located in beautiful Stanford, California
 

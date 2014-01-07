@@ -11,7 +11,9 @@ GIT_WORK_TREE=/some/path/thealphanerd.io
 GIT_DIR=/some/path/thealphanerd.io/.git
 
 \# not sure this is neccessary but seems to make it work
+
 cd /some/path/thealphanerd.io 
+
 git pull
 
 grunt build

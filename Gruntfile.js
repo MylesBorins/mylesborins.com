@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports = function (grunt) {
   'use strict';
 
@@ -12,6 +14,17 @@ module.exports = function (grunt) {
           pageSrc: 'src/pages',
           data: {
             baseUrl: '/'
+          },
+          markedOptions: function (marked) {
+            var renderer = _.extend(new marked.Renderer(), {
+              image: function (href, title, text) {
+                return '<div class="buffer-me"><img src="' + href + '" alt="' + text + '">' + '</div>';
+              }
+            });
+            var options = {
+              renderer: renderer
+            };
+            return options;
           },
           pagination: {
             postsPerPage: 1,
