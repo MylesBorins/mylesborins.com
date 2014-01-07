@@ -1,6 +1,8 @@
+/*global jQuery*/
+
 (function ($) {
   'use strict';
-  var bigguy = $('#social-links')
+  var bigguy = $('#sticky-social');
   var smally = $('.nav-links-social');
   var children = smally.children();
   smally.fadeTo(0, 0);
@@ -9,12 +11,12 @@
     parent: $('body')
   });
   
-  if(!$('ul.nav-links-social.show').length){
+  if (!$('ul.nav-links-social.show').length) {
     bigguy.stick_in_parent({
     
     }).on('sticky_kit:stick', function (e) {
       setTimeout(function (e) {
-        bigguy.fadeTo('slow',1)
+        bigguy.fadeTo('slow', 1);
         smally.fadeTo('slow', 1);
       }, 200);
     
@@ -24,7 +26,7 @@
   }
   else {
     setTimeout(function () {
-      $('ul.nav-links-social.show').fadeTo(1000,1)
+      $('ul.nav-links-social.show').fadeTo(1000, 1);
     }, 1000);
   }
     
