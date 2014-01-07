@@ -27,6 +27,13 @@ module.exports = function (grunt) {
                 }
                 out += '>';
                 return out;
+              },
+              heading: function (text, level) {
+                var numbers = ['oops', 'one', 'two', 'three', 'four', 'five', 'six'];
+                if (level === 1) {
+                  return '<hr><hr class="top-' + numbers[level] + '"><h' + level + '>' + text + '</h' + level + '><hr class="bottom-' + numbers[level] + '"><hr>';
+                }
+                return '<hr class="top-' + numbers[level] + '"><h' + level + '>' + text + '</h' + level + '><hr class="bottom-' + numbers[level] + '">';
               }
             });
             var options = {
