@@ -16,9 +16,17 @@ module.exports = function (grunt) {
             baseUrl: '/'
           },
           markedOptions: function (marked) {
+            // This is the default image renderer
+            // Just thought it would be good to have for reference
+            // inacse I decide to modify it
             var renderer = _.extend(new marked.Renderer(), {
               image: function (href, title, text) {
-                return '<div class="buffer-me"><img src="' + href + '" alt="' + text + '">' + '</div>';
+                var out = '<img src="' + href + '" alt="' + text + '"';
+                if (title) {
+                  out += ' title="' + title + '"';
+                }
+                out += '>';
+                return out;
               }
             });
             var options = {

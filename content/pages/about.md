@@ -3,14 +3,12 @@
   type: "about",
   bigImage: "/images/about-header.png"
 }
-
 #code | music | art
-
 ![a picture of Myles](/images/me.jpg)
 
 Myles Borins is a second year graduate student
 
-he studies at ccrma
+he spends his days studying and researching at ccrma
 
  a.k.a 1he center for computer research in music and acoustics 
 
