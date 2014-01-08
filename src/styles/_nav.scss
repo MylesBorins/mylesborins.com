@@ -13,9 +13,12 @@ nav {
     }
   }
   &.social-links {
+    pointer-events: none;
     &.is_stuck {
-     background: rgba(255,255,255,0.99);
+      pointer-events: auto;
+      background: rgba(255,255,255,0.99);
     }
+
     z-index: 2;
     background: white;
     padding-top: 0.4em;
@@ -23,6 +26,9 @@ nav {
     margin-bottom: 0em;
     text-align: center;
     ul {
+      &.show {
+        pointer-events: auto;
+      }
       margin-bottom: 10px;
       font-size: 1.5em;
     }
