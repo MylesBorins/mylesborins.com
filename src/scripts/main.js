@@ -5,7 +5,7 @@
   var bigguy = $('#sticky-social');
   var smally = $('.nav-links-social');
   var children = smally.children();
-  smally.fadeTo(0, 0);
+/*  smally.fadeTo(0, 0);*/
   
   $('#header').stick_in_parent({
     parent: $('body')
@@ -36,7 +36,7 @@
     icon.hover(function (e) {
       icon.fadeTo('fast', 1.0);
     }, function (e) {
-      icon.fadeTo('slow', 0.5);
+      icon.fadeTo('fast', 0.5);
     });
   });
   

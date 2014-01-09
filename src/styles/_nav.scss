@@ -1,6 +1,6 @@
 nav {
 //  border-bottom: 1px solid gainsboro;
-  margin-top: 0.4em;
+  margin-top: 1.4em;
   margin-bottom: 0.8em;
 
   a {
@@ -15,6 +15,9 @@ nav {
   &.social-links {
     pointer-events: none;
     &.is_stuck {
+      @include breakpoint(small-phone) {
+        font-size: 1.2em;
+      }
       pointer-events: auto;
       background: rgba(255,255,255,0.99);
     }
@@ -26,6 +29,14 @@ nav {
     margin-bottom: 0em;
     text-align: center;
     ul {
+      opacity: 0;
+      &#about-ul {
+        @include breakpoint(small-phone) {
+          opacity: 1;
+          padding-bottom: 1em;
+          font-size: 2em;
+        }
+      }
       &.show {
         pointer-events: auto;
       }
