@@ -8,10 +8,10 @@ $lightTextColor: transparentize($baseTextColor, .5);
 
 @mixin breakpoint($point) {
   @if $point == big-phone {
-    @media (max-width: 1136px) { @content; }
+    @media (max-width: 1250px) { @content; }
   }
     @else if $point == small-phone {
-    @media (max-width: 640px)  { @content; }
+    @media (max-width: 900px)  { @content; }
   }
 }
 
