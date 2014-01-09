@@ -16,5 +16,3 @@ Theremax has only been tested on OSX 10.8 at the moment, but should be able to b
 You can find the github repository [here](https://www.github.com/thealphanerd/theremax)
 
 There is a site dedicated to more thorough documentation that can be found [here](https://ccrma.stanford.edu/~mborins/256a/theremax/)
-
-YOU SHOULD REALLY NOT EDIT YOUR SITE LIVE FOR A DEMO
