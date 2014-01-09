@@ -12,3 +12,18 @@
     line-height: 1em;
   }
 }
+
+#lower-social {
+  @include breakpoint(small-phone) {
+    display: none;
+  }
+}
+
+#upper-social {
+  display: none;
+  @include breakpoint(small-phone) {
+    display: block;
+    padding-bottom: 1em;
+    font-size: 1em;
+  }
+}
