@@ -142,8 +142,7 @@ Each LED is wired in series with the other LED of the same color.  All three gro
 
 #early dmx testing
 
-
-
-
-Below is an early test using Touch OSC to control a dmx light via a max/msp patch
-<iframe width="420" height="315" src="//www.youtube.com/embed/XX9AVYvVYFU" frameborder="0" allowfullscreen></iframe>
+<div class="videoWrapper">
+    <iframe width="420" height="315" src="//www.youtube.com/embed/XX9AVYvVYFU" frameborder="0" allowfullscreen></iframe>
+</div>
+>an early test using Touch OSC to control a dmx light via a max/msp patch
