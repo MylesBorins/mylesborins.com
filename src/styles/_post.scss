@@ -34,6 +34,12 @@
       width: 70%;
     }
   }
+  .top-top-one {
+    margin-top: 4em;
+  }
+  .bottom-bottom-one {
+    margin-bottom: 4em;
+  }
   h1, h2, h3 {
     text-align: center;
   }
@@ -48,6 +54,7 @@
     padding-bottom: 56.25%; /* 16:9 */
     padding-top: 25px;
     height: 0;
+    margin-bottom: 2em;
     iframe {
       position: absolute;
       top: 0;
