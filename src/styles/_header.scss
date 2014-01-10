@@ -15,3 +15,13 @@ img.buffer {
 #header {
   z-index: 5;
 }
+
+#sticky-social {
+  #instrument {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+    pointer-events: auto;
+    margin-bottom: 3em;
+  }
+}
