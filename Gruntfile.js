@@ -31,7 +31,7 @@ module.exports = function (grunt) {
               heading: function (text, level) {
                 var numbers = ['oops', 'one', 'two', 'three', 'four', 'five', 'six'];
                 if (level === 1) {
-                  return '<hr><hr class="top-' + numbers[level] + '"><h' + level + '>' + text + '</h' + level + '><hr class="bottom-' + numbers[level] + '"><hr>';
+                  return '<hr class="top-top-one"><hr class="top-one"><h1>' + text + '</h1><hr class="bottom-one"><hr class="bottom-bottom-one">';
                 }
                 return '<hr class="top-' + numbers[level] + '"><h' + level + '>' + text + '</h' + level + '><hr class="bottom-' + numbers[level] + '">';
               }
