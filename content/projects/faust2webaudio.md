@@ -20,4 +20,4 @@ A compiler to take code written in the faust signal processing language and crea
  
 You can find the source on [github](http://www.github.com/thealphanerd/faust2webaudio) and a slide deck with more information [here](https://ccrma.stanford.edu/~mborins/420b/)
 
-You can find out more information about at [here](http://faust.grame.fr)
+If you want to learn more about Faust check out [faust.grame.fr](http://faust.grame.fr)
