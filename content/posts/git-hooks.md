@@ -1,7 +1,7 @@
 {
   title: "a local, artisanal, and static site",
   date:  "2014-01-07",
-  description: "compiling from faust2webaudio",
+  description: "deploying with git-hooks",
   type: "blog"
 }
 
