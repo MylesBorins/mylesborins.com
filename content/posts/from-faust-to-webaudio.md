@@ -180,7 +180,7 @@ faust -a minimal.cpp -i -uim -cn Noise \
  dsp/noise.dsp -o cpp/faust-noise.cpp
 ```
 
-In order to get access to the verious parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.
+In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.
 ```c++
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
