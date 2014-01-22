@@ -13,4 +13,4 @@ he spends his days studying and researching at ccrma
 
 located in beautiful Stanford, California
 
-you can find his cv as a pdf [here](https://thealphanerd.io/cv.pdf)
+you can find his cv as a pdf [here](http://thealphanerd.io/cv.pdf)
