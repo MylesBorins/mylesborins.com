@@ -55,7 +55,7 @@ I then moved to my local git repo and added the bare repo on linode as a remote.
 [ linode ~/bare ] git init --bare site.git
 ~~~cntrl-d~~~
 [ local ~/github/site ] git remote add linode \
-     ssh://user@some-si.te:bare/site.git
+     user@somesi.te:bare/site.git
 [ local ~/github/site ] git push linode master
 ```
 
