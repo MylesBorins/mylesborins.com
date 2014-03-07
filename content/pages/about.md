@@ -9,7 +9,7 @@ Myles Borins is a second year graduate student
 
 he spends his days studying and researching at ccrma
 
- a.k.a 1he center for computer research in music and acoustics 
+ a.k.a the center for computer research in music and acoustics 
 
 located in beautiful Stanford, California
 
