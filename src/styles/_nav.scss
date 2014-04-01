@@ -42,6 +42,11 @@ nav {
       }
       margin-bottom: 10px;
       font-size: 1.5em;
+
+      @include breakpoint(small-phone) {
+        font-size: 1.2em;
+        padding-top: 0.5em;
+      }
     }
     li {
       margin-top: 0.0em;

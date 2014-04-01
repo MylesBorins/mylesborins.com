@@ -11,7 +11,7 @@ $lightTextColor: transparentize($baseTextColor, .5);
     @media (max-width: 1250px) { @content; }
   }
     @else if $point == small-phone {
-    @media (max-width: 900px)  { @content; }
+    @media screen and (max-width: 900px)  { @content; }
   }
 }
 
@@ -40,7 +40,7 @@ body {
   }
 
   @include breakpoint(small-phone) {
-    font-size: 12px;
+    font-size: 10.5px;
   }
 }
 
