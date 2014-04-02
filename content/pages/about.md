@@ -5,4 +5,12 @@
 #code | music | art
 ![a picture of Myles](/images/me.jpg)
 
-I really shouldn't be editing this on the fly
+Myles Borins is a developer, musician, artist, and inventor
+
+he recently graduated with a Master of Music Science and Technology from c.c.r.m.a.
+
+a.k.a the center for computer research in music and acoustics 
+
+he is currently figuring out what to do next, feel free to email him with ideas
+
+you can find his cv as a pdf [here](http://thealphanerd.io/cv.pdf)
