@@ -11,6 +11,6 @@ he recently graduated with a Master of Music Science and Technology from c.c.r.m
 
 a.k.a the center for computer research in music and acoustics 
 
-he is currently figuring out what to do next, feel free to email him with ideas
+he is currently working as a software and tooling engineer at [famous](http://famo.us)
 
 you can find his cv as a pdf [here](http://thealphanerd.io/cv.pdf)
