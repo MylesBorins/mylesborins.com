@@ -1,5 +1,5 @@
 {
-  title: "a local, artisanal, and static site",
+  title: "Deploying a Static site with Grunt and Git",
   date:  "2014-01-07",
   description: "deploying with git-hooks",
   type: "blog"
@@ -86,4 +86,4 @@ Finally, after all of this work you can deploy with
 ```
 git push linode
 ```
-and all is well in the universe
+and all is well in the universe.
