@@ -1,0 +1,66 @@
+==================================================================
+https://keybase.io/thealphanerd
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://thealphanerd.io
+    * I am thealphanerd (https://keybase.io/thealphanerd) on keybase.
+      * I have a public key with fingerprint 7928 07C1 5095 4BF0 299B  289A 38CE 40DE EE89 8E15
+
+      To claim this, I am signing this object:
+
+{
+    "body": {
+            "key": {
+                        "fingerprint": "792807c150954bf0299b289a38ce40deee898e15",
+                        "host": "keybase.io",
+                        "key_id": "38ce40deee898e15",
+                        "uid": "0c8fdac22d1e9ef4d8eff0a6bbe26800",
+                        "username": "thealphanerd"
+                    },
+            "service": {
+                        "hostname": "thealphanerd.io",
+                        "protocol": "http:"
+                    },
+            "type": "web_service_binding",
+            "version": 1
+        },
+    "ctime": 1410980557,
+    "expire_in": 157680000,
+    "prev": "c83e8e75eefcf8fe66ab75f21ff355ad32f34ea8b9d1f4bfdb90f997e47ce886",
+    "seqno": 8,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v1.0.3
+Comment: https://keybase.io/crypto
+
+yMHnAnicO8LLzMDFOK2nU6Xd1Jyd8fSBH6UMIZK3zlYrJeWnVCpZVStlp4KptMy8
+9NSigqLMvBIlKyVzSyMLA/NkQ1MDS1OTpDQDI0vLJCMLy0Rji+RUE4OU1NRUC0uL
+VENTJR2ljPxikA6gMUmJxal6mflAMSAnPjMFKIpFfSlYwiDZIi0lMdnIKMUw1TI1
+zSTFIjUtzSDRLCkp1cjMwsAApLA4tSgvMTcVqLokIzUxpyAjMS+1KEWpVkcJKFOW
+mZwKcjfIeiyqIO4oKMovyU/OzwFKZpSUFFiB9JZUFoAUl6cmxUONiU/KzEsBeh+o
+oSy1qDgzP0/JyhCoMrkkE2SuoYmhgaWFgampuY5SakVBZlFqfCZIhak5yKEGBiBr
+UsuARiZbGKdapJqbpqamJadZpKWamSUmmZumGRmmpRmbmiamGBulGZukJlokWaYY
+pgFDNSXJ0iDN0tI81cQ8OdXCwkwJ5LHCvHwlKwugMxPTgUYWZ6bnJZaUFqUq1R46
+EMPCwMjFwMbKBIpABi5OAVi0/nbkYJga8oHPyZfjjeDGJ6Yq3ps3qa2bPPnFi/1u
+3FVJp7S7jtlGfzoivemjhftWn63qvU5nruYkefitV/82c5bbNTlLpxa2NtHSLcdc
+riXWak5ftorDoVNR3XF/m4LHuY/Gd2JdY7QUnIsD5tj43J/g+bP/m+2sUJtjc4MV
+ZxYdn6s797nvaud/u/dcWcbwcbF1sQNvetcbc8H79x5luP9bKWXrlVPQ5bH9xV3L
+J8dkAnv3f6yr6WJQvHnGfm1XnpEWh/L3Q7uv3fYwuyjZaJd7fZlPzJ65doWvmO12
+aO17Zv1gm/8JXVlWn8f/bvYuXM3sbr54sm7pHuFzN+2ubUo2uhZ+YJ3k64j7G2wO
+qh/tKwYAxCoWqA==
+=FBw+
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/thealphanerd
+
+==================================================================
+

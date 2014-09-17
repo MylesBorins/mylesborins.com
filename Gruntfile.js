@@ -81,6 +81,7 @@ module.exports = function (grunt) {
           cwd: 'src',
           dest: 'public_html',
           src: [
+            '.well-known/**',
             'examples/**',
             'images/**',
             'scripts/**',
