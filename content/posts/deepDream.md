@@ -38,6 +38,8 @@ After burning a bit of time trying to bootstrap my system I opted to find a dock
 
 A query or two brought me to [ryankennedyio/deepdream][dockerhub-repo] on [docker hub][dockerhub]. Sadly the repo has no readme 😞. Thankfully after some Sherlocking I found the [repo on github][github-repo]. The repo outlined the specific docker command that should be used to get things up and running. Everything works now and I can follow along. Below I will post my experiments... expect more as time goes on.
 
+The Creator of this repo wrote a great [blog post][ryan-blog] which goes quite a bit more in depth into getting things started.
+
 ![trippy-me](/images/trippy-me.jpg)
 
 [deepdream-github]: https://github.com/google/deepdream
@@ -49,3 +51,4 @@ A query or two brought me to [ryankennedyio/deepdream][dockerhub-repo] on [docke
 [dockerhub-repo]: https://registry.hub.docker.com/u/ryankennedyio/deepdream/
 [github-repo]: https://github.com/ryankennedyio/deep-dream-generator
 [twitter]: https://twitter.com/thealphanerd
+[ryan-blog]: http://ryankennedy.io/running-the-deep-dream/
