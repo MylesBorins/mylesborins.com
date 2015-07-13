@@ -2,7 +2,9 @@
   title: "Playing with Deep Dream (on OSX 10.9).",
   date:  "2015-7-12",
   description: "Getting up and running to play with DeepDream.",
-  type: "blog"
+  type: "blog",
+  bigImage: "/images/deepdream/doge.jpeg",
+  bigImageAlt: "Am I hallucinating?"
 }
 
 ####TLDR
