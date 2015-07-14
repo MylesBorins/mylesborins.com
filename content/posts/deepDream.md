@@ -26,6 +26,8 @@ docker run -d -p 443:8888 -e "PASSWORD=password" -v $PWD:/src ryankennedyio/deep
 
 ⚠⚠⚠ as of the writing of this post the included image in the above repo doesn't play nice with deep dream. If you change the jpeg everything will play nice. There is a PR in to fix this :D ⚠⚠⚠
 
+**I recently stumbled across [clouddream][clouddream] which has some really amazing examples of how to turn deep dream into a service** 
+
 If you have any questions or would like something expanded on please tweet [@thealphanerd][twitter] or DM me.
 
 #Getting started is a drag
@@ -54,3 +56,5 @@ The Creator of this repo wrote a great [blog post][ryan-blog] which goes quite a
 [github-repo]: https://github.com/ryankennedyio/deep-dream-generator
 [twitter]: https://twitter.com/thealphanerd
 [ryan-blog]: http://ryankennedy.io/running-the-deep-dream/
+
+[clouddream]: https://github.com/VISIONAI/clouddream/
