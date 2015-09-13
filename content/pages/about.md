@@ -7,10 +7,10 @@
 
 Myles Borins is a developer, musician, artist, and inventor
 
-he recently graduated with a Master of Music Science and Technology from c.c.r.m.a.
+he graduated with a Master of Music Science and Technology from c.c.r.m.a.
 
 a.k.a the center for computer research in music and acoustics 
 
-he is currently working as a head of open source, labs, and developer advocacy at [famous](http://famo.us)
+he spends most of his time contributing to the node ecosystem.
 
 you can find his cv as a pdf [here](http://thealphanerd.io/cv.pdf)
