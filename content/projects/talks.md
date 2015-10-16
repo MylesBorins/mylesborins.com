@@ -9,7 +9,7 @@
 
 #RejectJS (October 2015)
 
-<iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/watch?v=GKTSvI8qw_M" frameborder="0" allowfullscreen></iframe>
+<iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/GKTSvI8qw_M" frameborder="0" allowfullscreen></iframe>
 
 #ForwardJS 3 (July 2015)
 
