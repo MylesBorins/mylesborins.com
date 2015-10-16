@@ -7,6 +7,10 @@
   project: "speaking"
 }
 
+#RejectJS (October 2015)
+
+<iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/watch?v=GKTSvI8qw_M" frameborder="0" allowfullscreen></iframe>
+
 #ForwardJS 3 (July 2015)
 
 <iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/6a1iOfyn5e8" frameborder="0" allowfullscreen></iframe>
