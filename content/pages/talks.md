@@ -3,8 +3,7 @@
   date:  "2014-1-7",
   quarter: "Ongoing",
   description: "I like to speak",
-  type: "project",
-  project: "speaking"
+  type: "talks"
 }
 
 #RejectJS (October 2015)

@@ -1,0 +1,11 @@
+extends ../layouts/base
+
+block head
+  title= "thealphanerd.io | talks"
+
+block content
+  h1 talks
+  #talks
+    each post in posts
+      if(post.type === "talks")
+        .post-body.markdown!= post.content
