@@ -9,9 +9,9 @@
 
 #Talks
 
-##ViewSource (November 2015)
+<!-- ##ViewSource (November 2015)
 
-<iframe src="https://air.mozilla.org/myles-borins-signal-processing-perceptual-audio-and-the-web-audio-api/video/" class="center-vid" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://air.mozilla.org/myles-borins-signal-processing-perceptual-audio-and-the-web-audio-api/video/" class="center-vid" width="560" height="315" frameborder="0" allowfullscreen></iframe> -->
 
 ##RejectJS (October 2015)
 
