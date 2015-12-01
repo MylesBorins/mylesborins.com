@@ -9,7 +9,7 @@
 
 pre-requirements:
 
-  * (sign up for bluemix)[https://console.ng.bluemix.net/registration/]
+  * [sign up for bluemix](https://console.ng.bluemix.net/registration/)
   * know some git
   * have a node project ready to go
 
