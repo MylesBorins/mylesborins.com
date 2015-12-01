@@ -47,8 +47,8 @@ server.listen(process.env.PORT || 3000, function () {
 ```
 
 Deploy to the cloud
-```
-cf push
+```bash
+$ cf push
 ```
 
 Obviously this isn't anything super complicated, but this will get you up and running with an app in the cloud in a matter of minutes!
