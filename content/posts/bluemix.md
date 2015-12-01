@@ -8,9 +8,10 @@
 ####TLDR
 
 pre-requirements:
-    * [sign up for bluemix](https://console.ng.bluemix.net/registration/)
-    * know some git
-    * have a node project ready to go
+
+  * (sign up for bluemix)[https://console.ng.bluemix.net/registration/]
+  * know some git
+  * have a node project ready to go
 
 First thing first you will need to cloud foundary CLI. Here are basic instructions to get started with OSX + homebrew.
 
