@@ -6,55 +6,58 @@ I hereby claim:
 
   * I am an admin of http://thealphanerd.io
     * I am thealphanerd (https://keybase.io/thealphanerd) on keybase.
-      * I have a public key with fingerprint 7928 07C1 5095 4BF0 299B  289A 38CE 40DE EE89 8E15
+      * I have a public key with fingerprint C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8
 
-      To claim this, I am signing this object:
+      To do so, I am signing this object:
 
 {
-    "body": {
-            "key": {
-                        "fingerprint": "792807c150954bf0299b289a38ce40deee898e15",
-                        "host": "keybase.io",
-                        "key_id": "38ce40deee898e15",
-                        "uid": "0c8fdac22d1e9ef4d8eff0a6bbe26800",
-                        "username": "thealphanerd"
-                    },
-            "service": {
-                        "hostname": "thealphanerd.io",
-                        "protocol": "http:"
-                    },
-            "type": "web_service_binding",
-            "version": 1
-        },
-    "ctime": 1410980557,
-    "expire_in": 157680000,
-    "prev": "c83e8e75eefcf8fe66ab75f21ff355ad32f34ea8b9d1f4bfdb90f997e47ce886",
-    "seqno": 8,
-    "tag": "signature"
+      "body": {
+                "key": {
+                              "eldest_kid": "0101365e5fc96bd76e6c2f8636766c13bb44ec3429ae2667765b569201c58f374f9f0a",
+                                          "fingerprint": "c4f0dfff4e8c1a8236409d08e73bc641cc11f4c8",
+                                                      "host": "keybase.io",
+                                                                  "key_id": "e73bc641cc11f4c8",
+                                                                              "kid": "0101365e5fc96bd76e6c2f8636766c13bb44ec3429ae2667765b569201c58f374f9f0a",
+                                                                                          "uid": "0c8fdac22d1e9ef4d8eff0a6bbe26800",
+                                                                                                      "username": "thealphanerd"
+                                                                                                                },
+                        "service": {
+                                      "hostname": "thealphanerd.io",
+                                                  "protocol": "http:"
+                                                            },
+                                "type": "web_service_binding",
+                                        "version": 1
+                                              },
+          "ctime": 1452642202,
+              "expire_in": 157680000,
+                  "prev": "77cc787b6b52a4286b3eb04c9512f1268ca4c551a73ad47c11a0a632889d4843",
+                      "seqno": 115,
+                          "tag": "signature"
 }
 
-with the aforementioned key, yielding the PGP signature:
+which yields the signature:
 
 -----BEGIN PGP MESSAGE-----
-Version: Keybase OpenPGP v1.0.3
+Version: Keybase OpenPGP v2.0.49
 Comment: https://keybase.io/crypto
 
-yMHnAnicO8LLzMDFOK2nU6Xd1Jyd8fSBH6UMIZK3zlYrJeWnVCpZVStlp4KptMy8
-9NSigqLMvBIlKyVzSyMLA/NkQ1MDS1OTpDQDI0vLJCMLy0Rji+RUE4OU1NRUC0uL
-VENTJR2ljPxikA6gMUmJxal6mflAMSAnPjMFKIpFfSlYwiDZIi0lMdnIKMUw1TI1
-zSTFIjUtzSDRLCkp1cjMwsAApLA4tSgvMTcVqLokIzUxpyAjMS+1KEWpVkcJKFOW
-mZwKcjfIeiyqIO4oKMovyU/OzwFKZpSUFFiB9JZUFoAUl6cmxUONiU/KzEsBeh+o
-oSy1qDgzP0/JyhCoMrkkE2SuoYmhgaWFgampuY5SakVBZlFqfCZIhak5yKEGBiBr
-UsuARiZbGKdapJqbpqamJadZpKWamSUmmZumGRmmpRmbmiamGBulGZukJlokWaYY
-pgFDNSXJ0iDN0tI81cQ8OdXCwkwJ5LHCvHwlKwugMxPTgUYWZ6bnJZaUFqUq1R46
-EMPCwMjFwMbKBIpABi5OAVi0/nbkYJga8oHPyZfjjeDGJ6Yq3ps3qa2bPPnFi/1u
-3FVJp7S7jtlGfzoivemjhftWn63qvU5nruYkefitV/82c5bbNTlLpxa2NtHSLcdc
-riXWak5ftorDoVNR3XF/m4LHuY/Gd2JdY7QUnIsD5tj43J/g+bP/m+2sUJtjc4MV
-ZxYdn6s797nvaud/u/dcWcbwcbF1sQNvetcbc8H79x5luP9bKWXrlVPQ5bH9xV3L
-J8dkAnv3f6yr6WJQvHnGfm1XnpEWh/L3Q7uv3fYwuyjZaJd7fZlPzJ65doWvmO12
-aO17Zv1gm/8JXVlWn8f/bvYuXM3sbr54sm7pHuFzN+2ubUo2uhZ+YJ3k64j7G2wO
-qh/tKwYAxCoWqA==
-=FBw+
+yMIeAnicrVJtaE5RHH8em+FBVkoPq+F+mb3gnnPPPffeTSOL1spLafNledx77jl7
+rs29133u3pqZhEIa0xJCIm2Ekg+SmWc0MZEkyqwZimhriNgs5w7f9tGn0zm/l/P7
+/fvfnZkSioSPFIS/Ti9vXx3uSZ6uDpW1Nh9vEAzHrBfyG4RKOn7QKpMm/FilZQr5
+gghEIGGZyoxo2DAVTDGBTMUSVjAmQDIMhCiRENR0CjFWFCwbMtagCIisMklBTGOi
+LuQJzLIrqOd6lu1zW4KYaDLGEFUJ0FUoYSRqpqhSRTIIRoAQABgiKhfGnUSg4OEM
+PUGXWA5/45fYeLwJ+P85d/UfO6IyUycQmoBqlCFTpYzj2DC4WhXFgJignq1vpZzt
+x6le5cZ1m3qm0JgncKTGIjQYbtBmAtafWq7n+A5xqjgY9303P9D69W5ArqVG7K9N
+zLBsk0+TC2qol7AcW8gHnEl8K/AFSIYYQSjCPIHWuZZHY1bAkJUgqCgG39Aabqko
+hCiqYmBDhjqCKjYkaoiIaDKADPBaREdEloGuSLqJFD5hnTeWoKpqJlKRJATFttkO
+9wYyD6pXcNOEVWHrfrVHhcau2+WpoXAklDZ5UrBnoci09H/bt/nF1NDO6ytqTxZN
+yy4Yef5hpA6eHbx3d/cA3ZbM2tvZ9KZ/Q9PHoZ/77as92XO7tp9wnnRvSiVFt3pL
+I0/Hlhc+WFaUtmjjjJIzU9y3zsXUxlcrR7sPylX16SWXBlPaXpfNW1Vnt/R8NJWl
+3+6BwpNMg9Xel46a7uILZs7SVjt+7Ot8N6fr0zo3qWa2p75/eHPfrL7R3Nzyc4+b
+dq85sDgav7GnuPddSXgs6/DLaPlQRvvayPCuO/Fn7UdbxGjvkYV9bH3HpKwVLfW4
+M+UzfLR9Qe4POnzs6Za2otnXPiRz5ny/ktvfLJd43Q9Kh/X1T7qibXmXf4GG1Wk7
+Mt7cj0qnBg6dz0z+BglsQyc=
+=LeON
 -----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
