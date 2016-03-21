@@ -28,7 +28,7 @@ The piece consists of a number of discrete components
 
 For more photographs check out the stream on [flickr](http://www.flickr.com/photos/54368887@N03/sets/72157625446054755)
 
-#chapter 1
+# chapter 1
 <div class="videoWrapper">
     <iframe src="//player.vimeo.com/video/17106260" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
@@ -40,7 +40,7 @@ Find more of his awesome stuff [here](http://alphanerdproductions.com/nnnnnnnn.o
 ![The CNC pattern](/images/string-theory/cnc-guide.jpg)
 ![the finbonacci pattern follow to place holes for cnc](/images/string-theory/fibonacci-sprial.jpg)
 
-#chapter 2
+# chapter 2
 
 <div class="videoWrapper">
     <iframe src="//player.vimeo.com/video/17389896" width="500" height="375" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -51,7 +51,7 @@ Find more of his awesome stuff [here](http://alphanerdproductions.com/nnnnnnnn.o
 
 Special thanks go out to Sean Procyk for the Bass Box concept… it is entirely his… he even helped build it.
 
-#chapter 3
+# chapter 3
 
 <div class="videoWrapper">
     <iframe src="//player.vimeo.com/video/17501148" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

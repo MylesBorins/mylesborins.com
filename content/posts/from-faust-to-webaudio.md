@@ -9,7 +9,7 @@
 
 >*All examples in this blog post will need to be run from a webkit based browser, preferably chrome.  Blame it on vendor specific prefixes*
 
-#What is Faust
+# What is Faust
 
 ![llustration by Harry Clarke for Goethes Faust](/images/faust-to-webaudio/faust-classic.png)
 
@@ -17,7 +17,7 @@
 
 The Faust compiler takes signal processing code written in the Faust language and tokenizes it into *Faust Intermediate Representations* (FIR).  From FIR a user is able to use an architecture file to compile to a number of back-ends including C++ and Java.  These architecture files can also include custom wrappers to interface with a variety of industry standard DSP platforms including [max/msp](http://cycling74.com/products/max/), [supercollider](http://supercollider.sourceforge.net/), [audio unit](https://en.wikipedia.org/wiki/Audio_Units), [vst](https://en.wikipedia.org/wiki/Virtual_Studio_Technology), and more.
 
-#What is the Web Audio Api?
+# What is the Web Audio Api?
 ![HTML 5](/images/faust-to-webaudio/h5_logo.png)
 
 The [Web Audio Api](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html) is a high-level JavaScript API for processing and synthesizing audio in web applications.
@@ -28,20 +28,20 @@ You can check out Hongchan Choi's [WAAX](https://github.com/hoch/waax) library f
 
 But What if you want something more?
 
-##The JavaScriptNode
+## The JavaScriptNode
 
 The JavaScriptNode allows individuals to create their own web audio nodes in pure JavaScript.  This allows individuals to extend the Web Audio Api with custom nodes.
 
 Web Audio Libraries such as [Flocking](flockingjs.org) by Colin Clark and [Gibber](http://www.charlie-roberts.com/gibber/) by Charlie Roberts make extensive use of the JavaScriptNode.
 
->###!!! WARNING !!!
+>### !!! WARNING !!!
 
 >Currently native Web Audio nodes and JavaScriptNodes don't play so nicely together, most implementations of Web Audio tend to pick one or the other.  
 
->###!!! WARNING !!!
+>### !!! WARNING !!!
 
 
-##What does faust look like?
+## What does faust look like?
 
 Below is an example of Noise Written in Faust 
 
@@ -50,7 +50,7 @@ random  = +(12345)~*(1103515245);
 noise   = random/2147483647.0;
 process = noise * vslider("Volume[style:knob]", 0, 0, 1, 0.1);
 ```
-##What does a WebAudioNode look like?
+## What does a WebAudioNode look like?
 Below is an example of White Noise taken from Flocking
 ```
 flock.ugen.whiteNoise = function (inputs, output, options) {
@@ -76,22 +76,22 @@ flock.ugen.whiteNoise = function (inputs, output, options) {
 };
 ```
 
-#But Doesn't Faust Already compile to web audio?
+# But Doesn't Faust Already compile to web audio?
 
 Indeed it does, but does it work? 
 
 [Current Faust2Webaudio Noise](/examples/faust2webaudio/current-noise.html)
 
-###Why did that break?
+### Why did that break?
 
 There is only one answer... JavaScript. Unfortunately as much as I am a JavaScript fanboy there are some things the language just isn't good at, such as integer arithmetic. The algorithm to compute noise used by Faust is relying on specific integer overflow side effects in order to generate a signal.  With the current compiler simply porting directly from the *FIR* to JavaScript all numbers are represented as well... numbers (32-bit floating point numbers to be exact).
 
-#asm.js to the rescue!
+# asm.js to the rescue!
 [![asm.js](/images/faust-to-webaudio/asmjs.jpg)](http://asmjs.org/)
 
 asm.js is a strict subset of JavaScript that can be used as a low-level, efficient target language for compilers. The asm.js language provides an abstraction similar to the C/C++ virtual machine: a large binary heap with efficient loads and stores, integer and floating-point arithmetic, first-order function definitions, and function pointers.
 
-##What does an asm.js WebAudioNode look like?
+## What does an asm.js WebAudioNode look like?
 
 An example from the [asmjs Flocking Branch](https://github.com/colinbdclark/Flocking/tree/asmjs)
 ```
@@ -129,18 +129,18 @@ flock.ugen.asmSin.module = function (stdlib, foreign, heap) {
 
 While it would have been possible to implement a traveller to compile asm.js code from the *FIR* representation, I opted to try a slightly different path.
 
-#introducing emscripten
+# introducing emscripten
 
 [![Emscripten](/images/faust-to-webaudio/emscripten.jpg)](http://emscripten.org/)
 
 Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can be generated from C/C++ using Clang, or any other language that can be converted into LLVM bitcode) and compiles that into JavaScript, which can be run on the web (or anywhere else JavaScript can run).
 
-#one script to rule them all
+# one script to rule them all
 
 Let's start by taking a look at the [bash script](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh) that is used to compile noise.js
 
 ```bash
-#!/bin/bash
+# !/bin/bash
 # tputcolors
 
 set -e
@@ -173,7 +173,7 @@ The above script can be simply thought of as the following steps
 <!-- This script will uses faust to compile a C++ file. The C++ file is then processed using sed to replace the generic references in the file **DSP** with the name of the class we are compiling **Noise**.  The C++ file is then appended with a wrapper (also processed by sed) that wraps the objects constructor, destructor, getters, setters, and public methods. The resulting file is compiled by emscripten into JavaScript.  The compiled JavaScript file   -->
 
 
-##Faust -> C++
+## Faust -> C++
 Using the faust compiler (specifically the faust2-asmjs branch) we can compile from [faust](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp) to [C++](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp) with the following command
 ```
 faust -a minimal.cpp -i -uim -cn Noise \
@@ -184,9 +184,9 @@ In order to get access to the various parts of a C++ class via emscripten we nee
 ```c++
 // Adapted From https://gist.github.com/camupod/5640386
 // compile using "C" linkage to avoid name obfuscation
-#include <emscripten.h>
-#include <map>
-#include <string>
+# include <emscripten.h>
+# include <map>
+# include <string>
 
 extern "C" {
     
@@ -352,7 +352,7 @@ Finally we apply the following JavaScript wrapper in order to break out the func
 }());
 ```
 
-###[But does it work?](/examples/faust2webaudio/)
+### [But does it work?](/examples/faust2webaudio/)
 
 While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator
 
@@ -366,7 +366,7 @@ You will notice above that the model contains an object with a key *Volume* and 
 
 In the case of Noise it is quite simple to keep track of a single pointer, but when trying to implement a general purpose compiler we need to be able to dynamically construct a model of any number of keys and pointers.
 
-#Fighting with Faust
+# Fighting with Faust
 
 One thing I have not yet mentioned about Faust is that the concept of UI is baked into the language.  Rather than variables one assigns UI objects such as a Horizontal Slider or Button.
 
@@ -435,7 +435,7 @@ that.setupModel = function () {
 
 With the additional code it becomes possible to compile almost any unit generator implemented in the faust language.
 
-#more examples:
+# more examples:
 
 * [sine oscillator](/examples/faust2webaudio/osc.html)
     * Interact with ```osc.model```
@@ -444,12 +444,12 @@ With the additional code it becomes possible to compile almost any unit generato
 * [16th order FDN reverb](/examples/faust2webaudio/reverbDesigner.html)
     * This one will make your browser chug, but it is an extremely complex model written by Julius Smith, just checkout out how many things are going on in ```reverb.model```
     
-#what's next?
+# what's next?
 
 ### benchmarks
 The next step with the project is to run a series of bench marks to see how the compiled code fares against both native code and other public JavaScriptNode unit generators.  If these unit generators prove to be competitive there will be a few more challenges to overcome
 
-###dynamically linking files
+### dynamically linking files
 Currently I am wrapping every unit generator in a closure with its own emscripten virtual machine.  This is due to not yet figuring out how to implement a single instance of the emscripten virtual machine.  When I tried loading more than one compiled file everything would explode.
 
 My current solution is only a bandaid, and I will need to find a way to dynamically link multiple js files together.  The only possible side effect of this approach would that we might miss out of certain optimizations that might be able to be done via emscripten and the google closure compiler if all js files are compiled as a single script.

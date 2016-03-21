@@ -15,24 +15,24 @@
 </div>
 
 
-#hardware
+# hardware
 
 
 
 
 
-##arduino duemilanove
+## arduino duemilanove
 
 ![Arduino Duemilanove](/images/stringin-it/ArduinoDuemilanove.jpg)
 
 
-##dmx shield
+## dmx shield
 
 ![DMX Shield](/images/stringin-it/dmx.jpg)
 >information on the dmx shield can be found [here](http://playground.arduino.cc/DMX/DMXShield)
 
 
-##cauvet colorSTRIP
+## cauvet colorSTRIP
 
 ![colorSTRIP](/images/stringin-it/COLORSTRIP.jpg)
 > DMX light used in installation
@@ -41,18 +41,18 @@
 
 
 
-#software
+# software
 
 
 
-###touch OSC layout
+### touch OSC layout
 
 This layout is designed to work in conjuncture with below arduino code and Max/msp patch. It sends data via OSC to the host computer to be translated into DMX via Max and Arduino
 
 Download the layout [here](/files/ColorStrip.touchosc)
 
 
-###arduino code
+### arduino code
 
 Firmware for the arduino was written which allows for serial data to be received from base laptop as well as DMX messages to be sent out.
 
@@ -61,7 +61,7 @@ The source code for this project can be found on [github](https://github.com/The
 The DmxSimple library was utilized for outputting DMX data to the lighting fixture, the library can be found [here](http://code.google.com/p/tinkerit/wiki/DmxSimple)
 
 
-###max/msp code
+### max/msp code
 
 A Max/msp patch was used take incoming OSC data, and route it to the arduino via Serial. The code also kept track of which mode the user was inputting data to allow full control of lighting rig.
 
@@ -71,7 +71,7 @@ This patch can be found in the source code linked above
 
 
 
-#The Final Product
+# The Final Product
 
 
 
@@ -92,7 +92,7 @@ The way the installation worked was actually fairly simple. An iPod with touch o
 
 
 
-#inspiration
+# inspiration
 
 
 
@@ -103,7 +103,7 @@ The way the installation worked was actually fairly simple. An iPod with touch o
 
 
 
-#initial Hardware Hacking
+# initial Hardware Hacking
 
 
 
@@ -119,7 +119,7 @@ Later the lights were controlled using an audio stream from ableton live, allowi
 Since the majority of the original toy was discarded aside from the enclosure you can actually rebuild this project from the bill of materials and instructions below.
 
 
-###materials
+### materials
 
 * 1 x arduino Duemilanova
 * 2 x 5v DC motor
@@ -132,7 +132,7 @@ Since the majority of the original toy was discarded aside from the enclosure yo
 * Some Wire
 
 
-###instructions
+### instructions
 Each LED is wired in series with the other LED of the same color.  All three groups receive power from pin 10.  The group of each group goes to a collecter on the 2N3904.  Pins 6 - 8 go to the respective bases, and the emiters all conenct to ground.
 
 
@@ -140,7 +140,7 @@ Each LED is wired in series with the other LED of the same color.  All three gro
 
 
 
-#early dmx testing
+# early dmx testing
 
 <div class="videoWrapper">
     <iframe width="420" height="315" src="//www.youtube.com/embed/XX9AVYvVYFU" frameborder="0" allowfullscreen></iframe>

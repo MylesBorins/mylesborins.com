@@ -2,7 +2,7 @@
   title: "thealphanerd.io | about",
   type: "about"
 }
-#code | music | art
+# code | music | art
 ![a picture of Myles](/images/me.jpg)
 
 Myles Borins is a developer, musician, artist, and inventor

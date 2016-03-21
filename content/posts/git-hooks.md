@@ -11,7 +11,7 @@ git push linode
 
 I have wanted to deploy a site with a single git push for quite some time, but could never quite figure out how to do it.  This evening I finally figured it out and it wasn't so bad.
 
-###you can push all day
+### you can push all day
 This was something that stumped me for a while... every time I tried to push to a repo on my own server rather than github I would be faced with this error
 
 ```
@@ -35,7 +35,7 @@ remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
 To use@thealphanerd.io:some/dir/thealphanerd.io/.git
 ! [remote rejected] master -> master (branch is currently checked out)
 ```
-###double down with a bare repo
+### double down with a bare repo
 
 The problem was that I was trying to push to a non bare repo, this just won't work.  I needed to create a second bare repo that I would push to, and use a git hook to get my cloned repo to update itself.  What took me a while to wrap my head around, was that once you create the bare repo, you can actually make a clone from that local repo, and use it as a remote.  
 
@@ -70,7 +70,7 @@ Now the last thing we need to do is make a post-update script for the bare repo 
 /path/to/usr/bare/site.git/hooks/post-update
 
 ```bash
-#!/bin/sh
+# !/bin/sh
 export PATH="/a/path/gems/9.0.0.1/bin:$PATH:."
 
 GIT_WORK_TREE=/www/site/

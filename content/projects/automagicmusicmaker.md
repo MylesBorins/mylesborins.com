@@ -11,7 +11,7 @@
     <div id="piano"></div>
 </div> -->
 
-##make music. in your browser!
+## make music. in your browser!
 
 
 Built using the [flocking](https://github.com/colinbdclark/Flocking) audio synthesis library and the [fluid infusion framework](http://fluidproject.org/) "The Automagic Music Maker" offers developers and musicians the ability to generate various types of accessible and responsive instruments in the browser. Press shift for sustain and alt for arpeggiation! 

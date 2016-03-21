@@ -7,7 +7,7 @@
   bigImageAlt: "Am I hallucinating?"
 }
 
-####TLDR
+#### TLDR
 
 pre-requirements:
     * boot2docker installed
@@ -20,7 +20,7 @@ docker pull ryankennedyio/deepdream/
 git clone https://github.com/ryankennedyio/deep-dream-generator.git
 cd https://github.com/ryankennedyio/deep-dream-generator.git
 docker run -d -p 443:8888 -e "PASSWORD=password" -v $PWD:/src ryankennedyio/deepdream
-#you can now use boot2docker ip and visit https://{that ip}
+# you can now use boot2docker ip and visit https://{that ip}
 
 ```
 
@@ -30,13 +30,13 @@ docker run -d -p 443:8888 -e "PASSWORD=password" -v $PWD:/src ryankennedyio/deep
 
 If you have any questions or would like something expanded on please tweet [@thealphanerd][twitter] or DM me.
 
-#Getting started is a drag
+# Getting started is a drag
 
 The process of getting started with deep dream is not the simplest thing. If you start from the README found on [github][deepdream-github] you will notice that you need to get [ipython][ipython] [notebook][notebook] installed to get started. Once you get that running you are going to find a NEST of dependencies you are going to have to install
 
 From having an [anaconda][anaconda] build of python to having [CUDA][cuda-home] installed you are in for a bad time.
 
-#Just use docker
+# Just use docker
 
 After burning a bit of time trying to bootstrap my system I opted to find a docker image that got things up and running nicely.
 
