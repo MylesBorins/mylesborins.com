@@ -57,7 +57,7 @@ $ sudo apt-get install -t wheezy-backports libaugeas0 augeas-lenses
 
 Now that we have the updated version of libaugeas0 and augeas-lenses we simply rerun the original command ```./letsencrypt-auto --apache``` and the entire process of setting up SSL for https is automated. you are even given a UI that you can use to select which sites to grab certs for
 
-![It's a cert](images/letsencrypt/cli-ui.png)
+![It's a cert](/images/letsencrypt/cli-ui.png)
 
 ## Keeping things up to date
 
@@ -106,7 +106,7 @@ docker restart znc
 
 You will then want to connect to the web based admin panel, click on global settings, and make a new listen port on `6669` that has ssl enabled.
 
-![enabling ssl in the znc admin panel](images/letsencrypt/znc-admin.png)
+![enabling ssl in the znc admin panel](/images/letsencrypt/znc-admin.png)
 
 Once this port is enabled you will be able to connect to your server at port 36669 and start chatting securely!
 
