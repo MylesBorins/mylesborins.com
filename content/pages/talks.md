@@ -17,6 +17,10 @@
 
 <iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/Iak7dspvrZ8" frameborder="0" allowfullscreen></iframe>
 
+## EmpireJS (May 2016)
+
+<iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/hFxAbNlR1ts" frameborder="0" allowfullscreen></iframe>
+
 ## JSConf UY (April 2016)
 
 <iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/5un1I2qkojg" frameborder="0" allowfullscreen></iframe>
