@@ -17,6 +17,10 @@
 
 <iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/8is8iKlo8oQ" frameborder="0" allowfullscreen></iframe>
 
+## View Source EU (September 2016)
+
+<iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/JOR2ne84QQg" frameborder="0" allowfullscreen></iframe>
+
 ## JSConf Iceland (August 2016)
 
 <iframe class="center-vid" width="560" height="315" src="https://www.youtube.com/embed/Iak7dspvrZ8" frameborder="0" allowfullscreen></iframe>
