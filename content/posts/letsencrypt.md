@@ -32,7 +32,7 @@ The server I was working with is running Debian Wheezy and my web content is all
 $ ./letsencrypt-auto --apache
 Checking for new version...
 Requesting root privileges to run letsencrypt...
-   sudo /home/thealphanerd/.local/share/letsencrypt/bin/letsencrypt --apache
+   sudo /home/MylesBorins/.local/share/letsencrypt/bin/letsencrypt --apache
 The apache plugin is not working; there may be problems with your existing configuration.
 The error was: NotSupportedError('Apache plugin support requires libaugeas0 and augeas-lenses version 1.2.0 or higher, please make sure you have you have those installed.',)
 ```

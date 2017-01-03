@@ -32,7 +32,7 @@ remote: error: other way.
 remote: error:
 remote: error: To squelch this message and still keep the default behavior, set
 remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
-To use@thealphanerd.io:some/dir/thealphanerd.io/.git
+To use@MylesBorins.com:some/dir/MylesBorins.com/.git
 ! [remote rejected] master -> master (branch is currently checked out)
 ```
 ### double down with a bare repo

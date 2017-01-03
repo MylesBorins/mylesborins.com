@@ -462,4 +462,4 @@ I have at least one memory leak that I know of, this should really be taken care
 ### allow for signals to control parameters
 You can't do FM synthesis without being able to connect an lfo to the frequency of another oscillator.  You also can't make a dubstep wobble without being able to connect an amplitude to a cutoff frequency on a low pass filter.  This will be a must have for any Faust compiled unit generator to be a first class citizen.
 
-# use the force, read the [source](https://www.github.com/thealphanerd/faust2webaudio)
+# use the force, read the [source](https://www.github.com/MylesBorins/faust2webaudio)

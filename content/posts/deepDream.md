@@ -28,7 +28,7 @@ docker run -d -p 443:8888 -e "PASSWORD=password" -v $PWD:/src ryankennedyio/deep
 
 **I recently stumbled across [clouddream][clouddream] which has some really amazing examples of how to turn deep dream into a service** 
 
-If you have any questions or would like something expanded on please tweet [@thealphanerd][twitter] or DM me.
+If you have any questions or would like something expanded on please tweet [@MylesBorins][twitter] or DM me.
 
 # Getting started is a drag
 
@@ -54,7 +54,7 @@ The Creator of this repo wrote a great [blog post][ryan-blog] which goes quite a
 [dockerhub]: https://hub.docker.com/
 [dockerhub-repo]: https://registry.hub.docker.com/u/ryankennedyio/deepdream/
 [github-repo]: https://github.com/ryankennedyio/deep-dream-generator
-[twitter]: https://twitter.com/thealphanerd
+[twitter]: https://twitter.com/MylesBorins
 [ryan-blog]: http://ryankennedy.io/running-the-deep-dream/
 
 [clouddream]: https://github.com/VISIONAI/clouddream/

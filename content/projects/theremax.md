@@ -13,6 +13,6 @@ A fully featured cross platform native application that lets you control sound a
 
 Theremax has only been tested on OSX 10.8 at the moment, but should be able to be compiled with a little bit of love on linux or windows. (I always take pull requests)
 
-You can find the github repository [here](https://www.github.com/thealphanerd/theremax)
+You can find the github repository [here](https://www.github.com/MylesBorins/theremax)
 
 There is a site dedicated to more thorough documentation that can be found [here](https://ccrma.stanford.edu/~mborins/256a/theremax/)

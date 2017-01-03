@@ -1,14 +1,14 @@
 {
-  "name": "thealphanerd.io",
+  "name": "MylesBorins.com",
   "version": "0.0.1",
-  "homepage": "http://www.thealphanerd.io",
+  "homepage": "http://www.MylesBorins.com",
   "authors": [
     "Myles Borins <myles.borins@gmail.com>"
   ],
-  "description": "thealphanerd.io website",
+  "description": "MylesBorins.com website",
   "main": "Gruntfile.js",
   "keywords": [
-    "thealphanerd"
+    "MylesBorins"
   ],
   "license": "MIT",
   "private": true,

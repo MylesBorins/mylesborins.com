@@ -61,7 +61,7 @@ These are just some of the nifty keyboards you can make
     <div style="float:left; width:50%;" id="bottomrightpiano"></div>
 </div>
 
-You can check out the source code on [github](https://github.com/thealphanerd/piano)
+You can check out the source code on [github](https://github.com/MylesBorins/piano)
 
 <script src="/scripts/jquery/jquery.min.js"></script>    
 <script src="/scripts/automm/flocking.min.js"></script>    

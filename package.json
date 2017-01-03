@@ -1,7 +1,7 @@
 {
-  "name": "thealphanerd.io",
+  "name": "MylesBorins.com",
   "version": "1.0.0",
-  "repository": "https://github.com/TheAlphaNerd/thealphanerd.io.git",
+  "repository": "https://github.com/TheAlphaNerd/MylesBorins.com.git",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-cli": "^1.2.0",

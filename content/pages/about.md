@@ -1,5 +1,5 @@
 {
-  title: "thealphanerd.io | about",
+  title: "MylesBorins.com | about",
   type: "about"
 }
 # code | music | art
@@ -13,4 +13,4 @@ he graduated with a Master of Music Science and Technology from c.c.r.m.a.
 
 a.k.a the center for computer research in music and acoustics 
 
-you can find his cv as a pdf [here](http://thealphanerd.io/cv.pdf)
+you can find his cv as a pdf [here](http://MylesBorins.com/cv.pdf)
