@@ -7,8 +7,8 @@
 
 Myles Borins is a developer, musician, artist, and maker
 
-He works for Google as a developer advocate serving the Node.js ecosystem
+They work for Google as a developer advocate serving the Node.js ecosystem
 
-He cares about the open web and healthy communities.
+Myles cares about the open web and healthy communities.
 
-you can find his cv as a pdf [here](http://MylesBorins.com/cv.pdf)
+You can find their cv as a pdf [here](http://MylesBorins.com/cv.pdf)
