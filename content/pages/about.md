@@ -7,7 +7,7 @@
 
 Myles Borins is a developer, musician, artist, and inventor
 
-he works for IBM spending most of his time contributing to the node.js ecosystem.
+he works for Google as a developer advocate serving the Node.js ecosystem
 
 he graduated with a Master of Music Science and Technology from c.c.r.m.a.
 
