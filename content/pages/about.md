@@ -5,12 +5,10 @@
 # code | music | art
 ![a picture of Myles](/images/me.jpg)
 
-Myles Borins is a developer, musician, artist, and inventor
+Myles Borins is a developer, musician, artist, and maker
 
-he works for Google as a developer advocate serving the Node.js ecosystem
+He works for Google as a developer advocate serving the Node.js ecosystem
 
-he graduated with a Master of Music Science and Technology from c.c.r.m.a.
-
-a.k.a the center for computer research in music and acoustics 
+He cares about the open web and healthy communities.
 
 you can find his cv as a pdf [here](http://MylesBorins.com/cv.pdf)
