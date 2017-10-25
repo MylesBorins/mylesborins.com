@@ -94,4 +94,4 @@
 
 ## Linux Audio Conference (May 2014)
 ### From Faust to WebAudio
-<video class="center-vid" controls="" tabindex="0" height="360" width="640"><source type="video/webm" src="http://lac.linuxaudio.org/2014/recordings/day2/myles_borins_360p.webm"></video>
+<video id="faust-video" class="center-vid" controls="" tabindex="0"><source type="video/webm" src="http://lac.linuxaudio.org/2014/recordings/day2/myles_borins_360p.webm"></video>

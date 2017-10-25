@@ -1,4 +1,8 @@
 //@include sticky-footer(72px);
+
+$break-small: 640px;
+$break-large: 1200px;
+
 .light-grey {
   z-index:100;
   background: #dddddd;
@@ -38,4 +42,15 @@
   margin-left: auto;
   margin-right: auto;
   display: inherit;
+}
+
+#faust-video {
+  @media screen and (max-width: $break-small) {
+    height: 180px;
+    width: 320px;
+  }
+  @media screen and (min-width: $break-large) {
+    height: 360px;
+    width: 640px;
+  }
 }
