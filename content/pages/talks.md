@@ -9,13 +9,47 @@
 
 # Talks
 
+## Node Interactive (October 2017)
+### Node Wave 6
+[![Node Wave 6](https://img.youtube.com/vi/qsXtS1rZH5k/hq1.jpg)](https://www.youtube.com/watch?v=qsXtS1rZH5k)
+### Modules Modules Modules
+[![Modules Modules Modules](https://img.youtube.com/vi/W5CXzo4TZVU/hq1.jpg)](https://www.youtube.com/watch?v=W5CXzo4TZVU)
+
+## Nordic JS (September 2017)
+### The hilarious misadventures of being a platform downstream from your language
+[![The hilarious misadventures of being a platform downstream from your language](https://img.youtube.com/vi/kkHdhtzM0wk/0.jpg)](https://www.youtube.com/watch?v=kkHdhtzM0wk)
+
+## Node Summit (July 2017)
+### Open Source Governance Models: From BDFL to Distributed Consensus
+[![Open Source Governance Models: From BDFL to Distributed Consensus](https://i.vimeocdn.com/video/650644764.jpg)](https://vimeo.com/230146372)
+
+## Polyconf (July 2017)
+### Open Source Governance Models: From BDFL to Distributed Consensus
+[![Open Source Governance Models: From BDFL to Distributed Consensus](https://img.youtube.com/vi/nY64JAzHJuo/0.jpg)](https://www.youtube.com/watch?v=nY64JAzHJuo)
+
+## DinosaureJS (June 2017)
+### The True Cost of Unmoderated Collaboration: A Story from the Tranches
+[![The True Cost of Unmoderated Collaboration: A Story from the Tranches](https://img.youtube.com/vi/cJOUxRf80CE/0.jpg)](https://www.youtube.com/watch?v=cJOUxRf80CE)
+
+## Nodejs Israel (May 2017)
+### The CITGM Diaries
+[![The CITGM Diaries](https://img.youtube.com/vi/0A6-d3y5kWk/0.jpg)](https://www.youtube.com/watch?v=0A6-d3y5kWk)
+
+## Node Interactive (November 2016)
+<!-- ### Node.js Releases, How Do They Work? -->
+[![Node.js Releses, How Do They Work?](https://img.youtube.com/vi/8XIhvRIz2aA/0.jpg)](https://www.youtube.com/watch?v=8XIhvRIz2aA)
+
+## JSConf Asia (November 2016)
+### Node.js Versions, How Do They Work?
+[![Node.js version, How Do They Work?](https://img.youtube.com/vi/3gkm7oafWxs/0.jpg)](https://www.youtube.com/watch?v=3gkm7oafWxs)
+
 ## NodeConf EU (October 2016)
 ### Node.js Releases, How Do They Work?
 [![Node.js Releases, How Do They Work?](https://img.youtube.com/vi/G_mQmDsi9HI/0.jpg)](https://www.youtube.com/watch?v=G_mQmDsi9HI)
 
 ## Node Interactive EU (September 2016)
-### The CITGM Diaries
-[![Node.js Releases, How Do They Work?](https://img.youtube.com/vi/8is8iKlo8oQ/0.jpg)](https://www.youtube.com/watch?v=8is8iKlo8oQ)
+<!-- ### The CITGM Diaries -->
+[![The CITGM Diaries](https://img.youtube.com/vi/8is8iKlo8oQ/0.jpg)](https://www.youtube.com/watch?v=8is8iKlo8oQ)
 
 ## View Source EU (September 2016)
 ### Node.js Releases, How Do They Work?
