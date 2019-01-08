@@ -55,7 +55,7 @@ code {
   background:#F9F9FF;
   border: 1px solid hsl(0, 0%, 90%);
   padding: 0 0.3em;
-  @include border-radius(3px);
+  border-radius: 3px;
   margin: 0;
   font-size: .8em;
   line-height: 1.5em;
@@ -80,7 +80,7 @@ code {
 }
 
 .highlight {
-  @include border-radius(3px);
+  border-radius: 3px;
   background:#F9F9FF;
   border: 1px solid hsl(0, 0%, 90%);
 

@@ -81,10 +81,10 @@ body {
   right: 0.55em;
   bottom: 0.3em;
   width: 2em;
-  @include opacity(.3);
+  opacity: .3;
 
   &:hover {
-    @include opacity(.6);
+    opacity: .6;
   }
 
   @include breakpoint(big-phone) {

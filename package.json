@@ -13,8 +13,10 @@
     "grunt-contrib-watch": "~0.4.3",
     "grunt-open": "~0.2.0",
     "grunt-pages": "~0.11.0",
+    "grunt-sass": "^3.0.2",
     "load-grunt-tasks": "~0.1.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "node-sass": "^4.11.0"
   },
   "engines": {
     "node": ">=0.10.0"

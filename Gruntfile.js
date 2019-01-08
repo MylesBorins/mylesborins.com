@@ -1,3 +1,4 @@
+const sass = require('node-sass');
 var _ = require('lodash');
 
 module.exports = function (grunt) {
@@ -66,12 +67,18 @@ module.exports = function (grunt) {
         }
       }
     },
-    compass: {
+    sass: {
+      options: {
+        implementation: sass
+      },
       dist: {
-        options: {
-          sassDir: 'src/styles',
-          cssDir: 'public_html/styles'
-        }
+        files: [{
+          expand: true,
+          cwd: 'src/styles',
+          src: ['*.scss'],
+          dest: './public_html/styles',
+          ext: '.css'
+        }]
       }
     },
     copy: {
@@ -101,9 +108,9 @@ module.exports = function (grunt) {
         ],
         tasks: ['pages']
       },
-      compass: {
+      sass: {
         files: ['src/styles/**'],
-        tasks: ['compass']
+        tasks: ['sass']
       },
       copy: {
         files: [
@@ -146,7 +153,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean',
     'pages',
-    'compass',
+    'sass',
     'copy'
   ]);
 
