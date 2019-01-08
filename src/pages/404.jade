@@ -1,1 +1,10 @@
-extends about
+extends ../layouts/base
+
+block head
+  title= "404"
+
+block content
+  #about
+    each post in posts
+      if(post.type === "404")
+        .post-body.markdown!= post.content
