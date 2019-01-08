@@ -19,8 +19,6 @@ node_modules
 # Cabin-specific ignored files
 dist
 .grunt
-src/scripts/jquery
-src/scripts/sticky-kit
 .ftppass
 logs/
 public_html/
