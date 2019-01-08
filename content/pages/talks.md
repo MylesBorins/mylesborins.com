@@ -9,6 +9,36 @@
 
 # Talks
 
+## ColdFront (November 2018)
+### Top-Level Awaiting for Godot (45 mins)
+[![Top-Level Awaiting for Godot](https://img.youtube.com/vi/L87aCMJuWNM/hq3.jpg)](https://www.youtube.com/watch?v=L87aCMJuWNM)
+
+## DotJS (November 2018)
+### Top-Level Awaiting for Godot (18 mins)
+[![Top-Level Awaiting for Godot](https://img.youtube.com/vi/EERzGWgkU2o/0.jpg)](https://www.youtube.com/watch?v=EERzGWgkU2o)
+
+## Node+JS Interactive (Ocotober 2018)
+### Please Wait... loading: a tale of two loaders
+[![Please Wait... loading: a tale of two loaders](https://img.youtube.com/vi/HKvBXmcjs_I/hq1.jpg)](https://www.youtube.com/watch?v=HKvBXmcjs_I)
+
+## JSConf.us (August 2018)
+### Adventures in Ethical Computing
+[![Adventures in Ethical Computing](https://img.youtube.com/vi/wGIRqPvtJ1E/0.jpg)](https://www.youtube.com/watch?v=wGIRqPvtJ1E)
+
+## GCP Cloud Next (July 2017)
+### Serverless Compute on Google Cloud: What's New
+[![Serverless Compute on Google Cloud: What's New](https://img.youtube.com/vi/Y1sRy0Q2qig/0.jpg)](https://www.youtube.com/watch?v=Y1sRy0Q2qig)
+### How Serverless Helps You Build Highly Scalable and Secure Apps 
+[![How Serverless Helps You Build Highly Scalable and Secure Apps ](https://img.youtube.com/vi/dgc5Eeir2S0/hq1.jpg)](https://www.youtube.com/watch?v=dgc5Eeir2S0)
+
+## JSConf.eu (June 2018)
+### Please Wait... loading: a tale of two loaders
+[![Please Wait... loading: a tale of two loaders](https://img.youtube.com/vi/35ZMoH8T-gc/0.jpg)](https://www.youtube.com/watch?v=35ZMoH8T-gc)
+
+## Google I/O (May 2018)
+### Deploying serverless Node.js microservices
+[![Deploying serverless Node.js microservices](https://img.youtube.com/vi/ogexnfng_hE/0.jpg)](https://www.youtube.com/watch?v=ogexnfng_hE)
+
 ## Node Interactive (October 2017)
 ### Node Wave 6
 [![Node Wave 6](https://img.youtube.com/vi/qsXtS1rZH5k/hq1.jpg)](https://www.youtube.com/watch?v=qsXtS1rZH5k)
