@@ -1,6 +1,6 @@
 {
   title: "What exactly is @talkpayBot? How to make simple bots with the twitter stream API.",
-  date:  "2015-5-4",
+  date:  "2015-05-04",
   description: "Using streams and the twitter API to hopefully make a small difference.",
   type: "blog"
 }

@@ -1,6 +1,6 @@
 {
   title: "Getting your node.js app in the cloud with bluemix in 5 minutes",
-  date:  "2015-12-1",
+  date:  "2015-12-01",
   description: "it aint so hard after all",
   type: "blog"
 }

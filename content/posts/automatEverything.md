@@ -1,6 +1,6 @@
 {
   title: "Using grunt to save your thin client application from being swallowed by your server",
-  date:  "2014-3-23",
+  date:  "2014-03-23",
   description: "or how I learned to stop worrying and trust the compiler",
   type: "blog"
 }
