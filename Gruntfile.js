@@ -159,6 +159,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', 'server');
-
+  
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-pages');
 };
