@@ -1,6 +1,6 @@
 {
   title: "Playing with Deep Dream (on OSX 10.9).",
-  date:  "2015-7-12",
+  date:  "2015-07-12",
   description: "Getting up and running to play with DeepDream.",
   type: "blog",
   bigImage: "/images/deepdream/doge.jpeg",
