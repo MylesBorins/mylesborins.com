@@ -140,11 +140,6 @@ module.exports = function (grunt) {
         }
       }
     },
-    open: {
-      dist: {
-        path: 'http://localhost:5455'
-      }
-    },
     clean: {
       dist: 'public_html'
     }
@@ -160,7 +155,6 @@ module.exports = function (grunt) {
   grunt.registerTask('server', [
     'build',
     'connect',
-    'open',
     'watch'
   ]);
 
