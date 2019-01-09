@@ -1,0 +1,82 @@
+==================================================================
+https://keybase.io/mylesborins
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://mylesborins.com
+  * I am mylesborins (https://keybase.io/mylesborins) on keybase.
+  * I have a public key with fingerprint C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101365e5fc96bd76e6c2f8636766c13bb44ec3429ae2667765b569201c58f374f9f0a",
+      "fingerprint": "c4f0dfff4e8c1a8236409d08e73bc641cc11f4c8",
+      "host": "keybase.io",
+      "key_id": "e73bc641cc11f4c8",
+      "kid": "0101365e5fc96bd76e6c2f8636766c13bb44ec3429ae2667765b569201c58f374f9f0a",
+      "uid": "6295c6997e2df1496d0e32362a3e0019",
+      "username": "mylesborins"
+    },
+    "merkle_root": {
+      "ctime": 1547054073,
+      "hash_meta": "1eb6dc0cda7cd25218c964129966d11cd8c7616e1111d9d8318d3f162918edc0",
+      "seqno": 4259957
+    },
+    "revoke": {
+      "sig_ids": [
+        "06fd1a82e325149debc9794c3848a14a2f356d0c4f78b0d750be164507c2de390f"
+      ]
+    },
+    "service": {
+      "hostname": "mylesborins.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1547054084,
+  "expire_in": 157680000,
+  "prev": "92c7dbf3e1368dee90207afee34e84de694a076e47552fff86664ce25083b189",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.80
+Comment: https://keybase.io/crypto
+
+yMK8AnicrVNdaB1FGL1Jk9BGY7TQBixIWWyb6DXM7M7vVRFEQ6hY2ypctZHr7sw3
+yTb33r3d3RsbY15KwZcGqbUaij+U0ocEf8CWioVCvRatiWCg0lSx9cESBGsL1VJ/
+MDobFEF9dF6G2T3f+c45882pjmW59qZ9dzf9eMPAVF/TbOO5em6A5VvGnCDSo05h
+zBmGpQ3KGpK0NBxqp+AgjLDHKFCjJAs0Z8CUawTzGGdMYS8ICAHlEVf64DLGOaMB
+ZdJFWFFhPE6MNMh38o4Jq4MQ1+KwmlpaRQzSxhgCQmFfuB4jSGokgHuBYgQrhbEh
+StjCoSjJKqy4wE+gN4zsN3soLcn7D/z/rLu+RMdcSRWTkoOrDSaSaQSeVe36HiCE
+ZQZMIK76FbDoymgZkiCyXhNnPO9UIB4uQymOojTLV6VhhsKUcEQJ4p716CdDpQqk
+vi3GEDCtkNI+V9qlLhbWAcGulIxpjJUWijPMANulpRYeFtoz2CrEAmyhlZLAjmrk
+FIhLpaTcKohhJBqGrHkSDtrkEqewzUHM6Cx7a4RaSxoCJbkkyhNE+Jj4rvGo9Wmv
+iosAaU5RAJgRirhyNXgSGeep8axZPBKqJfLsqv4dQa+KKlZULY7SSEVl+3MoTWtJ
+IYsmHa1l6GcgKP3JUwrCqrazYitGIE7CqGqjssh/pCZI3oGdtTCGUpghKGcC2ZX1
+gRFLKV3FdWA8sGMgNIBELuK+AfDszBENTBIf2bEgnFLXTqJgjBEFLkXCC7CQf8eI
+XavTH7ScNryqn9ZjcMYbJwdack3tubbW5uwR5dpX3PzX0zp35/LcwfylN5wNd514
+f8fm1TOTW/APxbmNa/bd0vV5X6N/4rfWd35aeduHmxZmyMSBhc5Xit1fNT00dubE
+/NmpR8dWpfVZZ3n/mcuzx9adnVx8urGxc/XK/q5rO6e+WT9zfUXPa2u2FJu3FRYb
+cx+rvl9Pn37756v3v5D0vPXg9g52SLc9Mrrs685j/NW966/OnZ++IB7v3vpk2x7n
+5I2Xdx+a33XT/POP3fr7Z10tJrzj+8V7Lx7oeCmiB48cvefam87rx49MP/HR4eD6
+ZHdl/8PTPeVPFj799vzLrROH10LHxH0fvJsr0l17tvZeaK3vD57NXVl7/NJ3m794
+8YENfPvtv2za2/zlxVO7z61rXtVSfO/K0T8A9CJ7jQ==
+=5Ut/
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mylesborins
+
+==================================================================
+
