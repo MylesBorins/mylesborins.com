@@ -9,6 +9,14 @@
 
 # Talks
 
+## Google I/O  (May 2019)
+### Making the Right Decisions for Your Serverless Architecture
+[![Making the Right Decisions for Your Serverless Architecture](https://img.youtube.com/vi/Jn2sKJX1NHE/0.jpg)](https://www.youtube.com/watch?v=Jn2sKJX1NHE)
+
+## Open Source Leadership Summit (March 2019)
+###  Open Governance in the JavaScript Ecosystem
+[![Open Governance in the JavaScript Ecosystem](https://img.youtube.com/vi/u5l-c4Leovw/0.jpg)](https://www.youtube.com/watch?v=u5l-c4Leovw)
+
 ## ColdFront (November 2018)
 ### Top-Level Awaiting for Godot (45 mins)
 [![Top-Level Awaiting for Godot](https://img.youtube.com/vi/L87aCMJuWNM/hq3.jpg)](https://www.youtube.com/watch?v=L87aCMJuWNM)
