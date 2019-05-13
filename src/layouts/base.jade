@@ -7,7 +7,7 @@ mixin postHead(post)
       div.post-date= post.quarter
     - }
     - else {
-      div.post-date!= 'Published ' + post.date.toLocaleDateString()
+      div.post-date!= 'Published ' + post.date.toLocaleDateString('en-US').replace('-', '/')
     - } 
     
 
