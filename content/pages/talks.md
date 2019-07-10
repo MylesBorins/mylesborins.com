@@ -11,7 +11,7 @@
 
 ## Google I/O  (May 2019)
 ### Making the Right Decisions for Your Serverless Architecture
-[![Making the Right Decisions for Your Serverless Architecture](https://img.youtube.com/vi/Jn2sKJX1NHE/0.jpg)](https://www.youtube.com/watch?v=Jn2sKJX1NHE)
+[![Making the Right Decisions for Your Serverless Architecture](https://img.youtube.com/vi/Jn2sKJX1NHE/1.jpg)](https://www.youtube.com/watch?v=Jn2sKJX1NHE)
 
 ## Open Source Leadership Summit (March 2019)
 ###  Open Governance in the JavaScript Ecosystem
