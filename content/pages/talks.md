@@ -9,6 +9,13 @@
 
 # Talks
 
+## Node+JS Interactive (Dec 2019)
+### The Future of JavaScript is Universal
+[![The Future of JavaScript is Universal](https://img.youtube.com/vi/o2M7g8Xwc7g/0.jpg)](https://www.youtube.com/watch?v=o2M7g8Xwc7g)
+
+### Extra Special Modules
+[![Extra Special Modules](https://img.youtube.com/vi/bP0tlIcA3ns/0.jpg)](https://www.youtube.com/watch?v=bP0tlIcA3ns)
+
 ## Google I/O  (May 2019)
 ### Making the Right Decisions for Your Serverless Architecture
 [![Making the Right Decisions for Your Serverless Architecture](https://img.youtube.com/vi/Jn2sKJX1NHE/1.jpg)](https://www.youtube.com/watch?v=Jn2sKJX1NHE)
