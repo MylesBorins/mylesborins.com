@@ -22,3 +22,4 @@ dist
 .ftppass
 logs/
 public_html/
+.firebase
