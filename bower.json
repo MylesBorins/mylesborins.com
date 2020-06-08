@@ -21,7 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "sticky-kit": "~1.0.2",
+    "sticky-kit": "master",
     "jquery": "~3.5.1"
   }
 }

@@ -1,11 +1,10 @@
 
-jquery.sticky-kit.min.js: jquery.sticky-kit.js
-	closure --language_in=ECMASCRIPT5 $< > $@
+dist/sticky-kit.min.js: dist/sticky-kit.js
+	closure-compiler --language_in=ECMASCRIPT5 $< > $@
 
-jquery.sticky-kit.js: jquery.sticky-kit.coffee
-	coffee -c $<
-
+dist/sticky-kit.js: sticky-kit.coffee
+	coffee -p -c $< > $@
 
 copy:
-	cp jquery.sticky-kit.js site/www/src/
-	cp jquery.sticky-kit.min.js site/www/src/
+	cp dist/sticky-kit.js site/www/src/
+	cp dist/sticky-kit.min.js site/www/src/
