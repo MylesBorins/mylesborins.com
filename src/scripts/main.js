@@ -2,27 +2,36 @@
 
 (function ($) {
   'use strict';
-  var bigguy = $('#sticky-social');
-  var smally = $('.nav-links-social');
-  var children = smally.children();
-/*  smally.fadeTo(0, 0);*/
+  const bigguy = $('#sticky-social');
+  const smally = $('.nav-links-social');
+  const children = smally.children();
+  let hidden = true;
   
-  $('#header').stick_in_parent({
+  const stickyHeader = $('#header').stick_in_parent({
     parent: $('body')
   });
   
   if (!$('ul.nav-links-social.show').length) {
-    bigguy.stick_in_parent({
-    
-    }).on('sticky_kit:stick', function (e) {
-      setTimeout(function (e) {
-        bigguy.fadeTo('slow', 1);
-        smally.fadeTo('slow', 1);
-      }, 200);
-    
-    }).on('sticky_kit:unstick', function (e) {
-      smally.fadeTo(5, 0);
-    });
+    // const sticker = bigguy.stick_in_parent({
+    //   recalc_every: 1,
+    //   // make it not scroll... no idea why
+    //   spacer: false
+    // });
+    //
+    // sticker.on('sticky_kit:stick', function (e) {
+    //   if (!hidden) return;
+    //   setTimeout(function (e) {
+    //     bigguy.fadeTo('slow', 1);
+    //     smally.fadeTo('slow', 1);
+    //   }, 200);
+    //   hidden = !hidden;
+    // })
+    //
+    // sticker.on('sticky_kit:unstick', function (e) {
+    //   if (hidden) return;
+    //   smally.fadeTo(5, 0);
+    //   hidden = !hidden;
+    // });
   }
   else {
     setTimeout(function () {
