@@ -137,7 +137,7 @@ Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can b
 
 # one script to rule them all
 
-Let's start by taking a look at the [bash script](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh) that is used to compile noise.js
+Let's start by taking a look at the [bash script](https://github.com/TheAlphaNerd/faust2webaudio/blob/main/build-noise.sh) that is used to compile noise.js
 
 ```bash
 # !/bin/bash
@@ -174,7 +174,7 @@ The above script can be simply thought of as the following steps
 
 
 ## Faust -> C++
-Using the faust compiler (specifically the faust2-asmjs branch) we can compile from [faust](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp) to [C++](https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp) with the following command
+Using the faust compiler (specifically the faust2-asmjs branch) we can compile from [faust](https://github.com/TheAlphaNerd/faust2webaudio/blob/main/dsp/noise.dsp) to [C++](https://github.com/TheAlphaNerd/faust2webaudio/blob/main/cpp/faust-noise.cpp) with the following command
 ```
 faust -a minimal.cpp -i -uim -cn Noise \
  dsp/noise.dsp -o cpp/faust-noise.cpp

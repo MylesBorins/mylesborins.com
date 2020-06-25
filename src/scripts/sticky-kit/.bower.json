@@ -18,10 +18,10 @@
   "_release": "f306732c28",
   "_resolution": {
     "type": "branch",
-    "branch": "master",
+    "branch": "main",
     "commit": "f306732c28a18ea6b86897ae4f2e5a04c3690e56"
   },
   "_source": "https://github.com/leafo/sticky-kit.git",
-  "_target": "master",
+  "_target": "main",
   "_originalSource": "sticky-kit"
 }

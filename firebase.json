@@ -8,7 +8,7 @@
     ],
     "redirects": [{
       "source": "/cv.pdf",
-      "destination": "https://github.com/MylesBorins/curriculum_vitae/raw/master/myles-borins_cv.pdf",
+      "destination": "https://github.com/MylesBorins/curriculum_vitae/raw/main/myles-borins_cv.pdf",
       "type": 301
     }]
   }

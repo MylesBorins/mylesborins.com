@@ -18,7 +18,7 @@ This was something that stumped me for a while... every time I tried to push to 
 git push linode
 
 Total 0 (delta 0), reused 0 (delta 0)
-remote: error: refusing to update checked out branch: refs/heads/master
+remote: error: refusing to update checked out branch: refs/heads/main
 remote: error: By default, updating the current branch in a non-bare repository
 remote: error: is denied, because it will make the index and work tree inconsistent
 remote: error: with what you pushed, and will require 'git reset --hard' to match
@@ -33,7 +33,7 @@ remote: error:
 remote: error: To squelch this message and still keep the default behavior, set
 remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
 To use@MylesBorins.com:some/dir/MylesBorins.com/.git
-! [remote rejected] master -> master (branch is currently checked out)
+! [remote rejected] main -> main (branch is currently checked out)
 ```
 ### double down with a bare repo
 
@@ -56,7 +56,7 @@ I then moved to my local git repo and added the bare repo on linode as a remote.
 ~~~cntrl-d~~~
 [ local ~/github/site ] git remote add linode \
      user@somesi.te:bare/site.git
-[ local ~/github/site ] git push linode master
+[ local ~/github/site ] git push linode main
 ```
 
 Now that the bare repo has some data we can add it as a remote in the deployment repo
@@ -77,7 +77,7 @@ GIT_WORK_TREE=/www/site/
 GIT_DIR=/www/site/.git
 
 cd /www/site/
-git pull local master
+git pull local main
 
 grunt build
 ```

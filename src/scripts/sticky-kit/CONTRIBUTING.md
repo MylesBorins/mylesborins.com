@@ -16,6 +16,6 @@ If you're opening a pull request, remember Sticky-kit is written in
 to the CoffeeScript file and not the JavaScript files. Don't worry about
 building/minifying the JS files, it will automatically be done on the next versioned release. In any case, you
 can see how it's done in the
-[Makefile](https://github.com/leafo/sticky-kit/blob/master/Makefile).
+[Makefile](https://github.com/leafo/sticky-kit/blob/main/Makefile).
 
 Thanks
