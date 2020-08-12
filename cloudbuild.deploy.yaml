@@ -15,7 +15,7 @@
 steps:
   - name: 'node:12'
     entrypoint: npm
-    args: ['ci']
+    args: ['install']
   - name: 'node:12'
     entrypoint: npm
     args: ['run', 'build']
