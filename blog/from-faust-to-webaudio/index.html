@@ -26,8 +26,8 @@
 <span class="nx">noise</span>   <span class="o">=</span> <span class="nx">random</span><span class="o">/</span><span class="mf">2147483647.0</span><span class="p">;</span>
 <span class="nx">process</span> <span class="o">=</span> <span class="nx">noise</span> <span class="o">*</span> <span class="nx">vslider</span><span class="p">(</span><span class="s2">&quot;Volume[style:knob]&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
 </pre></div>
-
-</code></pre><hr class="top-two"><h2>What does a WebAudioNode look like?</h2><hr class="bottom-two"><p>Below is an example of White Noise taken from Flocking</p>
+</code></pre>
+<hr class="top-two"><h2>What does a WebAudioNode look like?</h2><hr class="bottom-two"><p>Below is an example of White Noise taken from Flocking</p>
 <pre><code><div class="highlight"><pre><span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">.</span><span class="nx">whiteNoise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
@@ -50,8 +50,8 @@
     <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
-
-</code></pre><hr class="top-top-one"><hr class="top-one"><h1>But Doesn&#39;t Faust Already compile to web audio?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Indeed it does, but does it work? </p>
+</code></pre>
+<hr class="top-top-one"><hr class="top-one"><h1>But Doesn&#39;t Faust Already compile to web audio?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Indeed it does, but does it work? </p>
 <p><a href="/examples/faust2webaudio/current-noise.html">Current Faust2Webaudio Noise</a></p>
 <hr class="top-three"><h3>Why did that break?</h3><hr class="bottom-three"><p>There is only one answer... JavaScript. Unfortunately as much as I am a JavaScript fanboy there are some things the language just isn&#39;t good at, such as integer arithmetic. The algorithm to compute noise used by Faust is relying on specific integer overflow side effects in order to generate a signal.  With the current compiler simply porting directly from the <em>FIR</em> to JavaScript all numbers are represented as well... numbers (32-bit floating point numbers to be exact).</p>
 <hr class="top-top-one"><hr class="top-one"><h1>asm.js to the rescue!</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://asmjs.org/"><img src="/images/faust-to-webaudio/asmjs.jpg" alt="asm.js"></a></p>
@@ -88,12 +88,12 @@
     <span class="p">};</span>
 <span class="p">};</span>
 </pre></div>
-
-</code></pre><p>While it would have been possible to implement a traveller to compile asm.js code from the <em>FIR</em> representation, I opted to try a slightly different path.</p>
+</code></pre>
+<p>While it would have been possible to implement a traveller to compile asm.js code from the <em>FIR</em> representation, I opted to try a slightly different path.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>introducing emscripten</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://emscripten.org/"><img src="/images/faust-to-webaudio/emscripten.jpg" alt="Emscripten"></a></p>
 <p>Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can be generated from C/C++ using Clang, or any other language that can be converted into LLVM bitcode) and compiles that into JavaScript, which can be run on the web (or anywhere else JavaScript can run).</p>
 <hr class="top-top-one"><hr class="top-one"><h1>one script to rule them all</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Let&#39;s start by taking a look at the <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh">bash script</a> that is used to compile noise.js</p>
-<pre><code class="lang-bash"><div class="highlight"><pre><span class="c"># !/bin/bash</span>
+<pre><code class="language-bash"><div class="highlight"><pre><span class="c"># !/bin/bash</span>
 <span class="c"># tputcolors</span>
 
 <span class="nb">set</span> -e
@@ -114,7 +114,6 @@ rm js/faust-noise-temp.js
 sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&quot;s/dsp/noise/g&quot;</span> js/wrapper.js &gt;&gt; js/faust-noise.js
 <span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
 </pre></div>
-
 </code></pre>
 <p>The above script can be simply thought of as the following steps</p>
 <ul>
@@ -125,13 +124,15 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 <li>profit!</li>
 </ul>
 <!-- This script will uses faust to compile a C++ file. The C++ file is then processed using sed to replace the generic references in the file **DSP** with the name of the class we are compiling **Noise**.  The C++ file is then appended with a wrapper (also processed by sed) that wraps the objects constructor, destructor, getters, setters, and public methods. The resulting file is compiled by emscripten into JavaScript.  The compiled JavaScript file   -->
+
+
 <hr class="top-two"><h2>Faust -&gt; C++</h2><hr class="bottom-two"><p>Using the faust compiler (specifically the faust2-asmjs branch) we can compile from <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp">faust</a> to <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp">C++</a> with the following command</p>
 <pre><code><div class="highlight"><pre><span class="nx">faust</span> <span class="o">-</span><span class="nx">a</span> <span class="nx">minimal</span><span class="p">.</span><span class="nx">cpp</span> <span class="o">-</span><span class="nx">i</span> <span class="o">-</span><span class="nx">uim</span> <span class="o">-</span><span class="nx">cn</span> <span class="nx">Noise</span> <span class="o">\</span>
  <span class="nx">dsp</span><span class="o">/</span><span class="nx">noise</span><span class="p">.</span><span class="nx">dsp</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">cpp</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="p">.</span><span class="nx">cpp</span>
 </pre></div>
-
-</code></pre><p>In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.</p>
-<pre><code class="lang-c++"><div class="highlight"><pre><span class="c1">// Adapted From https://gist.github.com/camupod/5640386</span>
+</code></pre>
+<p>In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.</p>
+<pre><code class="language-c++"><div class="highlight"><pre><span class="c1">// Adapted From https://gist.github.com/camupod/5640386</span>
 <span class="c1">// compile using &quot;C&quot; linkage to avoid name obfuscation</span>
 <span class="cp"># include &lt;emscripten.h&gt;</span>
 <span class="cp"># include &lt;map&gt;</span>
@@ -166,7 +167,6 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-
 </code></pre>
 <p>This wrapper will be the interface that we can call from JavaScript to interact with the emscripten virtual machine.</p>
 <p>We can then compile the resulting C++ file to asm.js using emscripten with the following command</p>
@@ -174,8 +174,8 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 <span class="o">-</span><span class="nx">s</span> <span class="nx">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;, \</span>
 <span class="s2">&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;]&quot;</span>
 </pre></div>
-
-</code></pre><p>Finally we apply the following JavaScript wrapper in order to break out the functions we wrapped earlier in C++, and allocate the dynamic memory required for a unit generators input / output buffers.</p>
+</code></pre>
+<p>Finally we apply the following JavaScript wrapper in order to break out the functions we wrapped earlier in C++, and allocate the dynamic memory required for a unit generators input / output buffers.</p>
 <pre><code><div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// This should be made to only make a new context if one does not exist</span>
 
@@ -295,28 +295,26 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
   <span class="p">};</span>
 <span class="p">}());</span>
 </pre></div>
-
-</code></pre><hr class="top-three"><h3><a href="/examples/faust2webaudio/">But does it work?</a></h3><hr class="bottom-three"><p>While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator</p>
-<pre><code class="lang-js"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">model</span>
+</code></pre>
+<hr class="top-three"><h3><a href="/examples/faust2webaudio/">But does it work?</a></h3><hr class="bottom-three"><p>While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator</p>
+<pre><code class="language-js"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">model</span>
   <span class="nb">Object</span> <span class="p">{</span><span class="nx">Volume</span><span class="o">:</span> <span class="mi">5260092</span><span class="p">}</span>
 <span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 </pre></div>
-
 </code></pre>
 <p>You will notice above that the model contains an object with a key <em>Volume</em> and a value <em>5260092</em>.  The value is a pointer into the emscripten heap where the value of Volume is stored.  By accessing that place in memory we can change the value of Volume, modifying process running in the unit generator.</p>
 <p>In the case of Noise it is quite simple to keep track of a single pointer, but when trying to implement a general purpose compiler we need to be able to dynamically construct a model of any number of keys and pointers.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>Fighting with Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>One thing I have not yet mentioned about Faust is that the concept of UI is baked into the language.  Rather than variables one assigns UI objects such as a Horizontal Slider or Button.</p>
 <p>The generated C++ code offers you a function called buildUserInterface that will take a UI object as an argument and execute a virtual function for every type of UI element. </p>
 <p>The data I need is a JSON model of all UI elements names and pointers.  The closest C++ object that I could think of to this pattern was a map.  So I implemented a way to create a map in the heap that would populate with the necessary data.  First by making a function to insert data into the map</p>
-<pre><code class="lang-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">insertMap</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
+<pre><code class="language-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">insertMap</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">uiMap</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
-
 </code></pre>
 <p>and then by calling said function during each virtual ui function</p>
-<pre><code class="lang-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">addButton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
+<pre><code class="language-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">addButton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
 <span class="p">};</span>
@@ -326,7 +324,6 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
-
 </code></pre>
 <p> Unfortunately there is no easy way using emscripten to represent a map as an object.  There is some support available with <a href="https://github.com/kripken/emscripten/wiki/embind">embind</a> but I found the results less than satisfactory.  Embind would return an object that did not have any interface to list available keys.</p>
 <p>I found the solution to be implementing two meta methods: one that returned the number of entires in the map, and another that copied the key and value into pointers given as arguments.  </p>
@@ -347,9 +344,9 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="k">return</span> <span class="nx">valPtr</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
-</code></pre><p>With these functions broken out via emscripten it because easy to implement a setupModel function in JavaScript</p>
-<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">that</span><span class="p">.</span><span class="nx">setupModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</code></pre>
+<p>With these functions broken out via emscripten it because easy to implement a setupModel function in JavaScript</p>
+<pre><code class="language-js"><div class="highlight"><pre><span class="nx">that</span><span class="p">.</span><span class="nx">setupModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">numParams</span> <span class="o">=</span> <span class="nx">DSP_getNumParams</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
   <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numParams</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -361,7 +358,6 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
   <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
-
 </code></pre>
 <p>With the additional code it becomes possible to compile almost any unit generator implemented in the faust language.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>more examples:</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><ul>

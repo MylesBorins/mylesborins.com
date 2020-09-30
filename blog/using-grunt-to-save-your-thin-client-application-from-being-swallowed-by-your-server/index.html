@@ -31,8 +31,8 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-
-</code></pre><p>The only thing that remained to implement was processing environmental variables to allow for easy switching between different api servers.  The solution we found was a bit of a hack, but it works.  We created an app-config.js file to contain a number of top-level global objects that are used to maintain environmental variables.  The original app-config.js file has the information for all three potential servers inside of it each wrapped in comments attributing each section to a particular environment variable.</p>
+</code></pre>
+<p>The only thing that remained to implement was processing environmental variables to allow for easy switching between different api servers.  The solution we found was a bit of a hack, but it works.  We created an app-config.js file to contain a number of top-level global objects that are used to maintain environmental variables.  The original app-config.js file has the information for all three potential servers inside of it each wrapped in comments attributing each section to a particular environment variable.</p>
 <pre><code><div class="highlight"><pre><span class="c1">// @if NODE_ENV=&#39;local&#39;</span>
 <span class="kd">var</span> <span class="nx">HOSTDEETS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">API_HOST</span><span class="o">:</span> <span class="s1">&#39;api.lvh.me:9001&#39;</span>
@@ -49,13 +49,13 @@
 <span class="p">};</span>
 <span class="c1">// @endif</span>
 </pre></div>
-
-</code></pre><p>We then used <a href="https://github.com/jsoverson/grunt-preprocess">grunt-preprocess</a> to create a new file that only contained the section that had the correct environmental variable.  In retrospect I think the handling of environmental variables were done in a less than ideal way.  We had played with switching to jade templating, and we could have done things much nicer by injecting values into the jade compiler, but alas when you need to ship you need to ship.</p>
+</code></pre>
+<p>We then used <a href="https://github.com/jsoverson/grunt-preprocess">grunt-preprocess</a> to create a new file that only contained the section that had the correct environmental variable.  In retrospect I think the handling of environmental variables were done in a less than ideal way.  We had played with switching to jade templating, and we could have done things much nicer by injecting values into the jade compiler, but alas when you need to ship you need to ship.</p>
 <p>In the end we were able to create an entirely separate repo for the front-end code, allowing the rails app to act as a restful api, and allowing our Angular app to act as a rich client ui.  While there is an obvious benefit to the back-end folks, no longer having to worry about the api server handling templating, the most rewarding benefit was that we turned the entire onboarding process for new front-end developers into a single line of bash.</p>
 <pre><code><div class="highlight"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="o">&amp;&amp;</span> <span class="nx">bower</span> <span class="nx">install</span> <span class="o">&amp;&amp;</span> <span class="nx">grunt</span> <span class="nx">server</span>
 </pre></div>
-
-</code></pre></div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+</code></pre>
+</div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);
 
