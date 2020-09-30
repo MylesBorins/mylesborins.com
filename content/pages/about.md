@@ -11,4 +11,4 @@ Myles works at GitHub as an Open Source Product Manager
 
 Myles cares about the open web and healthy communities
 
-You can find their cv as a pdf [here](http://MylesBorins.com/cv.pdf)
+You can find their cv as a pdf [here](https://MylesBorins.com/cv.pdf)

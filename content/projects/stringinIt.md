@@ -29,7 +29,7 @@
 ## dmx shield
 
 ![DMX Shield](/images/stringin-it/dmx.jpg)
->information on the dmx shield can be found [here](http://playground.arduino.cc/DMX/DMXShield)
+>information on the dmx shield can be found [here](https://playground.arduino.cc/DMX/DMXShield)
 
 
 ## cauvet colorSTRIP
@@ -58,7 +58,7 @@ Firmware for the arduino was written which allows for serial data to be received
 
 The source code for this project can be found on [github](https://github.com/TheAlphaNerd/Stringin-It)
 
-The DmxSimple library was utilized for outputting DMX data to the lighting fixture, the library can be found [here](http://code.google.com/p/tinkerit/wiki/DmxSimple)
+The DmxSimple library was utilized for outputting DMX data to the lighting fixture, the library can be found [here](https://code.google.com/p/tinkerit/wiki/DmxSimple)
 
 
 ### max/msp code
@@ -107,10 +107,10 @@ The way the installation worked was actually fairly simple. An iPod with touch o
 
 
 
-[Original Post on Monome Board](http://post.monome.org/comments.php?DiscussionID=6453&page=1)
+[Original Post on Monome Board](https://post.monome.org/comments.php?DiscussionID=6453&page=1)
   > I don't know if anyone on the board has had the pleasure of playing with a stringin’ It… but it is an absolutely fantastic toy to create 3D light shows in front of you.
 
-[Youtube Video of Original Toy](http://www.youtube.com/watch?v=J0jrtVZCpds)
+[Youtube Video of Original Toy](https://www.youtube.com/watch?v=J0jrtVZCpds)
 
 The initial prototype was made on a small scale by hacking the original toy to be controlled with an arduino.  A monome controller was used as a control interface emulating the controls of the original toy.
 

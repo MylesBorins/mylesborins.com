@@ -26,7 +26,7 @@ The piece consists of a number of discrete components
 
 ![a 3d illusion caused by the laser](/images/string-theory/three-dee.jpg)
 
-For more photographs check out the stream on [flickr](http://www.flickr.com/photos/54368887@N03/sets/72157625446054755)
+For more photographs check out the stream on [flickr](https://www.flickr.com/photos/54368887@N03/sets/72157625446054755)
 
 # chapter 1
 <div class="videoWrapper">
@@ -35,7 +35,7 @@ For more photographs check out the stream on [flickr](http://www.flickr.com/phot
 
 Special Thanks to Brian ‘Tehn’ Crabtree for the song “vitaminfactory”
 
-Find more of his awesome stuff [here](http://alphanerdproductions.com/nnnnnnnn.org)
+Find more of his awesome stuff [here](https://alphanerdproductions.com/nnnnnnnn.org)
 
 ![The CNC pattern](/images/string-theory/cnc-guide.jpg)
 ![the finbonacci pattern follow to place holes for cnc](/images/string-theory/fibonacci-sprial.jpg)

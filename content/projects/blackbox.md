@@ -27,9 +27,9 @@ The Black Box is a site based installation that allows users to create unique so
 # more videos
 
 <div class="videoWrapper">
-    <iframe src="//player.vimeo.com/video/54842728" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/54842728">The Blackbox Final Teaser</a> from <a href="http://vimeo.com/MylesBorins">TheAlphaNerd</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+    <iframe src="//player.vimeo.com/video/54842728" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/54842728">The Blackbox Final Teaser</a> from <a href="https://vimeo.com/MylesBorins">TheAlphaNerd</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </div>
 
 <div class="videoWrapper">
-    <iframe src="//player.vimeo.com/video/54755658" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/54755658">The Black Box: Teaser</a> from <a href="http://vimeo.com/MylesBorins">TheAlphaNerd</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+    <iframe src="//player.vimeo.com/video/54755658" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/54755658">The Black Box: Teaser</a> from <a href="https://vimeo.com/MylesBorins">TheAlphaNerd</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </div>
