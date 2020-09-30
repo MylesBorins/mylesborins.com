@@ -1,0 +1,395 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/blog/from-faust-to-webaudio/"><h1 class="post-title">from faust to webaudio</h1></a><div class="post-date">Published 1/13/2014</div></div><div class="post-body markdown"><blockquote>
+<p>The Web Audio API is the current standard for digital signal processing in the browser. Currently there are a number of natively compiled audio nodes capable of doing advanced synthesis. One of the available nodes the <strong><em>JavaScriptNode</em></strong> allows individuals to create their own custom unit generators in pure JavaScript.   In an attempt to test the boundaries of what can be run in a <strong><em>JavaScriptNode</em></strong> I have hacked together a compiler that can take extremely large signal flow diagrams written in the functional Faust synthesis language and create JavaScript unit generators that can interface with webaudio.</p>
+</blockquote>
+<blockquote>
+<p><em>All examples in this blog post will need to be run from a webkit based browser, preferably chrome.  Blame it on vendor specific prefixes</em></p>
+</blockquote>
+<hr class="top-top-one"><hr class="top-one"><h1>What is Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><img src="/images/faust-to-webaudio/faust-classic.png" alt="llustration by Harry Clarke for Goethes Faust"></p>
+<p><a href="http://faust.grame.fr/">FAUST</a> (Functional Audio Stream) is a functional programming language specifically designed for real-time signal processing and synthesis. FAUST targets high-performance signal processing applications and audio plug-ins for a variety of platforms and standards.</p>
+<p>The Faust compiler takes signal processing code written in the Faust language and tokenizes it into <em>Faust Intermediate Representations</em> (FIR).  From FIR a user is able to use an architecture file to compile to a number of back-ends including C++ and Java.  These architecture files can also include custom wrappers to interface with a variety of industry standard DSP platforms including <a href="http://cycling74.com/products/max/">max/msp</a>, <a href="http://supercollider.sourceforge.net/">supercollider</a>, <a href="https://en.wikipedia.org/wiki/Audio_Units">audio unit</a>, <a href="https://en.wikipedia.org/wiki/Virtual_Studio_Technology">vst</a>, and more.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>What is the Web Audio Api?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><img src="/images/faust-to-webaudio/h5_logo.png" alt="HTML 5"></p>
+<p>The <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio Api</a> is a high-level JavaScript API for processing and synthesizing audio in web applications.</p>
+<p>The Web Audio API comes with a number of natively compiled audio nodes capable of doing quite a bit of advanced synthesis.</p>
+<p>You can check out Hongchan Choi&#39;s <a href="https://github.com/hoch/waax">WAAX</a> library for an example of extensive work being done with native nodes.</p>
+<p>But What if you want something more?</p>
+<hr class="top-two"><h2>The JavaScriptNode</h2><hr class="bottom-two"><p>The JavaScriptNode allows individuals to create their own web audio nodes in pure JavaScript.  This allows individuals to extend the Web Audio Api with custom nodes.</p>
+<p>Web Audio Libraries such as <a href="flockingjs.org">Flocking</a> by Colin Clark and <a href="http://www.charlie-roberts.com/gibber/">Gibber</a> by Charlie Roberts make extensive use of the JavaScriptNode.</p>
+<blockquote>
+<hr class="top-three"><h3>!!! WARNING !!!</h3><hr class="bottom-three"></blockquote>
+<blockquote>
+<p>Currently native Web Audio nodes and JavaScriptNodes don&#39;t play so nicely together, most implementations of Web Audio tend to pick one or the other.  </p>
+</blockquote>
+<blockquote>
+<hr class="top-three"><h3>!!! WARNING !!!</h3><hr class="bottom-three"></blockquote>
+<hr class="top-two"><h2>What does faust look like?</h2><hr class="bottom-two"><p>Below is an example of Noise Written in Faust </p>
+<pre><code><div class="highlight"><pre><span class="nx">random</span>  <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span><span class="o">~*</span><span class="p">(</span><span class="mi">1103515245</span><span class="p">);</span>
+<span class="nx">noise</span>   <span class="o">=</span> <span class="nx">random</span><span class="o">/</span><span class="mf">2147483647.0</span><span class="p">;</span>
+<span class="nx">process</span> <span class="o">=</span> <span class="nx">noise</span> <span class="o">*</span> <span class="nx">vslider</span><span class="p">(</span><span class="s2">&quot;Volume[style:knob]&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+</pre></div>
+
+</code></pre><hr class="top-two"><h2>What does a WebAudioNode look like?</h2><hr class="bottom-two"><p>Below is an example of White Noise taken from Flocking</p>
+<pre><code><div class="highlight"><pre><span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">.</span><span class="nx">whiteNoise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">gen</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">numSamps</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span>
+            <span class="nx">i</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numSamps</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">out</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="nx">that</span><span class="p">.</span><span class="nx">mulAdd</span><span class="p">(</span><span class="nx">numSamps</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">onInputChanged</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">flock</span><span class="p">.</span><span class="nx">onMulAddInputChanged</span><span class="p">(</span><span class="nx">that</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">onInputChanged</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+</code></pre><hr class="top-top-one"><hr class="top-one"><h1>But Doesn&#39;t Faust Already compile to web audio?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Indeed it does, but does it work? </p>
+<p><a href="/examples/faust2webaudio/current-noise.html">Current Faust2Webaudio Noise</a></p>
+<hr class="top-three"><h3>Why did that break?</h3><hr class="bottom-three"><p>There is only one answer... JavaScript. Unfortunately as much as I am a JavaScript fanboy there are some things the language just isn&#39;t good at, such as integer arithmetic. The algorithm to compute noise used by Faust is relying on specific integer overflow side effects in order to generate a signal.  With the current compiler simply porting directly from the <em>FIR</em> to JavaScript all numbers are represented as well... numbers (32-bit floating point numbers to be exact).</p>
+<hr class="top-top-one"><hr class="top-one"><h1>asm.js to the rescue!</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://asmjs.org/"><img src="/images/faust-to-webaudio/asmjs.jpg" alt="asm.js"></a></p>
+<p>asm.js is a strict subset of JavaScript that can be used as a low-level, efficient target language for compilers. The asm.js language provides an abstraction similar to the C/C++ virtual machine: a large binary heap with efficient loads and stores, integer and floating-point arithmetic, first-order function definitions, and function pointers.</p>
+<hr class="top-two"><h2>What does an asm.js WebAudioNode look like?</h2><hr class="bottom-two"><p>An example from the <a href="https://github.com/colinbdclark/Flocking/tree/asmjs">asmjs Flocking Branch</a></p>
+<pre><code><div class="highlight"><pre><span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">.</span><span class="nx">asmSin</span><span class="p">.</span><span class="nx">module</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">stdlib</span><span class="p">,</span> <span class="nx">foreign</span><span class="p">,</span> <span class="nx">heap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="s2">&quot;use asm&quot;</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">sin</span> <span class="o">=</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">pi</span> <span class="o">=</span> <span class="mf">3.14159</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nx">Float32Array</span><span class="p">(</span><span class="nx">heap</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">gen</span> <span class="p">(</span><span class="nx">numSamps</span><span class="p">,</span> <span class="nx">freq</span><span class="p">,</span> <span class="nx">phaseOffset</span><span class="p">,</span> <span class="nx">mul</span><span class="p">,</span> <span class="nx">add</span><span class="p">,</span> <span class="nx">sampleRate</span><span class="p">,</span> <span class="nx">phase</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">numSamps</span> <span class="o">=</span> <span class="nx">numSamps</span><span class="o">|</span><span class="mi">0</span><span class="p">;</span>
+        <span class="nx">freq</span> <span class="o">=</span> <span class="o">+</span><span class="nx">freq</span><span class="p">;</span>
+        <span class="nx">phaseOffset</span> <span class="o">=</span> <span class="o">+</span><span class="nx">phaseOffset</span><span class="p">;</span>
+        <span class="nx">mul</span> <span class="o">=</span> <span class="o">+</span><span class="nx">mul</span><span class="p">;</span>
+        <span class="nx">add</span> <span class="o">=</span> <span class="o">+</span><span class="nx">add</span><span class="p">;</span>
+        <span class="nx">sampleRate</span> <span class="o">=</span> <span class="o">+</span><span class="nx">sampleRate</span><span class="p">;</span>
+        <span class="nx">phase</span> <span class="o">=</span> <span class="o">+</span><span class="nx">phase</span><span class="p">;</span>
+
+        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">|</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">numSamps</span> <span class="o">|</span> <span class="mi">0</span><span class="p">);</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">out</span><span class="p">[</span><span class="nx">i</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="nx">sin</span><span class="p">(</span><span class="nx">phase</span> <span class="o">+</span> <span class="nx">phaseOffset</span><span class="p">)</span> <span class="o">*</span> <span class="nx">mul</span> <span class="o">+</span> <span class="nx">add</span><span class="p">);</span>
+            <span class="nx">phase</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="nx">phase</span> <span class="o">+</span> <span class="p">(</span><span class="nx">freq</span> <span class="o">/</span> <span class="nx">sampleRate</span> <span class="o">*</span> <span class="nx">pi</span> <span class="o">*</span> <span class="mf">2.0</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="o">+</span><span class="nx">phase</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">gen</span><span class="o">:</span> <span class="nx">gen</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+
+</code></pre><p>While it would have been possible to implement a traveller to compile asm.js code from the <em>FIR</em> representation, I opted to try a slightly different path.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>introducing emscripten</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://emscripten.org/"><img src="/images/faust-to-webaudio/emscripten.jpg" alt="Emscripten"></a></p>
+<p>Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can be generated from C/C++ using Clang, or any other language that can be converted into LLVM bitcode) and compiles that into JavaScript, which can be run on the web (or anywhere else JavaScript can run).</p>
+<hr class="top-top-one"><hr class="top-one"><h1>one script to rule them all</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Let&#39;s start by taking a look at the <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh">bash script</a> that is used to compile noise.js</p>
+<pre><code class="lang-bash"><div class="highlight"><pre><span class="c"># !/bin/bash</span>
+<span class="c"># tputcolors</span>
+
+<span class="nb">set</span> -e
+<span class="nb">echo</span> <span class="s1">&#39;Compiling From Faust -&gt; CPP&#39;</span>
+faust -a minimal.cpp -i -uim -cn Noise  dsp/noise.dsp -o cpp/faust-noise.cpp
+<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Wrapping dat cpp&quot;</span>
+sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&quot;s/Dsp/Noise/g&quot;</span> -e <span class="s2">&quot;s/dsp/noise/g&quot;</span> cpp/faust-wrapper.cpp &gt;&gt; cpp/faust-noise.cpp
+<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Using emscripten to compile to JavaScript&quot;</span>
+emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js <span class="se">\</span>
+-s <span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;,&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;, &#39;_NOISE_getNumParams&#39;, &#39;_NOISE_getNextParam&#39;]&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Wrapping js&quot;</span>
+cat js/header.js &gt; js/faust-noise.js
+cat js/faust-noise-temp.js &gt;&gt; js/faust-noise.js
+rm js/faust-noise-temp.js
+sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&quot;s/dsp/noise/g&quot;</span> js/wrapper.js &gt;&gt; js/faust-noise.js
+<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
+</pre></div>
+
+</code></pre>
+<p>The above script can be simply thought of as the following steps</p>
+<ul>
+<li>faust -&gt; faustIR -&gt; c++ (faust compiler)</li>
+<li>wrap c++ to break out function and do some sed</li>
+<li>c++ -&gt; llvm -&gt; js (emscripten)</li>
+<li>do some magic with sed and wrap js</li>
+<li>profit!</li>
+</ul>
+<!-- This script will uses faust to compile a C++ file. The C++ file is then processed using sed to replace the generic references in the file **DSP** with the name of the class we are compiling **Noise**.  The C++ file is then appended with a wrapper (also processed by sed) that wraps the objects constructor, destructor, getters, setters, and public methods. The resulting file is compiled by emscripten into JavaScript.  The compiled JavaScript file   -->
+<hr class="top-two"><h2>Faust -&gt; C++</h2><hr class="bottom-two"><p>Using the faust compiler (specifically the faust2-asmjs branch) we can compile from <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp">faust</a> to <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp">C++</a> with the following command</p>
+<pre><code><div class="highlight"><pre><span class="nx">faust</span> <span class="o">-</span><span class="nx">a</span> <span class="nx">minimal</span><span class="p">.</span><span class="nx">cpp</span> <span class="o">-</span><span class="nx">i</span> <span class="o">-</span><span class="nx">uim</span> <span class="o">-</span><span class="nx">cn</span> <span class="nx">Noise</span> <span class="o">\</span>
+ <span class="nx">dsp</span><span class="o">/</span><span class="nx">noise</span><span class="p">.</span><span class="nx">dsp</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">cpp</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="p">.</span><span class="nx">cpp</span>
+</pre></div>
+
+</code></pre><p>In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.</p>
+<pre><code class="lang-c++"><div class="highlight"><pre><span class="c1">// Adapted From https://gist.github.com/camupod/5640386</span>
+<span class="c1">// compile using &quot;C&quot; linkage to avoid name obfuscation</span>
+<span class="cp"># include &lt;emscripten.h&gt;</span>
+<span class="cp"># include &lt;map&gt;</span>
+<span class="cp"># include &lt;string&gt;</span>
+
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+
+    <span class="c1">// constructor</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">DSP_constructor</span><span class="p">(</span><span class="kt">int</span> <span class="n">samplingFreq</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Init it with samplingFreq supplied... should we give a sample size here too?</span>
+        <span class="n">n</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="n">samplingFreq</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// destructor</span>
+    <span class="kt">void</span> <span class="n">DSP_destructor</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">n</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">DSP_compute</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">**</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">**</span> <span class="n">outputs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">n</span><span class="o">-&gt;</span><span class="n">compute</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">DSP_getNumInputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumInputs</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">DSP_getNumOutputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumOutputs</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</code></pre>
+<p>This wrapper will be the interface that we can call from JavaScript to interact with the emscripten virtual machine.</p>
+<p>We can then compile the resulting C++ file to asm.js using emscripten with the following command</p>
+<pre><code><div class="highlight"><pre><span class="nx">emcc</span> <span class="nx">cpp</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="p">.</span><span class="nx">cpp</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">js</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="o">-</span><span class="nx">temp</span><span class="p">.</span><span class="nx">js</span> <span class="o">\</span>
+<span class="o">-</span><span class="nx">s</span> <span class="nx">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;, \</span>
+<span class="s2">&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;]&quot;</span>
+</pre></div>
+
+</code></pre><p>Finally we apply the following JavaScript wrapper in order to break out the functions we wrapped earlier in C++, and allocate the dynamic memory required for a unit generators input / output buffers.</p>
+<pre><code><div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// This should be made to only make a new context if one does not exist</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="nx">faust</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">webkitAudioContext</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">Noise_constructor</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_constructor&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">Noise_destructor</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_destructor&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">]);</span>
+  <span class="kd">var</span> <span class="nx">Noise_compute</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_compute&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">]);</span>
+  <span class="kd">var</span> <span class="nx">Noise_getNumInputs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_getNumInputs&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">Noise_getNumOutputs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_getNumOutputs&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
+
+  <span class="nx">faust</span><span class="p">.</span><span class="nx">noise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span> <span class="o">=</span> <span class="nx">Noise_constructor</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">sampleRate</span><span class="p">);</span>
+
+    <span class="c1">// Bind to C++ Member Functions</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">getNumInputs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Noise_getNumInputs</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Noise_getNumOutputs</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">noiseOutChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">noiseInChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">inputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">noiseInput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">noiseInput</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">input</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+
+      <span class="nx">Noise_compute</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span><span class="p">);</span>
+
+      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">outputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">noiseOutput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">output</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">output</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">noiseOutput</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">destroy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Noise_destructor</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="c1">// Connect to another node</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+      <span class="p">}</span>
+
+    <span class="p">};</span>
+
+    <span class="c1">// Bind to Web Audio</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">play</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">pause</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">//assuming poitner in emscripten are 32bits</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+      <span class="c1">// Get input / output counts</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumInputs</span><span class="p">();</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span><span class="p">();</span>
+
+      <span class="c1">// Setup web audio context</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span> <span class="o">=</span> <span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">createJavaScriptNode</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">onaudioprocess</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span><span class="p">;</span>
+
+      <span class="c1">// allocate memory for input / output arrays</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">);</span>
+
+      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">that</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+
+
+    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}());</span>
+</pre></div>
+
+</code></pre><hr class="top-three"><h3><a href="/examples/faust2webaudio/">But does it work?</a></h3><hr class="bottom-three"><p>While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">model</span>
+  <span class="nb">Object</span> <span class="p">{</span><span class="nx">Volume</span><span class="o">:</span> <span class="mi">5260092</span><span class="p">}</span>
+<span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+
+</code></pre>
+<p>You will notice above that the model contains an object with a key <em>Volume</em> and a value <em>5260092</em>.  The value is a pointer into the emscripten heap where the value of Volume is stored.  By accessing that place in memory we can change the value of Volume, modifying process running in the unit generator.</p>
+<p>In the case of Noise it is quite simple to keep track of a single pointer, but when trying to implement a general purpose compiler we need to be able to dynamically construct a model of any number of keys and pointers.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Fighting with Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>One thing I have not yet mentioned about Faust is that the concept of UI is baked into the language.  Rather than variables one assigns UI objects such as a Horizontal Slider or Button.</p>
+<p>The generated C++ code offers you a function called buildUserInterface that will take a UI object as an argument and execute a virtual function for every type of UI element. </p>
+<p>The data I need is a JSON model of all UI elements names and pointers.  The closest C++ object that I could think of to this pattern was a map.  So I implemented a way to create a map in the heap that would populate with the necessary data.  First by making a function to insert data into the map</p>
+<pre><code class="lang-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">insertMap</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">uiMap</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+
+</code></pre>
+<p>and then by calling said function during each virtual ui function</p>
+<pre><code class="lang-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">addButton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">addHorizontalSlider</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">init</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">fmax</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">step</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+</code></pre>
+<p> Unfortunately there is no easy way using emscripten to represent a map as an object.  There is some support available with <a href="https://github.com/kripken/emscripten/wiki/embind">embind</a> but I found the results less than satisfactory.  Embind would return an object that did not have any interface to list available keys.</p>
+<p>I found the solution to be implementing two meta methods: one that returned the number of entires in the map, and another that copied the key and value into pointers given as arguments.  </p>
+<pre><code><div class="highlight"><pre><span class="kr">int</span> <span class="nx">DSP_getNumParams</span><span class="p">(</span><span class="nx">Noise_wrap</span> <span class="o">*</span><span class="nx">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">size</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">FAUSTFLOAT</span><span class="o">*</span> <span class="nx">DSP_getNextParam</span><span class="p">(</span><span class="nx">Dsp_wrap</span> <span class="o">*</span><span class="nx">n</span><span class="p">,</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">key</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">FAUSTFLOAT</span><span class="o">*</span> <span class="nx">valPtr</span> <span class="o">=</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">-&gt;</span><span class="nx">second</span><span class="p">;</span>
+    <span class="nx">strcpy</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">-&gt;</span><span class="nx">first</span><span class="p">.</span><span class="nx">c_str</span><span class="p">());</span>
+    <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span> <span class="o">==</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">end</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span> <span class="o">=</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">begin</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">valPtr</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+</code></pre><p>With these functions broken out via emscripten it because easy to implement a setupModel function in JavaScript</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">that</span><span class="p">.</span><span class="nx">setupModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">numParams</span> <span class="o">=</span> <span class="nx">DSP_getNumParams</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numParams</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Allocate keyPtr in the stack</span>
+    <span class="kd">var</span> <span class="nx">keyPtr</span> <span class="o">=</span> <span class="nx">allocate</span><span class="p">(</span><span class="nx">intArrayFromString</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;i8&#39;</span><span class="p">,</span> <span class="nx">ALLOC_STACK</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">valPtr</span> <span class="o">=</span> <span class="nx">DSP_getNextParam</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">keyPtr</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">Pointer_stringify</span><span class="p">(</span><span class="nx">keyPtr</span><span class="p">);</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">model</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">valPtr</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+</code></pre>
+<p>With the additional code it becomes possible to compile almost any unit generator implemented in the faust language.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>more examples:</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><ul>
+<li><a href="/examples/faust2webaudio/osc.html">sine oscillator</a><ul>
+<li>Interact with <code>osc.model</code></li>
+</ul>
+</li>
+<li><a href="/examples/faust2webaudio/freeverb.html">freeverb</a><ul>
+<li>Interact with <code>freeverb.model</code> and <code>noise.model</code></li>
+</ul>
+</li>
+<li><a href="/examples/faust2webaudio/reverbDesigner.html">16th order FDN reverb</a><ul>
+<li>This one will make your browser chug, but it is an extremely complex model written by Julius Smith, just checkout out how many things are going on in <code>reverb.model</code></li>
+</ul>
+</li>
+</ul>
+<hr class="top-top-one"><hr class="top-one"><h1>what&#39;s next?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><hr class="top-three"><h3>benchmarks</h3><hr class="bottom-three"><p>The next step with the project is to run a series of bench marks to see how the compiled code fares against both native code and other public JavaScriptNode unit generators.  If these unit generators prove to be competitive there will be a few more challenges to overcome</p>
+<hr class="top-three"><h3>dynamically linking files</h3><hr class="bottom-three"><p>Currently I am wrapping every unit generator in a closure with its own emscripten virtual machine.  This is due to not yet figuring out how to implement a single instance of the emscripten virtual machine.  When I tried loading more than one compiled file everything would explode.</p>
+<p>My current solution is only a bandaid, and I will need to find a way to dynamically link multiple js files together.  The only possible side effect of this approach would that we might miss out of certain optimizations that might be able to be done via emscripten and the google closure compiler if all js files are compiled as a single script.</p>
+<p>It might be necessary to implement a build system with a tool such as grunt to automate the process of compiling and optimizing any number of compiled emscripten compiled js files.  Having to stop and compile multiple files by hand every time you wanted to add a new unit generator would prove quite frustrating to me.</p>
+<hr class="top-three"><h3>cleaning up memory leaks</h3><hr class="bottom-three"><p>I have at least one memory leak that I know of, this should really be taken care of asap</p>
+<hr class="top-three"><h3>allow for signals to control parameters</h3><hr class="bottom-three"><p>You can&#39;t do FM synthesis without being able to connect an lfo to the frequency of another oscillator.  You also can&#39;t make a dubstep wobble without being able to connect an amplitude to a cutoff frequency on a low pass filter.  This will be a must have for any Faust compiled unit generator to be a first class citizen.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>use the force, read the <a href="https://www.github.com/MylesBorins/faust2webaudio">source</a></h1><hr class="bottom-one"><hr class="bottom-bottom-one"></div><div class="pagination group"><a href="/page/7/" class="newer">Newer &#8594;</a><a href="/page/9/" class="older">&#8592; Older</a></div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>

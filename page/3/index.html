@@ -1,0 +1,99 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/blog/securing-apache-and-znc-with-letsencrypt/"><h1 class="post-title">Securing apache and znc with letsencrypt</h1></a><div class="post-date">Published 4/3/2016</div></div><div class="post-body markdown"><hr class="top-two"><h2>This stuff is hard</h2><hr class="bottom-two"><p>A couple month&#39;s back I was invited to the <a href="https://letsencrypt.org/">letsencrypt</a> beta and tried to get ssl working on my static sites being hosted by apache. I failed miserably... ssl is hard 😡.</p>
+<hr class="top-two"><h2>Let&#39;s try again</h2><hr class="bottom-two"><p>Today I decided to give it another go as things are out of beta. Despite a few system related hiccups the experience was awesome!</p>
+<p>To start I followed the <a href="https://letsencrypt.org/getting-started/">getting started</a> instructions on the <a href="https://letsencrypt.org/">letsencrypt</a> website.</p>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/letsencrypt/letsencrypt
+<span class="nv">$ </span><span class="nb">cd </span>letsencrypt
+<span class="nv">$ </span>./letsencrypt-auto --help
+</pre></div>
+
+</code></pre>
+<p>Everything just worked! My system was bootstrapped with all the things I needed to make some ssl certs. 🎉</p>
+<hr class="top-two"><h2>An edge case</h2><hr class="bottom-two"><p>The server I was working with is running Debian Wheezy and my web content is all hosted using apache. Thankfully <a href="https://letsencrypt.org/">letsencrypt</a> comes with a super helpful apache plugin! All you need to do to get ssl running with apache is:</p>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="nv">$ </span>./letsencrypt-auto --apache
+Checking <span class="k">for </span>new version...
+Requesting root privileges to run letsencrypt...
+   sudo /home/MylesBorins/.local/share/letsencrypt/bin/letsencrypt --apache
+The apache plugin is not working<span class="p">;</span> there may be problems with your existing configuration.
+The error was: NotSupportedError<span class="o">(</span><span class="s1">&#39;Apache plugin support requires libaugeas0 and augeas-lenses version 1.2.0 or higher, please make sure you have you have those installed.&#39;</span>,<span class="o">)</span>
+</pre></div>
+
+</code></pre>
+<hr class="top-two"><h2>Dat Backport</h2><hr class="bottom-two"><p>That is bad! What should I do if the version of dependencies shipped with debian are too old? The answer is to start using <a href="http://backports.debian.org/">debian backports</a>. Debian offers backport debian repositories that you can add to your <code>sources.list</code>. Once added you will be able to manually install specific packages at a later version that what is in the default repository. You can find <a href="http://backports.debian.org/Instructions/">instructions on setting up backports</a> on the debian website, below are the exact commands I ran.</p>
+<blockquote>
+<p>⚠️<strong>WARNING</strong>⚠️</p>
+</blockquote>
+<blockquote>
+<p>The following steps involve modifying your apt <code>sources.list</code>, only do so if you know what you are doing!</p>
+</blockquote>
+<blockquote>
+<p>⚠️<strong>WARNING</strong>⚠️</p>
+</blockquote>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="nv">$ </span>sudo <span class="nb">echo</span> <span class="s2">&quot;deb http://ftp.debian.org/debian wheezy-backports main&quot;</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list
+<span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install -t wheezy-backports libaugeas0 augeas-lenses
+</pre></div>
+
+</code></pre>
+<hr class="top-two"><h2>Up and running</h2><hr class="bottom-two"><p>Now that we have the updated version of libaugeas0 and augeas-lenses we simply rerun the original command <code>./letsencrypt-auto --apache</code> and the entire process of setting up SSL for https is automated. you are even given a UI that you can use to select which sites to grab certs for</p>
+<p><img src="/images/letsencrypt/cli-ui.png" alt="It&#39;s a cert"></p>
+<hr class="top-two"><h2>Keeping things up to date</h2><hr class="bottom-two"><p>It turns out <a href="https://letsencrypt.org/">letsencrypt</a> expires certs after 90 days. In order to make sure our sites don&#39;t use expired certs we need to set up a cron job that will regularily update the certs. Following the <a href="http://backports.debian.org/Instructions/">instructions on the website</a> I created this update-cert shell script.</p>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="c">#!/bin/sh</span>
+<span class="k">if</span> ! /path/to/letsencrypt/letsencrypt-auto renew &gt; /var/log/letsencrypt/renew.log 2&gt;<span class="p">&amp;</span>1 <span class="p">;</span> <span class="k">then</span>
+<span class="k">  </span><span class="nb">echo </span>Automated renewal failed:
+  cat /var/log/letsencrypt/renew.log
+  <span class="nb">exit </span>1
+<span class="k">fi</span>
+</pre></div>
+
+</code></pre>
+<p>I placed the script into <code>/etc/cron.daily/update-certs</code>, and just let cron take care of the rest. If you are making a new file don&#39;t forget to chown it to 755.</p>
+<hr class="top-two"><h2>Going the extra mile</h2><hr class="bottom-two"><p>Just over a year ago I decided to start using <a href="http://wiki.znc.in/ZNC">znc</a> as an irc bouncer. When using an irc bouncer you connect your irc client to the bouncer, and the bouncer connects to the irc server. When you are disconnected the bouncer maintains a connection with the irc server, and when you reconnect to the bounceryou are sent all the messages you missed. Getting a bouncer up and going on <a href="http://digitalocean.com/">digital ocean</a> was beyond easy due to the existance of <a href="https://github.com/jimeh/docker-znc">a docker container for znc</a>. After creating a docker droplet on digital ocean I got a bouncer up and running with this single command.</p>
+<pre><code class="lang-sh"><div class="highlight"><pre>docker run -d -p 36667:6667 -p 36669:6669 -v <span class="nv">$HOME</span>/.znc:/znc-data --name znc jimeh/znc
+</pre></div>
+
+</code></pre>
+<p>Once the znc server is running you can connect to it via http to setup the config and get your things set up. Mostly everything was intuitive, except for setting up SSL. This is kind of a big deal. While you are able to easily set up an SSL connection between znc and your irc server, if you do not have SSL setup on your bouncer you will be sending it traffic in plain text. This is really bad, especially if you are using irc on a public network, which you likely are.</p>
+<hr class="top-two"><h2>Hide Yo Packets</h2><hr class="bottom-two"><p>So now that <a href="https://letsencrypt.org/">letsencrypt</a> has been out for a couple months the <a href="http://wiki.znc.in/ZNC">znc</a> wiki has updated with <a href="http://wiki.znc.in/Signed_SSL_certificate#LetsEncrypt">instructions</a> on how you can easily setup a cert. Their instruction are however missing the first step, which is generating your cert.</p>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="nv">$ </span>./letsencrypt-auto certonly --standalone -d mysite.wow
+</pre></div>
+
+</code></pre>
+<p>Once the cert is generated we want to create the pem file that <a href="http://wiki.znc.in/ZNC">znc</a> will use</p>
+<pre><code class="lang-sh"><div class="highlight"><pre><span class="nv">$ </span>cat /etc/letsencrypt/live/mysite.wow/<span class="o">{</span>privkey,cert,chain<span class="o">}</span>.pem &gt; ~/.znc/znc.pem
+</pre></div>
+
+</code></pre>
+<p>We will then have to restart znc</p>
+<pre><code class="lang-sh"><div class="highlight"><pre>docker restart znc
+</pre></div>
+
+</code></pre>
+<p>You will then want to connect to the web based admin panel, click on global settings, and make a new listen port on <code>6669</code> that has ssl enabled.</p>
+<p><img src="/images/letsencrypt/znc-admin.png" alt="enabling ssl in the znc admin panel"></p>
+<p>Once this port is enabled you will be able to connect to your server at port 36669 and start chatting securely!</p>
+<hr class="top-two"><h2>Keeping things up to date</h2><hr class="bottom-two"><p>You will need to create a cronjob to keep your irc cert up to date as well. Below is the bash script that I used</p>
+<pre><code class="lang-bash"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+~/letsencrypt/letsencrypt-auto renew -nvv --standalone &gt; /var/log/letsencrypt/renew.log 2&gt;<span class="p">&amp;</span>1
+<span class="nv">LE_STATUS</span><span class="o">=</span><span class="nv">$?</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$LE_STATUS&quot;</span> !<span class="o">=</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo </span>Automated renewal failed:
+    cat /var/log/letsencrypt/renew.log
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+cat /etc/letsencrypt/live/mysite.wow/<span class="o">{</span>privkey,cert,chain<span class="o">}</span>.pem &gt; ~/.znc/znc.pem
+docker restart znc
+<span class="nb">echo </span>Automated renewal worked!
+</pre></div>
+
+</code></pre>
+<p>I placed this file in <code>/etc/cron.daily/</code> and now I will most likely not have to worry about this again.</p>
+<hr class="top-two"><h2>Parting words</h2><hr class="bottom-two"><p>SSL scared me. The first time I tried to do this I had no idea what to do, nothing worked, and it didn&#39;t feel really great. I continued using my bouncer in an insecure way, avoiding taking care of this problem because it was so hard for me. After seeing how far <a href="https://letsencrypt.org/">letsencrypt</a> has come in the last couple months I am elated. I am no longer afraid of setting up SSL, and I am fairly confident that I will be able to do so without much pain with future services.</p>
+</div><div class="pagination group"><a href="/page/2/" class="newer">Newer &#8594;</a><a href="/page/4/" class="older">&#8592; Older</a></div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>

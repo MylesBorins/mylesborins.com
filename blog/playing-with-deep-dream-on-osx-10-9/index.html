@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>Playing with Deep Dream (on OSX 10.9).</title><meta name="description" content="Getting up and running to play with DeepDream."></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><div id="header-image"><img src="/images/deepdream/doge.jpeg" alt="Am I hallucinating?"></div><img src="/images/deepdream/doge.jpeg" alt="ignore me, I'm a buffer" class="buffer"><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/blog/playing-with-deep-dream-on-osx-10-9/"><h1 class="post-title">Playing with Deep Dream (on OSX 10.9).</h1></a><div class="post-date">Published 7/12/2015</div></div><div class="post-body markdown"><hr class="top-four"><h4>TLDR</h4><hr class="bottom-four"><p>pre-requirements:</p>
+<pre><code><div class="highlight"><pre><span class="o">*</span> <span class="nx">boot2docker</span> <span class="nx">installed</span>
+<span class="o">*</span> <span class="nx">docker</span> <span class="nx">installed</span>
+<span class="o">*</span> <span class="nx">courage</span>
+</pre></div>
+
+</code></pre><pre><code class="lang-bash"><div class="highlight"><pre>boot2docker up
+docker pull ryankennedyio/deepdream/
+git clone https://github.com/ryankennedyio/deep-dream-generator.git
+<span class="nb">cd </span>https://github.com/ryankennedyio/deep-dream-generator.git
+docker run -d -p 443:8888 -e <span class="s2">&quot;PASSWORD=password&quot;</span> -v <span class="nv">$PWD</span>:/src ryankennedyio/deepdream
+<span class="c"># you can now use boot2docker ip and visit https://{that ip}</span>
+</pre></div>
+
+</code></pre>
+<p>⚠⚠⚠ as of the writing of this post the included image in the above repo doesn&#39;t play nice with deep dream. If you change the jpeg everything will play nice. There is a PR in to fix this :D ⚠⚠⚠</p>
+<p><strong>I recently stumbled across <a href="https://github.com/VISIONAI/clouddream/">clouddream</a> which has some really amazing examples of how to turn deep dream into a service</strong> </p>
+<p>If you have any questions or would like something expanded on please tweet <a href="https://twitter.com/MylesBorins">@MylesBorins</a> or DM me.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Getting started is a drag</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>The process of getting started with deep dream is not the simplest thing. If you start from the README found on <a href="https://github.com/google/deepdream">github</a> you will notice that you need to get <a href="http://ipython.org/">ipython</a> <a href="https://ipython.org/notebook.html">notebook</a> installed to get started. Once you get that running you are going to find a NEST of dependencies you are going to have to install</p>
+<p>From having an <a href="https://continuum.io/downloads">anaconda</a> build of python to having <a href="https://www.nvidia.com/object/cuda_home_new.html">CUDA</a> installed you are in for a bad time.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Just use docker</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>After burning a bit of time trying to bootstrap my system I opted to find a docker image that got things up and running nicely.</p>
+<p>A query or two brought me to <a href="https://registry.hub.docker.com/u/ryankennedyio/deepdream/">ryankennedyio/deepdream</a> on <a href="https://hub.docker.com/">docker hub</a>. Sadly the repo has no readme 😞. Thankfully after some Sherlocking I found the <a href="https://github.com/ryankennedyio/deep-dream-generator">repo on github</a>. The repo outlined the specific docker command that should be used to get things up and running. Everything works now and I can follow along. Below I will post my experiments... expect more as time goes on.</p>
+<p>The Creator of this repo wrote a great <a href="http://ryankennedy.io/running-the-deep-dream/">blog post</a> which goes quite a bit more in depth into getting things started.</p>
+<p><img src="/images/trippy-me.jpg" alt="trippy-me"></p>
+</div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>

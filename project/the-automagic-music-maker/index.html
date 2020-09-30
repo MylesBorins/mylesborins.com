@@ -1,0 +1,184 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>the automagic music maker</title><meta name="description" content="make music in your browser with flocking"></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/project/the-automagic-music-maker/"><h1 class="post-title">the automagic music maker</h1></a><div class="post-date">Summer 2012</div></div><div class="post-body markdown"><!-- <div id="instrument">
+    <div id="piano"></div>
+</div> -->
+<hr class="top-two"><h2>make music. in your browser!</h2><hr class="bottom-two"><p>Built using the <a href="https://github.com/colinbdclark/Flocking">flocking</a> audio synthesis library and the <a href="http://fluidproject.org/">fluid infusion framework</a> &quot;The Automagic Music Maker&quot; offers developers and musicians the ability to generate various types of accessible and responsive instruments in the browser. Press shift for sustain and alt for arpeggiation! </p>
+<p>All generated instruments are designed to work with industry standard screen-reader software such as Apple&#39;s Voice Over, Jaws, and NVDA. Once selected individuals will find the applications have an in depth description explaining how to traverse and interact with the instrument with their keyboard. </p>
+<p>Create keyboards of custom sizes, colors, and tunings. Want a 7 note octave of pink and brown notes, easy peasey. Microtonal compositions with 100 equal tempered notes per octaves, our specialty! </p>
+<p>Feel free to open up your console right now and start tinkering, the above keyboard is a global object called Instrument</p>
+<pre><code><div class="highlight"><pre><span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">model</span>                     <span class="c1">// Take a peak at the model</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;ocataves&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>     <span class="c1">// 3 Octaves</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;afourFreq&quot;</span><span class="p">,</span> <span class="mi">435</span><span class="p">)</span>  <span class="c1">// 19th Century Austria</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;octaveNotes&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1">// Just try it!</span>
+</pre></div>
+
+</code></pre><p>Just hit alt to enable to arpeggiator... which you can also modify via the console.</p>
+<pre><code><div class="highlight"><pre><span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;interval&quot;</span><span class="p">,</span> <span class="mi">350</span><span class="p">)</span>             <span class="c1">// Set Interval</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;arpPattern&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1">// Set The pattern</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="s2">&quot;minor&quot;</span><span class="p">)</span>            <span class="c1">// Feeling sad?</span>
+<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">)</span>        <span class="c1">// Feeling jerry?</span>
+</pre></div>
+
+</code></pre><p>You can also make grids!!!</p>
+<div id="gridFrame"></div>
+
+<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">model</span>                     <span class="c1">// Take a peak at the model</span>
+<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>         <span class="c1">// Clear up some space.</span>
+<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>     <span class="c1">// each row becomes a mode!</span>
+<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;octaveNotes&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1">// Works too!</span>
+</pre></div>
+
+</code></pre>
+<p>These are just some of the nifty keyboards you can make</p>
+<div>
+    <div style="float:left; width:50%;" id="topleftpiano"></div>
+    <div style="float:left; width:50%;" id="toprightpiano"></div>
+</div>
+
+<div>
+    <div style="float:left; width:50%;" id="bottomleftpiano"></div>
+    <div style="float:left; width:50%;" id="bottomrightpiano"></div>
+</div>
+
+<p>You can check out the source code on <a href="https://github.com/MylesBorins/piano">github</a></p>
+<script src="/scripts/jquery/jquery.min.js"></script>    
+<script src="/scripts/automm/flocking.min.js"></script>    
+<script src="/scripts/automm/d3.v2.min.js"></script>
+<script src="/scripts/automm/MyInfusion.min.js"></script>
+<script src="/scripts/automm/dat.gui.js"></script>
+<script src="/scripts/automm/automm.min.js"></script>
+<script type/="text/javascript">
+/*global jQuery, fluid*/
+var automm = automm || {};
+var demo = demo || {};
+var grid = grid || {};
+var instrument = instrument || {};
+
+(function(){
+    "use strict";
+
+    var sticky = $("#sticky-social");
+    sticky.attr('class', '');
+    sticky.attr('id', 'header-image');
+    sticky.empty();
+    sticky.append('<div id="instrument"><div id="piano"></div></div>');
+
+    instrument = automm.instrument("#instrument", {
+        model: {
+            firstNote: 60,
+            octaves: 2,
+            padding: 70,
+            keys: {
+            }
+        }
+    });
+
+    grid = automm.instrument("#gridFrame", {
+        model: {
+            autoGrid: true,
+            firstNote: 60,
+            octaves: 2,
+            padding: 0,
+            keys: {
+                white: {
+                    fill: 'magenta',
+                    stroke: 'black',
+                    highlight: 'lime'
+                },
+                black: {
+                    fill: 'cyan',
+                    stroke: 'black',
+                    highlight: 'maroon'
+                }
+            }
+        }
+    });
+    demo.topleftpiano = automm.instrument("#topleftpiano", {
+          model: {
+              autoPiano: true,
+              padding: 50,
+              firstNote: 60,
+              octaves: 4,
+              octaveNotes: 10,
+              keys: {
+                  white: {
+                      fill: 'white',
+                      highlight: 'yellow'
+                  },
+                  black: {
+                      fill: 'black',
+                      highlight: 'yellow'
+                  }
+              }
+          }
+     });
+     demo.toprightpiano = automm.instrument("#toprightpiano", {
+           model: {
+               autoPiano: true,
+               padding: 50,
+               firstNote: 60,
+               octaveNotes: 11,
+               octaves: 4,
+               keys: {
+                   white: {
+                       fill: 'black',
+                       highlight: 'yellow',
+                       stroke: 'white'
+                   },
+                   black: {
+                       fill: 'white',
+                       highlight: 'orange',
+                       Stroke: 'white'
+                   }
+               }
+           }
+      });
+
+      demo.bottomleftpiano = automm.instrument("#bottomleftpiano", {
+            model: {
+                autoPiano: true,
+                padding: 50,
+                firstNote: 61,
+                octaveNotes: 8,
+                octaves: 2,
+                keys: {
+                    white: {
+                        fill: 'LightSkyBlue',
+                        highlight: 'purple'
+                    },
+                    black: {
+                        fill: 'silver',
+                        highlight: 'hotpink'
+                    }
+                }
+            }
+       });
+
+       demo.bottomrightpiano = automm.instrument("#bottomrightpiano", {
+             model: {
+                 autoPiano: true,
+                 padding: 50,
+                 firstNote: 64,
+                 octaveNotes: 8,
+                 octaves: 2,
+                 keys: {
+                     white: {
+                         fill: 'purple',
+                         highlight: 'LightSkyBlue'
+                     },
+                     black: {
+                         fill: 'hotpink',
+                         highlight: 'silver'
+                     }
+                 }
+             }
+        });
+}());
+</script>  </div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>stringin' it</title><meta name="description" content="stringin' it"></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><div id="header-image"><img src="/images/stringin-it/header.jpg" alt="From Hand Made Music / Monome Tour 2010"></div><img src="/images/stringin-it/header.jpg" alt="ignore me, I'm a buffer" class="buffer"><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/project/stringin-it/"><h1 class="post-title">stringin' it</h1></a><div class="post-date">Fall 2009 - Winter 2010</div></div><div class="post-body markdown"><div class="videoWrapper">
+  <iframe width="420" height="315" src="//www.youtube.com/embed/X96E2jjCfC8" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+<hr class="top-top-one"><hr class="top-one"><h1>hardware</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><hr class="top-two"><h2>arduino duemilanove</h2><hr class="bottom-two"><p><img src="/images/stringin-it/ArduinoDuemilanove.jpg" alt="Arduino Duemilanove"></p>
+<hr class="top-two"><h2>dmx shield</h2><hr class="bottom-two"><p><img src="/images/stringin-it/dmx.jpg" alt="DMX Shield"></p>
+<blockquote>
+<p>information on the dmx shield can be found <a href="http://playground.arduino.cc/DMX/DMXShield">here</a></p>
+</blockquote>
+<hr class="top-two"><h2>cauvet colorSTRIP</h2><hr class="bottom-two"><p><img src="/images/stringin-it/COLORSTRIP.jpg" alt="colorSTRIP"></p>
+<blockquote>
+<p>DMX light used in installation</p>
+</blockquote>
+<hr class="top-top-one"><hr class="top-one"><h1>software</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><hr class="top-three"><h3>touch OSC layout</h3><hr class="bottom-three"><p>This layout is designed to work in conjuncture with below arduino code and Max/msp patch. It sends data via OSC to the host computer to be translated into DMX via Max and Arduino</p>
+<p>Download the layout <a href="/files/ColorStrip.touchosc">here</a></p>
+<hr class="top-three"><h3>arduino code</h3><hr class="bottom-three"><p>Firmware for the arduino was written which allows for serial data to be received from base laptop as well as DMX messages to be sent out.</p>
+<p>The source code for this project can be found on <a href="https://github.com/TheAlphaNerd/Stringin-It">github</a></p>
+<p>The DmxSimple library was utilized for outputting DMX data to the lighting fixture, the library can be found <a href="http://code.google.com/p/tinkerit/wiki/DmxSimple">here</a></p>
+<hr class="top-three"><h3>max/msp code</h3><hr class="bottom-three"><p>A Max/msp patch was used take incoming OSC data, and route it to the arduino via Serial. The code also kept track of which mode the user was inputting data to allow full control of lighting rig.</p>
+<p>This patch can be found in the source code linked above</p>
+<hr class="top-top-one"><hr class="top-one"><h1>The Final Product</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>The final installation was eye level in height and 6 feet in length.</p>
+<p>There were four major components to the installation.</p>
+<ol>
+<li><p>The Frame and the Motors. (The frame was designed by fellow OCAD students Paul Moleiro and Dov Smilovic.)</p>
+</li>
+<li><p>The Arduino Duemilanove w/ DMX shield</p>
+</li>
+<li><p>Chauvet ColorSTRIP dmx light</p>
+</li>
+<li><p>iPod touch /w Touch OSC</p>
+</li>
+</ol>
+<p>The way the installation worked was actually fairly simple. An iPod with touch osc installed would send OSC message over a wireless network to a macbook pro. This macbook would have a max/msp patch installed which would route the data from the iPod and translate the messages to be sent via serial to an arduino micro-controller. The arduino would then take these serial messages and use the information to control the lighting via DMX and the speed of the string via PWM.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>inspiration</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><img src="/images/stringin-it/original.jpg" alt="The Original"></p>
+<blockquote>
+<p>The original toy that inspired it all</p>
+</blockquote>
+<hr class="top-top-one"><hr class="top-one"><h1>initial Hardware Hacking</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://post.monome.org/comments.php?DiscussionID=6453&amp;page=1">Original Post on Monome Board</a></p>
+<blockquote>
+<p>I don&#39;t know if anyone on the board has had the pleasure of playing with a stringin’ It… but it is an absolutely fantastic toy to create 3D light shows in front of you.</p>
+</blockquote>
+<p><a href="http://www.youtube.com/watch?v=J0jrtVZCpds">Youtube Video of Original Toy</a></p>
+<p>The initial prototype was made on a small scale by hacking the original toy to be controlled with an arduino.  A monome controller was used as a control interface emulating the controls of the original toy.</p>
+<p>Later the lights were controlled using an audio stream from ableton live, allowing for real time audio reactive 3D visuals.</p>
+<p>Since the majority of the original toy was discarded aside from the enclosure you can actually rebuild this project from the bill of materials and instructions below.</p>
+<hr class="top-three"><h3>materials</h3><hr class="bottom-three"><ul>
+<li>1 x arduino Duemilanova</li>
+<li>2 x 5v DC motor</li>
+<li>1 x String</li>
+<li>2 x Red LED</li>
+<li>2 x Blue LED</li>
+<li>2 x Green LED</li>
+<li>3 x 2N3904 Transistor</li>
+<li>1 x TIP120 Transistor</li>
+<li>Some Wire</li>
+</ul>
+<hr class="top-three"><h3>instructions</h3><hr class="bottom-three"><p>Each LED is wired in series with the other LED of the same color.  All three groups receive power from pin 10.  The group of each group goes to a collecter on the 2N3904.  Pins 6 - 8 go to the respective bases, and the emiters all conenct to ground.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>early dmx testing</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><div class="videoWrapper">
+    <iframe width="420" height="315" src="//www.youtube.com/embed/XX9AVYvVYFU" frameborder="0" allowfullscreen></iframe>
+</div></p>
+<blockquote>
+<p>an early test using Touch OSC to control a dmx light via a max/msp patch</p>
+</blockquote>
+</div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/blog/what-exactly-is-talkpaybot-how-to-make-simple-bots-with-the-twitter-stream-api/"><h1 class="post-title">What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</h1></a><div class="post-date">Published 5/4/2015</div></div><div class="post-body markdown"><blockquote>
+<p>To truly begin to eradicate pay inequality, we need a radical discussion. So let’s talk about pay.&quot; ~ Lauren Voswinkel</p>
+</blockquote>
+<p>On April 28th 2015 <a href="https://twitter.com/laurenvoswinkel">Lauren Voswinkel</a> wrote <a href="https://modelviewculture.com/news/lets-talk-about-pay">an article</a> on model view culture that called for people to tweet their salaries using the hashtag <em>#talkpay</em> on May 1st, International Workers&#39; Day.</p>
+<p>While I can claim that I was inspired, I did not initially feel comfortable tweeting this information for a variety of personal reasons. That was until I saw a thread involving <a href="https://twitter.com/othiym23">@othiym23</a> and <a href="https://twitter.com/addyosmani">@addyosmani</a> discussing how Forrest had been acting as a manual proxy to anonymously tweet <em>#talkpay</em> tweet all day. Specifically it was suggested a bot could make this process much simpler.</p>
+<p>My immediate reaction was &quot;I can totally build this bot, and do it with streams!&quot;</p>
+<p>From 1000 feet the process is pretty simple. Make a bot that will tweet any DM it receives that includes <em>#talkpay</em>. Twitter offers a <a href="https://dev.twitter.com/streaming/overview">stream-api</a> that makes this <a href="https://dev.twitter.com/streaming/userstreams#direct_messages">quite simple</a>.</p>
+<p>To get started the first thing I did was register a twitter handle for <a href="https://twitter.com/talkpayBot">the bot</a>. Once a twitter account is set up you have to visit <a href="https://apps.twitter.com/">apps.twitter.com</a> and <em>create a new app</em>. Since the bot will be sending and receiving Dm&#39;s it will also be necessary to modify the app permissions to <em>Read, Write and Access direct Messages</em>.</p>
+<p><img src="/images/talkpayBot/permissions.png" alt="application permissions"></p>
+<p>Once the permissions have been appropriately set you will need to regenerate the consumer Key and Secret and also create a unique access token. These four secret tokens will be necessary for you to securely communicate with the twitter api.</p>
+<p>Once the app is properly registered with twitter we can begin to program the bot in node.js using the <a href="https://www.npmjs.com/package/twit">Twit</a> library. Getting started is fairly easy. In a new folder use <code>npm init</code> to initialize the project. Install Twit <code>npm install --save twit</code>, and then create your index.js file <code>touch index.js</code>. Now that we have the skeleton for our project we can create a new object Twit that can easily communicate with the twitter api using the credentials we generated above</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Twit</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;twit&#39;</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">T</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twit</span><span class="p">({</span>
+    <span class="nx">consumer_key</span><span class="o">:</span>         <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="nx">consumer_secret</span><span class="o">:</span>      <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="nx">access_token</span><span class="o">:</span>         <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="nx">access_token_secret</span><span class="o">:</span>  <span class="s1">&#39;...&#39;</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Now that we have T object up and running you might want to play with the twitter API to make sure things are working as expected. This could include sending a &quot;Hello World&quot; tweet.</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;hello world!&#39;</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Assuming everything is working as expected, we should see that our bot has tweet &quot;Hello World&quot;.</p>
+<p>Now that we are familiar with using the Twit library we can easily start breaking down the bot we are trying to build in to a series of steps</p>
+<ul>
+<li>On every DM</li>
+<li>Check for #talkpay</li>
+<li>If #talkpay tweet it</li>
+<li>If not #talkpay warn user</li>
+<li>Delete All Messages after bot has processed them</li>
+</ul>
+<p>So lets start by figuring out how to listen to a direct message stream</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">T</span><span class="p">.</span><span class="nx">stream</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
+
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventMsg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I just received a message from &#39;</span> <span class="o">+</span> <span class="nx">screenName</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;msg: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;id: &#39;</span> <span class="o">+</span> <span class="nx">msgID</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Now try DM&#39;ing the bot you created. Every time it receives a message the above function will get called and the name of the sender, the content of the message, and the message ID will all be logged to the console.</p>
+<p>Now lets check for #talkpay and tweet if the phrase is included in the DM</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventMsg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span><span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I tweeted the message&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Now we can try DM&#39;ing the bot with a message that includes <em>#talkpay</em> and the bot will do its thing! This is awesome, except it does not really warn the sender if the message didn&#39;t get tweeted. This can be accomplished with and else statement and another call to the api.</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventMsg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span><span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I tweeted the message&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/new&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">screen_name</span><span class="o">:</span> <span class="nx">screenName</span><span class="p">,</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I did not tweet a thing, but I warned them&#39;</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>This is awesome, we can now DM the bot and it will warn us if we didn&#39;t include the appropriate Hash Tag. The only issue now is that things are not at all anonymous... the bot will keep a record of all the DM&#39;s it received.</p>
+<p>I like to consider myself inherently trustworthy, but there is no reason I should know who has tweeted the bot. By abstracting the callback function that we give to our API calls we can force all DMs to be immediately deleted after being triaged.</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/destroy&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="nx">id</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventMsg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/new&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">screen_name</span><span class="o">:</span> <span class="nx">screenName</span><span class="p">,</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Now everything appears to be working, except that we will notice the bot will be tweeting the warning message everytime someone DMs without <em>#talkpay</em>. This is due to the fact that the direct_messages stream includes messages both from and to your user. A simple if statement can catch any instances where the incoming message is from yourself. We are going to want to make sure that message is deleted as well, otherwise the bot will maintain a list of everyone that wrote it without <em>#talkpay</em>.</p>
+<p>Below is the final code for the bot</p>
+<pre><code class="lang-js"><div class="highlight"><pre><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">Twit</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;twit&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./local.json&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">T</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twit</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">T</span><span class="p">.</span><span class="nx">stream</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/destroy&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="nx">id</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventMsg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">screenName</span> <span class="o">===</span> <span class="s1">&#39;talkpayBot&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/new&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">screen_name</span><span class="o">:</span> <span class="nx">screenName</span><span class="p">,</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+</code></pre>
+<p>Amazing!!! We now have a very simple node.js application that is able to anonymously tweet any message it receives that includes a specific hashtag. The only step left is getting this bot into <strong>THE CLOUD</strong>.</p>
+<p>I will follow up with another write up later this week explaining how I <em>dockerized</em> this application and deployed it into the cloud painlessly on digital ocean.</p>
+</div><div class="pagination group"><a href="/page/5/" class="newer">Newer &#8594;</a><a href="/page/7/" class="older">&#8592; Older</a></div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-46827582-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>
