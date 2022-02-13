@@ -4,7 +4,6 @@
   "author": "Myles Borins <myles.borins@gmail.com>",
   "repository": "https://github.com/MylesBorins/MylesBorins.com.git",
   "devDependencies": {
-    "bower": "^1.8.8",
     "grunt": "^1.3.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^2.0.0",
@@ -22,10 +21,12 @@
     "node": ">=16"
   },
   "scripts": {
-    "postinstall": "npm run bower",
-    "bower": "bower install",
     "start": "grunt server",
     "build": "grunt build"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "sticky-kit": "^1.1.3"
+  }
 }

@@ -96,6 +96,15 @@ module.exports = function (grunt) {
             'styles/fonts/**',
             'files/**'
           ]
+        }, {
+          expand: true,
+          flatten: true,
+          filter: 'isFile',
+          dest: 'public_html/scripts/',
+          src: [
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/sticky-kit/dist/sticky-kit.min.js'
+          ]
         }]
       }
     },
