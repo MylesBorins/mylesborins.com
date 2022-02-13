@@ -1,7 +1,7 @@
 //- Mixin for post, used on homepage and post page
 mixin postHead(post)
   .post-head.group
-    a(href="#{data.baseUrl}#{post.url}")
+    a(href=`${data.baseUrl}${post.url}`)
         h1.post-title= post.title
     - if (post.type && post.type === 'project') {
       div.post-date= post.quarter
@@ -12,7 +12,7 @@ mixin postHead(post)
     
 
 mixin post(post)
-  mixin postHead(post)
+  +postHead(post)
   .post-body.markdown!= post.content
 
 doctype html
@@ -22,17 +22,17 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(name="description", content="portfolio and blog of myles borins")
     meta(name="author", content="Myles Borins")
-    link(rel="icon", type="image/png", href="#{data.baseUrl}images/favicon.ico")
-    link(href="#{data.baseUrl}styles/main.css", rel="stylesheet")
+    link(rel="icon", type="image/png", href=`${data.baseUrl}images/favicon.ico`)
+    link(href=`${data.baseUrl}styles/main.css`, rel="stylesheet")
     block head
       title= "MylesBorins.com"
   body
-    include header.jade
+    include header.pug
     block headImage
-    include social.jade
+    include social.pug
     .meta-white
       .center.shift-up-body 
         block content
 
-    include footer.jade
-    include scripts.jade
+    include footer.pug
+    include scripts.pug

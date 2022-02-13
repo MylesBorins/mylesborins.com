@@ -6,4 +6,4 @@ block head
 block content
   each post in posts
     if(post.type === "blog")
-      mixin postHead(post)
+      +postHead(post)

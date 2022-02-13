@@ -6,5 +6,5 @@ block head
 block content
   each post in posts
     if(post.type === "project")
-      mixin postHead(post)
+      +postHead(post)
 

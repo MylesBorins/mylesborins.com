@@ -8,7 +8,7 @@ module.exports = function (grunt) {
       posts: {
         src: 'content',
         dest: 'public_html',
-        layout: 'src/layouts/post.jade',
+        layout: 'src/layouts/post.pug',
         url: ':type/:title/',
         options: {
           pageSrc: 'src/pages',
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
           },
           pagination: {
             postsPerPage: 1,
-            listPage: 'src/pages/index.jade',
+            listPage: 'src/pages/index.pug',
             getPostGroups: function (postCollection, pagination) {
               var postsPerPage = pagination.postsPerPage;
               var postGroups   = [];
