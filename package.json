@@ -19,7 +19,7 @@
     "node-sass": "^7.0.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=16"
   },
   "scripts": {
     "postinstall": "npm run bower",
