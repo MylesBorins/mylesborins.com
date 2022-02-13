@@ -22,34 +22,32 @@
 <blockquote>
 <hr class="top-three"><h3>!!! WARNING !!!</h3><hr class="bottom-three"></blockquote>
 <hr class="top-two"><h2>What does faust look like?</h2><hr class="bottom-two"><p>Below is an example of Noise Written in Faust </p>
-<pre><code><div class="highlight"><pre><span class="nx">random</span>  <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span><span class="o">~*</span><span class="p">(</span><span class="mi">1103515245</span><span class="p">);</span>
-<span class="nx">noise</span>   <span class="o">=</span> <span class="nx">random</span><span class="o">/</span><span class="mf">2147483647.0</span><span class="p">;</span>
-<span class="nx">process</span> <span class="o">=</span> <span class="nx">noise</span> <span class="o">*</span> <span class="nx">vslider</span><span class="p">(</span><span class="s2">&quot;Volume[style:knob]&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
-</pre></div>
+<pre><code>random  = +(12345)~*(1103515245);
+noise   = random/2147483647.0;
+process = noise * vslider(&quot;Volume[style:knob]&quot;, 0, 0, 1, 0.1);
 </code></pre>
 <hr class="top-two"><h2>What does a WebAudioNode look like?</h2><hr class="bottom-two"><p>Below is an example of White Noise taken from Flocking</p>
-<pre><code><div class="highlight"><pre><span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">.</span><span class="nx">whiteNoise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">(</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<pre><code>flock.ugen.whiteNoise = function (inputs, output, options) {
+    var that = flock.ugen(inputs, output, options);
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">gen</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">numSamps</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span>
-            <span class="nx">i</span><span class="p">;</span>
+    that.gen = function (numSamps) {
+        var out = that.output,
+            i;
 
-        <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numSamps</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">out</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
-        <span class="p">}</span>
+        for (i = 0; i &lt; numSamps; i++) {
+            out[i] = Math.random();
+        }
 
-        <span class="nx">that</span><span class="p">.</span><span class="nx">mulAdd</span><span class="p">(</span><span class="nx">numSamps</span><span class="p">);</span>
-    <span class="p">};</span>
+        that.mulAdd(numSamps);
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">onInputChanged</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">flock</span><span class="p">.</span><span class="nx">onMulAddInputChanged</span><span class="p">(</span><span class="nx">that</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.onInputChanged = function () {
+        flock.onMulAddInputChanged(that);
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">onInputChanged</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
-<span class="p">};</span>
-</pre></div>
+    that.onInputChanged();
+    return that;
+};
 </code></pre>
 <hr class="top-top-one"><hr class="top-one"><h1>But Doesn&#39;t Faust Already compile to web audio?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Indeed it does, but does it work? </p>
 <p><a href="/examples/faust2webaudio/current-noise.html">Current Faust2Webaudio Noise</a></p>
@@ -57,63 +55,61 @@
 <hr class="top-top-one"><hr class="top-one"><h1>asm.js to the rescue!</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://asmjs.org/"><img src="/images/faust-to-webaudio/asmjs.jpg" alt="asm.js"></a></p>
 <p>asm.js is a strict subset of JavaScript that can be used as a low-level, efficient target language for compilers. The asm.js language provides an abstraction similar to the C/C++ virtual machine: a large binary heap with efficient loads and stores, integer and floating-point arithmetic, first-order function definitions, and function pointers.</p>
 <hr class="top-two"><h2>What does an asm.js WebAudioNode look like?</h2><hr class="bottom-two"><p>An example from the <a href="https://github.com/colinbdclark/Flocking/tree/asmjs">asmjs Flocking Branch</a></p>
-<pre><code><div class="highlight"><pre><span class="nx">flock</span><span class="p">.</span><span class="nx">ugen</span><span class="p">.</span><span class="nx">asmSin</span><span class="p">.</span><span class="nx">module</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">stdlib</span><span class="p">,</span> <span class="nx">foreign</span><span class="p">,</span> <span class="nx">heap</span><span class="p">)</span> <span class="p">{</span>
-    <span class="s2">&quot;use asm&quot;</span><span class="p">;</span>
+<pre><code>flock.ugen.asmSin.module = function (stdlib, foreign, heap) {
+    &quot;use asm&quot;;
 
-    <span class="kd">var</span> <span class="nx">sin</span> <span class="o">=</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">pi</span> <span class="o">=</span> <span class="mf">3.14159</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nx">Float32Array</span><span class="p">(</span><span class="nx">heap</span><span class="p">);</span>
+    var sin = stdlib.Math.sin;
+    var pi = 3.14159;
+    var out = new stdlib.Float32Array(heap);
 
-    <span class="kd">function</span> <span class="nx">gen</span> <span class="p">(</span><span class="nx">numSamps</span><span class="p">,</span> <span class="nx">freq</span><span class="p">,</span> <span class="nx">phaseOffset</span><span class="p">,</span> <span class="nx">mul</span><span class="p">,</span> <span class="nx">add</span><span class="p">,</span> <span class="nx">sampleRate</span><span class="p">,</span> <span class="nx">phase</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">numSamps</span> <span class="o">=</span> <span class="nx">numSamps</span><span class="o">|</span><span class="mi">0</span><span class="p">;</span>
-        <span class="nx">freq</span> <span class="o">=</span> <span class="o">+</span><span class="nx">freq</span><span class="p">;</span>
-        <span class="nx">phaseOffset</span> <span class="o">=</span> <span class="o">+</span><span class="nx">phaseOffset</span><span class="p">;</span>
-        <span class="nx">mul</span> <span class="o">=</span> <span class="o">+</span><span class="nx">mul</span><span class="p">;</span>
-        <span class="nx">add</span> <span class="o">=</span> <span class="o">+</span><span class="nx">add</span><span class="p">;</span>
-        <span class="nx">sampleRate</span> <span class="o">=</span> <span class="o">+</span><span class="nx">sampleRate</span><span class="p">;</span>
-        <span class="nx">phase</span> <span class="o">=</span> <span class="o">+</span><span class="nx">phase</span><span class="p">;</span>
+    function gen (numSamps, freq, phaseOffset, mul, add, sampleRate, phase) {
+        numSamps = numSamps|0;
+        freq = +freq;
+        phaseOffset = +phaseOffset;
+        mul = +mul;
+        add = +add;
+        sampleRate = +sampleRate;
+        phase = +phase;
 
-        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        var i = 0;
 
-        <span class="k">for</span> <span class="p">(;</span> <span class="p">(</span><span class="nx">i</span> <span class="o">|</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">numSamps</span> <span class="o">|</span> <span class="mi">0</span><span class="p">);</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">out</span><span class="p">[</span><span class="nx">i</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="nx">sin</span><span class="p">(</span><span class="nx">phase</span> <span class="o">+</span> <span class="nx">phaseOffset</span><span class="p">)</span> <span class="o">*</span> <span class="nx">mul</span> <span class="o">+</span> <span class="nx">add</span><span class="p">);</span>
-            <span class="nx">phase</span> <span class="o">=</span> <span class="o">+</span><span class="p">(</span><span class="nx">phase</span> <span class="o">+</span> <span class="p">(</span><span class="nx">freq</span> <span class="o">/</span> <span class="nx">sampleRate</span> <span class="o">*</span> <span class="nx">pi</span> <span class="o">*</span> <span class="mf">2.0</span><span class="p">));</span>
-        <span class="p">}</span>
+        for (; (i | 0) &lt; (numSamps | 0); i = i + 1 | 0) {
+            out[i &gt;&gt; 2] = +(sin(phase + phaseOffset) * mul + add);
+            phase = +(phase + (freq / sampleRate * pi * 2.0));
+        }
 
-        <span class="k">return</span> <span class="o">+</span><span class="nx">phase</span><span class="p">;</span>
-    <span class="p">}</span>
+        return +phase;
+    }
 
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="nx">gen</span><span class="o">:</span> <span class="nx">gen</span>
-    <span class="p">};</span>
-<span class="p">};</span>
-</pre></div>
+    return {
+        gen: gen
+    };
+};
 </code></pre>
 <p>While it would have been possible to implement a traveller to compile asm.js code from the <em>FIR</em> representation, I opted to try a slightly different path.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>introducing emscripten</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://emscripten.org/"><img src="/images/faust-to-webaudio/emscripten.jpg" alt="Emscripten"></a></p>
 <p>Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can be generated from C/C++ using Clang, or any other language that can be converted into LLVM bitcode) and compiles that into JavaScript, which can be run on the web (or anywhere else JavaScript can run).</p>
 <hr class="top-top-one"><hr class="top-one"><h1>one script to rule them all</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Let&#39;s start by taking a look at the <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh">bash script</a> that is used to compile noise.js</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="c"># !/bin/bash</span>
-<span class="c"># tputcolors</span>
+<pre><code class="language-bash"># !/bin/bash
+# tputcolors
 
-<span class="nb">set</span> -e
-<span class="nb">echo</span> <span class="s1">&#39;Compiling From Faust -&gt; CPP&#39;</span>
+set -e
+echo &#39;Compiling From Faust -&gt; CPP&#39;
 faust -a minimal.cpp -i -uim -cn Noise  dsp/noise.dsp -o cpp/faust-noise.cpp
-<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Wrapping dat cpp&quot;</span>
-sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&quot;s/Dsp/Noise/g&quot;</span> -e <span class="s2">&quot;s/dsp/noise/g&quot;</span> cpp/faust-wrapper.cpp &gt;&gt; cpp/faust-noise.cpp
-<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Using emscripten to compile to JavaScript&quot;</span>
-emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js <span class="se">\</span>
--s <span class="nv">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;,&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;, &#39;_NOISE_getNumParams&#39;, &#39;_NOISE_getNextParam&#39;]&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Wrapping js&quot;</span>
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Wrapping dat cpp&quot;
+sed -e &quot;s/DSP/NOISE/g&quot; -e &quot;s/Dsp/Noise/g&quot; -e &quot;s/dsp/noise/g&quot; cpp/faust-wrapper.cpp &gt;&gt; cpp/faust-noise.cpp
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Using emscripten to compile to JavaScript&quot;
+emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js \
+-s EXPORTED_FUNCTIONS=&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;,&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;, &#39;_NOISE_getNumParams&#39;, &#39;_NOISE_getNextParam&#39;]&quot;
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Wrapping js&quot;
 cat js/header.js &gt; js/faust-noise.js
 cat js/faust-noise-temp.js &gt;&gt; js/faust-noise.js
 rm js/faust-noise-temp.js
-sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&quot;s/dsp/noise/g&quot;</span> js/wrapper.js &gt;&gt; js/faust-noise.js
-<span class="nb">echo</span> <span class="s2">&quot; $(tput setaf 2)Complete$(tput sgr0)&quot;</span>
-</pre></div>
+sed -e &quot;s/DSP/NOISE/g&quot; -e &quot;s/dsp/noise/g&quot; js/wrapper.js &gt;&gt; js/faust-noise.js
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
 </code></pre>
 <p>The above script can be simply thought of as the following steps</p>
 <ul>
@@ -127,237 +123,228 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 
 
 <hr class="top-two"><h2>Faust -&gt; C++</h2><hr class="bottom-two"><p>Using the faust compiler (specifically the faust2-asmjs branch) we can compile from <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp">faust</a> to <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp">C++</a> with the following command</p>
-<pre><code><div class="highlight"><pre><span class="nx">faust</span> <span class="o">-</span><span class="nx">a</span> <span class="nx">minimal</span><span class="p">.</span><span class="nx">cpp</span> <span class="o">-</span><span class="nx">i</span> <span class="o">-</span><span class="nx">uim</span> <span class="o">-</span><span class="nx">cn</span> <span class="nx">Noise</span> <span class="o">\</span>
- <span class="nx">dsp</span><span class="o">/</span><span class="nx">noise</span><span class="p">.</span><span class="nx">dsp</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">cpp</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="p">.</span><span class="nx">cpp</span>
-</pre></div>
+<pre><code>faust -a minimal.cpp -i -uim -cn Noise \
+ dsp/noise.dsp -o cpp/faust-noise.cpp
 </code></pre>
 <p>In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.</p>
-<pre><code class="language-c++"><div class="highlight"><pre><span class="c1">// Adapted From https://gist.github.com/camupod/5640386</span>
-<span class="c1">// compile using &quot;C&quot; linkage to avoid name obfuscation</span>
-<span class="cp"># include &lt;emscripten.h&gt;</span>
-<span class="cp"># include &lt;map&gt;</span>
-<span class="cp"># include &lt;string&gt;</span>
+<pre><code class="language-c++">// Adapted From https://gist.github.com/camupod/5640386
+// compile using &quot;C&quot; linkage to avoid name obfuscation
+# include &lt;emscripten.h&gt;
+# include &lt;map&gt;
+# include &lt;string&gt;
 
-<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+extern &quot;C&quot; {
     
-    <span class="c1">// constructor</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">DSP_constructor</span><span class="p">(</span><span class="kt">int</span> <span class="n">samplingFreq</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Init it with samplingFreq supplied... should we give a sample size here too?</span>
-        <span class="n">n</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="n">samplingFreq</span><span class="p">);</span>
+    // constructor
+    void *DSP_constructor(int samplingFreq) {
+        // Init it with samplingFreq supplied... should we give a sample size here too?
+        n-&gt;init(samplingFreq);
 
-        <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
-    <span class="p">}</span>
+        return n;
+    }
     
-    <span class="c1">// destructor</span>
-    <span class="kt">void</span> <span class="n">DSP_destructor</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">delete</span> <span class="n">n</span><span class="p">;</span>
-    <span class="p">}</span>
+    // destructor
+    void DSP_destructor(Dsp_wrap *n) {
+        delete n;
+    }
 
-    <span class="kt">int</span> <span class="n">DSP_compute</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">**</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">**</span> <span class="n">outputs</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">n</span><span class="o">-&gt;</span><span class="n">compute</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">);</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
+    int DSP_compute(Dsp_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+        n-&gt;compute(count, inputs, outputs);
+        return 1;
+    }
 
-    <span class="kt">int</span> <span class="n">DSP_getNumInputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
-        <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumInputs</span><span class="p">();</span>
-    <span class="p">}</span>
+    int DSP_getNumInputs(Dsp_wrap *n){
+        return n-&gt;getNumInputs();
+    }
     
-    <span class="kt">int</span> <span class="n">DSP_getNumOutputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
-        <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumOutputs</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+    int DSP_getNumOutputs(Dsp_wrap *n){
+        return n-&gt;getNumOutputs();
+    }
+}
 </code></pre>
 <p>This wrapper will be the interface that we can call from JavaScript to interact with the emscripten virtual machine.</p>
 <p>We can then compile the resulting C++ file to asm.js using emscripten with the following command</p>
-<pre><code><div class="highlight"><pre><span class="nx">emcc</span> <span class="nx">cpp</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="p">.</span><span class="nx">cpp</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">js</span><span class="o">/</span><span class="nx">faust</span><span class="o">-</span><span class="nx">noise</span><span class="o">-</span><span class="nx">temp</span><span class="p">.</span><span class="nx">js</span> <span class="o">\</span>
-<span class="o">-</span><span class="nx">s</span> <span class="nx">EXPORTED_FUNCTIONS</span><span class="o">=</span><span class="s2">&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;, \</span>
-<span class="s2">&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;]&quot;</span>
-</pre></div>
+<pre><code>emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js \
+-s EXPORTED_FUNCTIONS=&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;, \
+&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;]&quot;
 </code></pre>
 <p>Finally we apply the following JavaScript wrapper in order to break out the functions we wrapped earlier in C++, and allocate the dynamic memory required for a unit generators input / output buffers.</p>
-<pre><code><div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// This should be made to only make a new context if one does not exist</span>
+<pre><code>(function() {
+  // This should be made to only make a new context if one does not exist
 
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="nx">faust</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">webkitAudioContext</span><span class="p">();</span>
-  <span class="p">}</span>
+  if (!faust.context)
+  {
+    faust.context = new webkitAudioContext();
+  }
 
-  <span class="kd">var</span> <span class="nx">Noise_constructor</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_constructor&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">Noise_destructor</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_destructor&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">]);</span>
-  <span class="kd">var</span> <span class="nx">Noise_compute</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_compute&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">]);</span>
-  <span class="kd">var</span> <span class="nx">Noise_getNumInputs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_getNumInputs&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">Noise_getNumOutputs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">cwrap</span><span class="p">(</span><span class="s1">&#39;Noise_getNumOutputs&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">);</span>
+  var Noise_constructor = Module.cwrap(&#39;Noise_constructor&#39;, &#39;number&#39;, &#39;number&#39;);
+  var Noise_destructor = Module.cwrap(&#39;Noise_destructor&#39;, null, [&#39;number&#39;]);
+  var Noise_compute = Module.cwrap(&#39;Noise_compute&#39;, [&#39;number&#39;], [&#39;number&#39;, &#39;number&#39;, &#39;number&#39;, &#39;number&#39;]);
+  var Noise_getNumInputs = Module.cwrap(&#39;Noise_getNumInputs&#39;, &#39;number&#39;, &#39;number&#39;);
+  var Noise_getNumOutputs = Module.cwrap(&#39;Noise_getNumOutputs&#39;, &#39;number&#39;, &#39;number&#39;);
 
-  <span class="nx">faust</span><span class="p">.</span><span class="nx">noise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="p">{};</span>
+  faust.noise = function () {
+    var that = {};
     
-    <span class="nx">that</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">};</span>
+    that.model = {
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span> <span class="o">=</span> <span class="nx">Noise_constructor</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">sampleRate</span><span class="p">);</span>
+    that.ptr = Noise_constructor(faust.context.sampleRate);
 
-    <span class="c1">// Bind to C++ Member Functions</span>
+    // Bind to C++ Member Functions
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">getNumInputs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">Noise_getNumInputs</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.getNumInputs = function () {
+      return Noise_getNumInputs(that.ptr);
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">Noise_getNumOutputs</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.getNumOutputs = function () {
+      return Noise_getNumOutputs(that.ptr);
+    };
     
-    <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">noiseOutChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-      <span class="kd">var</span> <span class="nx">noiseInChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-      <span class="kd">var</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">;</span>
-      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
-      <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">inputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">noiseInput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+    that.compute = function (e) {
+      var noiseOutChans = HEAP32.subarray(that.outs &gt;&gt; 2, (that.outs + that.numOut * that.ptrsize) &gt;&gt; 2);
+      var noiseInChans = HEAP32.subarray(that.ins &gt;&gt; 2, (that.ins + that.ins * that.ptrsize) &gt;&gt; 2);
+      var i, j;
+      for (i = 0; i &lt; that.numIn; i++)
+      {
+        var input = e.inputBuffer.getChannelData(i);
+        var noiseInput = HEAPF32.subarray(noiseInChans[i] &gt;&gt; 2, (noiseInChans[i] + that.vectorsize * that.ptrsize) &gt;&gt; 2);
         
-        <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">noiseInput</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">input</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
+        for (j = 0; j &lt; input.length; j++) {
+          noiseInput[j] = input[j];
+        }
+      }
       
-      <span class="nx">Noise_compute</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span><span class="p">);</span>
+      Noise_compute(that.ptr, that.vectorsize, that.ins, that.outs);
       
-      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
-      <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">outputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">noiseOutput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
+      for (i = 0; i &lt; that.numOut; i++)
+      {
+        var output = e.outputBuffer.getChannelData(i);
+        var noiseOutput = HEAPF32.subarray(noiseOutChans[i] &gt;&gt; 2, (noiseOutChans[i] + that.vectorsize * that.ptrsize) &gt;&gt; 2);
         
-        <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">output</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">output</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">noiseOutput</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">};</span>
+        for (j = 0; j &lt; output.length; j++) {
+          output[j] = noiseOutput[j];
+        }
+      }
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">destroy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">Noise_destructor</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.destroy = function () {
+      Noise_destructor(that.ptr);
+    };
     
-    <span class="c1">// Connect to another node</span>
-    <span class="nx">that</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">)</span>
-      <span class="p">{</span>
-        <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">);</span>
-      <span class="p">}</span>
-      <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
-      <span class="p">}</span>
+    // Connect to another node
+    that.connect = function (node) {
+      if (node.jsNode)
+      {
+        that.jsNode.connect(node.jsNode);
+      }
+      else {
+        that.jsNode.connect(node);
+      }
       
-    <span class="p">};</span>
+    };
 
-    <span class="c1">// Bind to Web Audio</span>
+    // Bind to Web Audio
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">play</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.play = function () {
+      that.jsNode.connect(faust.context.destination);
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">pause</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">(</span><span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
-    <span class="p">};</span>
+    that.pause = function () {
+      that.jsNode.disconnect(faust.context.destination);
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">//assuming poitner in emscripten are 32bits</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    that.init = function () {
+      var i;
+      that.ptrsize = 4; //assuming poitner in emscripten are 32bits
+      that.vectorsize = 2048;
+      that.samplesize = 4;
       
-      <span class="c1">// Get input / output counts</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumInputs</span><span class="p">();</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span><span class="p">();</span>
+      // Get input / output counts
+      that.numIn = that.getNumInputs();
+      that.numOut = that.getNumOutputs();
       
-      <span class="c1">// Setup web audio context</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span> <span class="o">=</span> <span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">createJavaScriptNode</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">onaudioprocess</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span><span class="p">;</span>
+      // Setup web audio context
+      that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
+      that.jsNode.onaudioprocess = that.compute;
       
-      <span class="c1">// allocate memory for input / output arrays</span>
-      <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">);</span>
+      // allocate memory for input / output arrays
+      that.ins = Module._malloc(that.ptrsize * that.numIn);
       
-      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
-      <span class="p">}</span>
+      for (i = 0; i &lt; that.numIn; i++) {
+        HEAP32[(that.ins &gt;&gt; 2) + i] = Module._malloc(that.vectorsize * that.samplesize);
+      }
       
-      <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
-      <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
-      <span class="p">}</span>
-    <span class="p">};</span>
+      that.outs = Module._malloc(that.ptrsize * that.numOut);
+      for (i = 0; i &lt; that.numOut; i++) {
+        HEAP32[(that.outs &gt;&gt; 2) + i] = Module._malloc(that.vectorsize * that.samplesize);
+      }
+    };
 
-    <span class="nx">that</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+    that.init();
     
 
-    <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
-  <span class="p">};</span>
-<span class="p">}());</span>
-</pre></div>
+    return that;
+  };
+}());
 </code></pre>
 <hr class="top-three"><h3><a href="/examples/faust2webaudio/">But does it work?</a></h3><hr class="bottom-three"><p>While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator</p>
-<pre><code class="language-js"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">model</span>
-  <span class="nb">Object</span> <span class="p">{</span><span class="nx">Volume</span><span class="o">:</span> <span class="mi">5260092</span><span class="p">}</span>
-<span class="o">&gt;</span> <span class="nx">noise</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
-</pre></div>
+<pre><code class="language-js">&gt; noise.model
+  Object {Volume: 5260092}
+&gt; noise.update(&quot;Volume&quot;, 0.01)
 </code></pre>
 <p>You will notice above that the model contains an object with a key <em>Volume</em> and a value <em>5260092</em>.  The value is a pointer into the emscripten heap where the value of Volume is stored.  By accessing that place in memory we can change the value of Volume, modifying process running in the unit generator.</p>
 <p>In the case of Noise it is quite simple to keep track of a single pointer, but when trying to implement a general purpose compiler we need to be able to dynamically construct a model of any number of keys and pointers.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>Fighting with Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>One thing I have not yet mentioned about Faust is that the concept of UI is baked into the language.  Rather than variables one assigns UI objects such as a Horizontal Slider or Button.</p>
 <p>The generated C++ code offers you a function called buildUserInterface that will take a UI object as an argument and execute a virtual function for every type of UI element. </p>
 <p>The data I need is a JSON model of all UI elements names and pointers.  The closest C++ object that I could think of to this pattern was a map.  So I implemented a way to create a map in the heap that would populate with the necessary data.  First by making a function to insert data into the map</p>
-<pre><code class="language-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">insertMap</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">uiMap</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">));</span>
-<span class="p">}</span>
-</pre></div>
+<pre><code class="language-c++">void insertMap(const char* label, FAUSTFLOAT* zone)
+{
+    uiMap.insert( std::pair&lt;std::string, FAUSTFLOAT*&gt;(label, zone));
+}
 </code></pre>
 <p>and then by calling said function during each virtual ui function</p>
-<pre><code class="language-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">addButton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
-<span class="p">};</span>
+<pre><code class="language-c++">void addButton(const char* label, FAUSTFLOAT* zone)
+{
+    insertMap(label, zone);
+};
 
-<span class="kt">void</span> <span class="nf">addHorizontalSlider</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span><span class="o">*</span> <span class="n">zone</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">init</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">fmax</span><span class="p">,</span> <span class="n">FAUSTFLOAT</span> <span class="n">step</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">insertMap</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">zone</span><span class="p">);</span>
-<span class="p">};</span>
-</pre></div>
+void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
+{
+    insertMap(label, zone);
+};
 </code></pre>
 <p> Unfortunately there is no easy way using emscripten to represent a map as an object.  There is some support available with <a href="https://github.com/kripken/emscripten/wiki/embind">embind</a> but I found the results less than satisfactory.  Embind would return an object that did not have any interface to list available keys.</p>
 <p>I found the solution to be implementing two meta methods: one that returned the number of entires in the map, and another that copied the key and value into pointers given as arguments.  </p>
-<pre><code><div class="highlight"><pre><span class="kr">int</span> <span class="nx">DSP_getNumParams</span><span class="p">(</span><span class="nx">Noise_wrap</span> <span class="o">*</span><span class="nx">n</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">size</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code>int DSP_getNumParams(Noise_wrap *n)
+{
+    return n-&gt;ui-&gt;uiMap.size();
+}
 
-<span class="nx">FAUSTFLOAT</span><span class="o">*</span> <span class="nx">DSP_getNextParam</span><span class="p">(</span><span class="nx">Dsp_wrap</span> <span class="o">*</span><span class="nx">n</span><span class="p">,</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">key</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">FAUSTFLOAT</span><span class="o">*</span> <span class="nx">valPtr</span> <span class="o">=</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">-&gt;</span><span class="nx">second</span><span class="p">;</span>
-    <span class="nx">strcpy</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">-&gt;</span><span class="nx">first</span><span class="p">.</span><span class="nx">c_str</span><span class="p">());</span>
-    <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span><span class="o">++</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span> <span class="o">==</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">end</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">iter</span> <span class="o">=</span> <span class="nx">n</span><span class="o">-&gt;</span><span class="nx">ui</span><span class="o">-&gt;</span><span class="nx">uiMap</span><span class="p">.</span><span class="nx">begin</span><span class="p">();</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">valPtr</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
+FAUSTFLOAT* DSP_getNextParam(Dsp_wrap *n, char *key)
+{
+    FAUSTFLOAT* valPtr = n-&gt;ui-&gt;iter-&gt;second;
+    strcpy(key, n-&gt;ui-&gt;iter-&gt;first.c_str());
+    n-&gt;ui-&gt;iter++;
+    if (n-&gt;ui-&gt;iter == n-&gt;ui-&gt;uiMap.end())
+    {
+        n-&gt;ui-&gt;iter = n-&gt;ui-&gt;uiMap.begin();
+    }
+    return valPtr;
+}
 </code></pre>
 <p>With these functions broken out via emscripten it because easy to implement a setupModel function in JavaScript</p>
-<pre><code class="language-js"><div class="highlight"><pre><span class="nx">that</span><span class="p">.</span><span class="nx">setupModel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">numParams</span> <span class="o">=</span> <span class="nx">DSP_getNumParams</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
-  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">numParams</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Allocate keyPtr in the stack</span>
-    <span class="kd">var</span> <span class="nx">keyPtr</span> <span class="o">=</span> <span class="nx">allocate</span><span class="p">(</span><span class="nx">intArrayFromString</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;i8&#39;</span><span class="p">,</span> <span class="nx">ALLOC_STACK</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">valPtr</span> <span class="o">=</span> <span class="nx">DSP_getNextParam</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">keyPtr</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">Pointer_stringify</span><span class="p">(</span><span class="nx">keyPtr</span><span class="p">);</span>
-    <span class="nx">that</span><span class="p">.</span><span class="nx">model</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">valPtr</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
+<pre><code class="language-js">that.setupModel = function () {
+  var i;
+  var numParams = DSP_getNumParams(that.ptr);
+  for (i = 0; i &lt; numParams; i++) {
+    // Allocate keyPtr in the stack
+    var keyPtr = allocate(intArrayFromString(&#39;&#39;), &#39;i8&#39;, ALLOC_STACK);
+    var valPtr = DSP_getNextParam(that.ptr, keyPtr);
+    var key = Pointer_stringify(keyPtr);
+    that.model[key] = valPtr;
+  }
+};
 </code></pre>
 <p>With the additional code it becomes possible to compile almost any unit generator implemented in the faust language.</p>
 <hr class="top-top-one"><hr class="top-one"><h1>more examples:</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><ul>

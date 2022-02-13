@@ -5,36 +5,31 @@
 <li>have a node project ready to go</li>
 </ul>
 <p>First thing first you will need to cloud foundary CLI. Here are basic instructions to get started with OSX + homebrew.</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="nv">$ </span>brew tap pivotal/tap <span class="c"># tap it</span>
-<span class="nv">$ </span>brew install cloudfoundry-cli <span class="c"># install it</span>
-<span class="nv">$ </span>cf api https://api.ng.bluemix.net <span class="c"># setup bluemix api(for NA)</span>
-<span class="nv">$ </span>cf login <span class="c"># login to bluemix</span>
-</pre></div>
+<pre><code class="language-bash">$ brew tap pivotal/tap # tap it
+$ brew install cloudfoundry-cli # install it
+$ cf api https://api.ng.bluemix.net # setup bluemix api(for NA)
+$ cf login # login to bluemix
 </code></pre>
 <p>Add a basic <code>manifest.yml</code> to the root of your project</p>
-<pre><code class="language-yaml"><div class="highlight"><pre><span class="nn">---</span>
-<span class="l-Scalar-Plain">applications</span><span class="p-Indicator">:</span>
-<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name-of-your-app</span>
-  <span class="l-Scalar-Plain">command</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">npm start</span>
-  <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">.</span>
-</pre></div>
+<pre><code class="language-yaml">---
+applications:
+- name: name-of-your-app
+  command: npm start
+  path: .
 </code></pre>
 <p>Add a basic <code>.cfignore</code> to the root of your project</p>
-<pre><code><div class="highlight"><pre><span class="nx">node_modules</span>
-<span class="nx">dist</span>
-</pre></div>
+<pre><code>node_modules
+dist
 </code></pre>
 <p>Make sure that you reference the environemnt port when starting your server (below example is with express)</p>
-<pre><code class="language-js"><div class="highlight"><pre><span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">host</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">address</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Example app listening at http://%s:%s&#39;</span><span class="p">,</span> <span class="nx">host</span><span class="p">,</span> <span class="nx">port</span><span class="p">);</span>
-<span class="p">});</span>
-</pre></div>
+<pre><code class="language-js">server.listen(process.env.PORT || 3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log(&#39;Example app listening at http://%s:%s&#39;, host, port);
+});
 </code></pre>
 <p>Deploy to the cloud</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="nv">$ </span>cf push
-</pre></div>
+<pre><code class="language-bash">$ cf push
 </code></pre>
 <p>Obviously this isn&#39;t anything super complicated, but this will get you up and running with an app in the cloud in a matter of minutes!</p>
 </div><div class="pagination group"><a class="newer" href="/page/3/">Newer &#8594;</a><a class="older" href="/page/5/">&#8592; Older</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];

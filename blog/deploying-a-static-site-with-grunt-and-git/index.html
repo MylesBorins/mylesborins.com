@@ -1,28 +1,26 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>Deploying a Static site with Grunt and Git</title><meta name="description" content="deploying with git-hooks"></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/deploying-a-static-site-with-grunt-and-git/"><h1 class="post-title">Deploying a Static site with Grunt and Git</h1></a><div class="post-date">Published 1/7/2014</div></div><div class="post-body markdown"><pre><code class="language-bash"><div class="highlight"><pre>git push linode
-</pre></div>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>Deploying a Static site with Grunt and Git</title><meta name="description" content="deploying with git-hooks"></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/deploying-a-static-site-with-grunt-and-git/"><h1 class="post-title">Deploying a Static site with Grunt and Git</h1></a><div class="post-date">Published 1/7/2014</div></div><div class="post-body markdown"><pre><code class="language-bash">git push linode
 </code></pre>
 <p>I have wanted to deploy a site with a single git push for quite some time, but could never quite figure out how to do it.  This evening I finally figured it out and it wasn&#39;t so bad.</p>
 <hr class="top-three"><h3>you can push all day</h3><hr class="bottom-three"><p>This was something that stumped me for a while... every time I tried to push to a repo on my own server rather than github I would be faced with this error</p>
-<pre><code><div class="highlight"><pre><span class="nx">git</span> <span class="nx">push</span> <span class="nx">linode</span>
+<pre><code>git push linode
 
-<span class="nx">Total</span> <span class="mi">0</span> <span class="p">(</span><span class="nx">delta</span> <span class="mi">0</span><span class="p">),</span> <span class="nx">reused</span> <span class="mi">0</span> <span class="p">(</span><span class="nx">delta</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">refusing</span> <span class="nx">to</span> <span class="nx">update</span> <span class="nx">checked</span> <span class="nx">out</span> <span class="nx">branch</span><span class="o">:</span> <span class="nx">refs</span><span class="o">/</span><span class="nx">heads</span><span class="o">/</span><span class="nx">master</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">By</span> <span class="k">default</span><span class="p">,</span> <span class="nx">updating</span> <span class="nx">the</span> <span class="nx">current</span> <span class="nx">branch</span> <span class="k">in</span> <span class="nx">a</span> <span class="nx">non</span><span class="o">-</span><span class="nx">bare</span> <span class="nx">repository</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">is</span> <span class="nx">denied</span><span class="p">,</span> <span class="nx">because</span> <span class="nx">it</span> <span class="nx">will</span> <span class="nx">make</span> <span class="nx">the</span> <span class="nx">index</span> <span class="nx">and</span> <span class="nx">work</span> <span class="nx">tree</span> <span class="nx">inconsistent</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">with</span> <span class="nx">what</span> <span class="nx">you</span> <span class="nx">pushed</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">will</span> <span class="nx">require</span> <span class="s1">&#39;git reset --hard&#39;</span> <span class="nx">to</span> <span class="nx">match</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">the</span> <span class="nx">work</span> <span class="nx">tree</span> <span class="nx">to</span> <span class="nx">HEAD</span><span class="p">.</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">can</span> <span class="nx">set</span> <span class="s1">&#39;receive.denyCurrentBranch&#39;</span> <span class="nx">configuration</span> <span class="nx">variable</span> <span class="nx">to</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="s1">&#39;ignore&#39;</span> <span class="nx">or</span> <span class="s1">&#39;warn&#39;</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">remote</span> <span class="nx">repository</span> <span class="nx">to</span> <span class="nx">allow</span> <span class="nx">pushing</span> <span class="nx">into</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">its</span> <span class="nx">current</span> <span class="nx">branch</span><span class="p">;</span> <span class="nx">however</span><span class="p">,</span> <span class="k">this</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">recommended</span> <span class="nx">unless</span> <span class="nx">you</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">arranged</span> <span class="nx">to</span> <span class="nx">update</span> <span class="nx">its</span> <span class="nx">work</span> <span class="nx">tree</span> <span class="nx">to</span> <span class="nx">match</span> <span class="nx">what</span> <span class="nx">you</span> <span class="nx">pushed</span> <span class="k">in</span> <span class="nx">some</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">other</span> <span class="nx">way</span><span class="p">.</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">To</span> <span class="nx">squelch</span> <span class="k">this</span> <span class="nx">message</span> <span class="nx">and</span> <span class="nx">still</span> <span class="nx">keep</span> <span class="nx">the</span> <span class="k">default</span> <span class="nx">behavior</span><span class="p">,</span> <span class="nx">set</span>
-<span class="nx">remote</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="s1">&#39;receive.denyCurrentBranch&#39;</span> <span class="nx">configuration</span> <span class="nx">variable</span> <span class="nx">to</span> <span class="s1">&#39;refuse&#39;</span><span class="p">.</span>
-<span class="nx">To</span> <span class="nx">use</span><span class="err">@</span><span class="nx">MylesBorins</span><span class="p">.</span><span class="nx">com</span><span class="o">:</span><span class="nx">some</span><span class="o">/</span><span class="nx">dir</span><span class="o">/</span><span class="nx">MylesBorins</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="p">.</span><span class="nx">git</span>
-<span class="o">!</span> <span class="p">[</span><span class="nx">remote</span> <span class="nx">rejected</span><span class="p">]</span> <span class="nx">master</span> <span class="o">-&gt;</span> <span class="nx">master</span> <span class="p">(</span><span class="nx">branch</span> <span class="nx">is</span> <span class="nx">currently</span> <span class="nx">checked</span> <span class="nx">out</span><span class="p">)</span>
-</pre></div>
+Total 0 (delta 0), reused 0 (delta 0)
+remote: error: refusing to update checked out branch: refs/heads/master
+remote: error: By default, updating the current branch in a non-bare repository
+remote: error: is denied, because it will make the index and work tree inconsistent
+remote: error: with what you pushed, and will require &#39;git reset --hard&#39; to match
+remote: error: the work tree to HEAD.
+remote: error:
+remote: error: You can set &#39;receive.denyCurrentBranch&#39; configuration variable to
+remote: error: &#39;ignore&#39; or &#39;warn&#39; in the remote repository to allow pushing into
+remote: error: its current branch; however, this is not recommended unless you
+remote: error: arranged to update its work tree to match what you pushed in some
+remote: error: other way.
+remote: error:
+remote: error: To squelch this message and still keep the default behavior, set
+remote: error: &#39;receive.denyCurrentBranch&#39; configuration variable to &#39;refuse&#39;.
+To use@MylesBorins.com:some/dir/MylesBorins.com/.git
+! [remote rejected] master -&gt; master (branch is currently checked out)
 </code></pre>
 <hr class="top-three"><h3>double down with a bare repo</h3><hr class="bottom-three"><p>The problem was that I was trying to push to a non bare repo, this just won&#39;t work.  I needed to create a second bare repo that I would push to, and use a git hook to get my cloned repo to update itself.  What took me a while to wrap my head around, was that once you create the bare repo, you can actually make a clone from that local repo, and use it as a remote.  </p>
 <p>What I particularly like about this setup is that the deployment of this static site is insular, making it so that I am not relying on github to be a central repository (a pattern I too often find myself stuck in).</p>
@@ -34,37 +32,33 @@
 </ul>
 <p>On linode I created a folder for bare repos in my home directory. I added the bare repo as a remote to 
 I then moved to my local git repo and added the bare repo on linode as a remote.</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="o">[</span> <span class="nb">local</span> ~ <span class="o">]</span> ssh user@si.te
-<span class="o">[</span> linode ~ <span class="o">]</span> mkdir bare <span class="o">&amp;&amp;</span> <span class="nb">cd </span>bare
-<span class="o">[</span> linode ~/bare <span class="o">]</span> git init --bare site.git
+<pre><code class="language-bash">[ local ~ ] ssh user@si.te
+[ linode ~ ] mkdir bare &amp;&amp; cd bare
+[ linode ~/bare ] git init --bare site.git
 ~~~cntrl-d~~~
-<span class="o">[</span> <span class="nb">local</span> ~/github/site <span class="o">]</span> git remote add linode <span class="se">\</span>
+[ local ~/github/site ] git remote add linode \
      user@somesi.te:bare/site.git
-<span class="o">[</span> <span class="nb">local</span> ~/github/site <span class="o">]</span> git push linode master
-</pre></div>
+[ local ~/github/site ] git push linode master
 </code></pre>
 <p>Now that the bare repo has some data we can add it as a remote in the deployment repo</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="o">[</span> linode ~/bare <span class="o">]</span> <span class="nb">cd</span> /www/site/
-<span class="o">[</span> linode /www/site <span class="o">]</span> git remote add <span class="nb">local</span> /path/to/usr/bare/site.git
-</pre></div>
+<pre><code class="language-bash">[ linode ~/bare ] cd /www/site/
+[ linode /www/site ] git remote add local /path/to/usr/bare/site.git
 </code></pre>
 <p>Now the last thing we need to do is make a post-update script for the bare repo to tell our deployment repo to pull from it, and run grunt.</p>
 <p>/path/to/usr/bare/site.git/hooks/post-update</p>
-<pre><code class="language-bash"><div class="highlight"><pre><span class="c"># !/bin/sh</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/a/path/gems/9.0.0.1/bin:$PATH:.&quot;</span>
+<pre><code class="language-bash"># !/bin/sh
+export PATH=&quot;/a/path/gems/9.0.0.1/bin:$PATH:.&quot;
 
-<span class="nv">GIT_WORK_TREE</span><span class="o">=</span>/www/site/
-<span class="nv">GIT_DIR</span><span class="o">=</span>/www/site/.git
+GIT_WORK_TREE=/www/site/
+GIT_DIR=/www/site/.git
 
-<span class="nb">cd</span> /www/site/
-git pull <span class="nb">local </span>master
+cd /www/site/
+git pull local master
 
 grunt build
-</pre></div>
 </code></pre>
 <p>Finally, after all of this work you can deploy with</p>
-<pre><code><div class="highlight"><pre><span class="nx">git</span> <span class="nx">push</span> <span class="nx">linode</span>
-</pre></div>
+<pre><code>git push linode
 </code></pre>
 <p>and all is well in the universe.</p>
 </div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];

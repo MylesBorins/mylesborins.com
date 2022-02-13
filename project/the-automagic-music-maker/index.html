@@ -6,27 +6,24 @@
 <p>All generated instruments are designed to work with industry standard screen-reader software such as Apple&#39;s Voice Over, Jaws, and NVDA. Once selected individuals will find the applications have an in depth description explaining how to traverse and interact with the instrument with their keyboard. </p>
 <p>Create keyboards of custom sizes, colors, and tunings. Want a 7 note octave of pink and brown notes, easy peasey. Microtonal compositions with 100 equal tempered notes per octaves, our specialty! </p>
 <p>Feel free to open up your console right now and start tinkering, the above keyboard is a global object called Instrument</p>
-<pre><code><div class="highlight"><pre><span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">model</span>                     <span class="c1">// Take a peak at the model</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;ocataves&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>     <span class="c1">// 3 Octaves</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;afourFreq&quot;</span><span class="p">,</span> <span class="mi">435</span><span class="p">)</span>  <span class="c1">// 19th Century Austria</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;octaveNotes&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1">// Just try it!</span>
-</pre></div>
+<pre><code>$ instrument.model                     // Take a peak at the model
+$ instrument.update(&quot;ocataves&quot;, 3)     // 3 Octaves
+$ instrument.update(&quot;afourFreq&quot;, 435)  // 19th Century Austria
+$ instrument.update(&quot;octaveNotes&quot;, 7)  // Just try it!
 </code></pre>
 <p>Just hit alt to enable to arpeggiator... which you can also modify via the console.</p>
-<pre><code><div class="highlight"><pre><span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;interval&quot;</span><span class="p">,</span> <span class="mi">350</span><span class="p">)</span>             <span class="c1">// Set Interval</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;arpPattern&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1">// Set The pattern</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="s2">&quot;minor&quot;</span><span class="p">)</span>            <span class="c1">// Feeling sad?</span>
-<span class="nx">$</span> <span class="nx">instrument</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;mixolydian&quot;</span><span class="p">)</span>        <span class="c1">// Feeling jerry?</span>
-</pre></div>
+<pre><code>$ instrument.update(&quot;interval&quot;, 350)             // Set Interval
+$ instrument.update(&quot;arpPattern&quot;, [0, 2, 1, 3])  // Set The pattern
+$ instrument.update(&quot;scale&quot;, &quot;minor&quot;)            // Feeling sad?
+$ instrument.update(&quot;mode&quot;, &quot;mixolydian&quot;)        // Feeling jerry?
 </code></pre>
 <p>You can also make grids!!!</p>
 <div id="gridFrame"></div>
 
-<pre><code class="language-js"><div class="highlight"><pre><span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">model</span>                     <span class="c1">// Take a peak at the model</span>
-<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>         <span class="c1">// Clear up some space.</span>
-<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>     <span class="c1">// each row becomes a mode!</span>
-<span class="nx">$</span> <span class="nx">grid</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;octaveNotes&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1">// Works too!</span>
-</pre></div>
+<pre><code class="language-js">$ grid.model                     // Take a peak at the model
+$ grid.update(&quot;rows&quot;, 2)         // Clear up some space.
+$ grid.update(&quot;columns&quot;, 13)     // each row becomes a mode!
+$ grid.update(&quot;octaveNotes&quot;, 7)  // Works too!
 </code></pre>
 <p>These are just some of the nifty keyboards you can make</p>
 <div>
