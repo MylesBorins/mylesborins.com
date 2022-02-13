@@ -139,7 +139,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 <span class="cp"># include &lt;string&gt;</span>
 
 <span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
-
+    
     <span class="c1">// constructor</span>
     <span class="kt">void</span> <span class="o">*</span><span class="n">DSP_constructor</span><span class="p">(</span><span class="kt">int</span> <span class="n">samplingFreq</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// Init it with samplingFreq supplied... should we give a sample size here too?</span>
@@ -147,7 +147,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 
         <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
     <span class="p">}</span>
-
+    
     <span class="c1">// destructor</span>
     <span class="kt">void</span> <span class="n">DSP_destructor</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">delete</span> <span class="n">n</span><span class="p">;</span>
@@ -161,7 +161,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="kt">int</span> <span class="n">DSP_getNumInputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
         <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumInputs</span><span class="p">();</span>
     <span class="p">}</span>
-
+    
     <span class="kt">int</span> <span class="n">DSP_getNumOutputs</span><span class="p">(</span><span class="n">Dsp_wrap</span> <span class="o">*</span><span class="n">n</span><span class="p">){</span>
         <span class="k">return</span> <span class="n">n</span><span class="o">-&gt;</span><span class="n">getNumOutputs</span><span class="p">();</span>
     <span class="p">}</span>
@@ -192,7 +192,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 
   <span class="nx">faust</span><span class="p">.</span><span class="nx">noise</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="p">{};</span>
-
+    
     <span class="nx">that</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="p">{</span>
     <span class="p">};</span>
 
@@ -207,7 +207,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="k">return</span> <span class="nx">Noise_getNumOutputs</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
     <span class="p">};</span>
-
+    
     <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
       <span class="kd">var</span> <span class="nx">noiseOutChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
       <span class="kd">var</span> <span class="nx">noiseInChans</span> <span class="o">=</span> <span class="nx">HEAP32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
@@ -216,19 +216,19 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
       <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">inputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
         <span class="kd">var</span> <span class="nx">noiseInput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseInChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-
+        
         <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">noiseInput</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">input</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
         <span class="p">}</span>
       <span class="p">}</span>
-
+      
       <span class="nx">Noise_compute</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span><span class="p">);</span>
-
+      
       <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
       <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">outputBuffer</span><span class="p">.</span><span class="nx">getChannelData</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
         <span class="kd">var</span> <span class="nx">noiseOutput</span> <span class="o">=</span> <span class="nx">HEAPF32</span><span class="p">.</span><span class="nx">subarray</span><span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="nx">noiseOutChans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
-
+        
         <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">output</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">output</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nx">noiseOutput</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
         <span class="p">}</span>
@@ -238,7 +238,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="nx">that</span><span class="p">.</span><span class="nx">destroy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="nx">Noise_destructor</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptr</span><span class="p">);</span>
     <span class="p">};</span>
-
+    
     <span class="c1">// Connect to another node</span>
     <span class="nx">that</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">)</span>
@@ -248,7 +248,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
       <span class="k">else</span> <span class="p">{</span>
         <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
       <span class="p">}</span>
-
+      
     <span class="p">};</span>
 
     <span class="c1">// Bind to Web Audio</span>
@@ -266,22 +266,22 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
       <span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">//assuming poitner in emscripten are 32bits</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-
+      
       <span class="c1">// Get input / output counts</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumInputs</span><span class="p">();</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">getNumOutputs</span><span class="p">();</span>
-
+      
       <span class="c1">// Setup web audio context</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span> <span class="o">=</span> <span class="nx">faust</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">createJavaScriptNode</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">onaudioprocess</span> <span class="o">=</span> <span class="nx">that</span><span class="p">.</span><span class="nx">compute</span><span class="p">;</span>
-
+      
       <span class="c1">// allocate memory for input / output arrays</span>
       <span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">);</span>
-
+      
       <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numIn</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ins</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
       <span class="p">}</span>
-
+      
       <span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">ptrsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">);</span>
       <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">that</span><span class="p">.</span><span class="nx">numOut</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">HEAP32</span><span class="p">[(</span><span class="nx">that</span><span class="p">.</span><span class="nx">outs</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">_malloc</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">vectorsize</span> <span class="o">*</span> <span class="nx">that</span><span class="p">.</span><span class="nx">samplesize</span><span class="p">);</span>
@@ -289,7 +289,7 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
     <span class="p">};</span>
 
     <span class="nx">that</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-
+    
 
     <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
   <span class="p">};</span>
@@ -370,11 +370,12 @@ sed -e <span class="s2">&quot;s/DSP/NOISE/g&quot;</span> -e <span class="s2">&qu
 </ul>
 </li>
 <li><a href="/examples/faust2webaudio/reverbDesigner.html">16th order FDN reverb</a><ul>
-<li>This one will make your browser chug, but it is an extremely complex model written by Julius Smith, just checkout out how many things are going on in <code>reverb.model</code></li>
+<li><p>This one will make your browser chug, but it is an extremely complex model written by Julius Smith, just checkout out how many things are going on in <code>reverb.model</code></p>
+<hr class="top-top-one"><hr class="top-one"><h1>what&#39;s next?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"></li>
 </ul>
 </li>
 </ul>
-<hr class="top-top-one"><hr class="top-one"><h1>what&#39;s next?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><hr class="top-three"><h3>benchmarks</h3><hr class="bottom-three"><p>The next step with the project is to run a series of bench marks to see how the compiled code fares against both native code and other public JavaScriptNode unit generators.  If these unit generators prove to be competitive there will be a few more challenges to overcome</p>
+<hr class="top-three"><h3>benchmarks</h3><hr class="bottom-three"><p>The next step with the project is to run a series of bench marks to see how the compiled code fares against both native code and other public JavaScriptNode unit generators.  If these unit generators prove to be competitive there will be a few more challenges to overcome</p>
 <hr class="top-three"><h3>dynamically linking files</h3><hr class="bottom-three"><p>Currently I am wrapping every unit generator in a closure with its own emscripten virtual machine.  This is due to not yet figuring out how to implement a single instance of the emscripten virtual machine.  When I tried loading more than one compiled file everything would explode.</p>
 <p>My current solution is only a bandaid, and I will need to find a way to dynamically link multiple js files together.  The only possible side effect of this approach would that we might miss out of certain optimizations that might be able to be done via emscripten and the google closure compiler if all js files are compiled as a single script.</p>
 <p>It might be necessary to implement a build system with a tool such as grunt to automate the process of compiling and optimizing any number of compiled emscripten compiled js files.  Having to stop and compile multiple files by hand every time you wanted to add a new unit generator would prove quite frustrating to me.</p>

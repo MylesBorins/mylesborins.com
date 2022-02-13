@@ -55,13 +55,13 @@ var instrument = instrument || {};
 
 (function(){
     "use strict";
-
+    
     var sticky = $("#sticky-social");
     sticky.attr('class', '');
     sticky.attr('id', 'header-image');
     sticky.empty();
     sticky.append('<div id="instrument"><div id="piano"></div></div>');
-
+    
     instrument = automm.instrument("#instrument", {
         model: {
             firstNote: 60,
@@ -71,7 +71,7 @@ var instrument = instrument || {};
             }
         }
     });
-
+    
     grid = automm.instrument("#gridFrame", {
         model: {
             autoGrid: true,

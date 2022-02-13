@@ -10,7 +10,7 @@
 <p>Once the permissions have been appropriately set you will need to regenerate the consumer Key and Secret and also create a unique access token. These four secret tokens will be necessary for you to securely communicate with the twitter api.</p>
 <p>Once the app is properly registered with twitter we can begin to program the bot in node.js using the <a href="https://www.npmjs.com/package/twit">Twit</a> library. Getting started is fairly easy. In a new folder use <code>npm init</code> to initialize the project. Install Twit <code>npm install --save twit</code>, and then create your index.js file <code>touch index.js</code>. Now that we have the skeleton for our project we can create a new object Twit that can easily communicate with the twitter api using the credentials we generated above</p>
 <pre><code class="language-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Twit</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;twit&#39;</span><span class="p">)</span>
-
+ 
 <span class="kd">var</span> <span class="nx">T</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Twit</span><span class="p">({</span>
     <span class="nx">consumer_key</span><span class="o">:</span>         <span class="s1">&#39;...&#39;</span><span class="p">,</span>
     <span class="nx">consumer_secret</span><span class="o">:</span>      <span class="s1">&#39;...&#39;</span><span class="p">,</span>
@@ -28,11 +28,11 @@
 <p>Assuming everything is working as expected, we should see that our bot has tweet &quot;Hello World&quot;.</p>
 <p>Now that we are familiar with using the Twit library we can easily start breaking down the bot we are trying to build in to a series of steps</p>
 <ul>
-<li>On every DM</li>
-<li>Check for #talkpay</li>
-<li>If #talkpay tweet it</li>
-<li>If not #talkpay warn user</li>
-<li>Delete All Messages after bot has processed them</li>
+<li>  On every DM</li>
+<li>  Check for #talkpay</li>
+<li>  If #talkpay tweet it</li>
+<li>  If not #talkpay warn user</li>
+<li>  Delete All Messages after bot has processed them</li>
 </ul>
 <p>So lets start by figuring out how to listen to a direct message stream</p>
 <pre><code class="language-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">T</span><span class="p">.</span><span class="nx">stream</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
@@ -41,7 +41,7 @@
   <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
-
+  
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I just received a message from &#39;</span> <span class="o">+</span> <span class="nx">screenName</span><span class="p">);</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;msg: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">);</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;id: &#39;</span> <span class="o">+</span> <span class="nx">msgID</span><span class="p">);</span>
@@ -54,7 +54,7 @@
   <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
-
+  
   <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span><span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I tweeted the message&#39;</span><span class="p">);</span>
@@ -68,13 +68,13 @@
   <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
-
+  
   <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span><span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I tweeted the message&#39;</span><span class="p">);</span>
     <span class="p">});</span>
   <span class="p">}</span>
-
+  
   <span class="k">else</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;direct_messages/new&#39;</span><span class="p">,</span> <span class="p">{</span>
       <span class="nx">screen_name</span><span class="o">:</span> <span class="nx">screenName</span><span class="p">,</span>
@@ -99,7 +99,7 @@
   <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
-
+  
   <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;#talkpay&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">T</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="p">{</span>
       <span class="nx">status</span><span class="o">:</span> <span class="nx">msg</span>
@@ -142,7 +142,7 @@
   <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">screenName</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">screen_name</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">msgID</span> <span class="o">=</span> <span class="nx">eventMsg</span><span class="p">.</span><span class="nx">direct_message</span><span class="p">.</span><span class="nx">id_str</span><span class="p">;</span>
-
+  
   <span class="k">if</span> <span class="p">(</span><span class="nx">screenName</span> <span class="o">===</span> <span class="s1">&#39;talkpayBot&#39;</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">callbackHandler</span><span class="p">(</span><span class="nx">msgID</span><span class="p">);</span>
   <span class="p">}</span>
