@@ -1,5 +1,4 @@
 const sass = require('node-sass');
-var _ = require('lodash');
 
 module.exports = function (grunt) {
   'use strict';
@@ -20,7 +19,7 @@ module.exports = function (grunt) {
             // This is the default image renderer
             // Just thought it would be good to have for reference
             // inacse I decide to modify it
-            var renderer = _.extend(new marked.Renderer(), {
+            const renderer = Object.assign(new marked.Renderer(), {
               image: function (href, title, text) {
                 var out = '<img src="' + href + '" alt="' + text + '"';
                 if (title) {
@@ -36,11 +35,10 @@ module.exports = function (grunt) {
                 }
                 return '<hr class="top-' + numbers[level] + '"><h' + level + '>' + text + '</h' + level + '><hr class="bottom-' + numbers[level] + '">';
               }
-            });
-            var options = {
-              renderer: renderer
+            })
+            return {
+              renderer
             };
-            return options;
           },
           pagination: {
             postsPerPage: 1,
