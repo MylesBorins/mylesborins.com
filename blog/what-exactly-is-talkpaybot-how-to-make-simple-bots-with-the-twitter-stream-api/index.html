@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</title><meta name="description" content="Using streams and the twitter API to hopefully make a small difference."></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav id="sticky-social" class="social-links group small"><ul class="nav-links-social"><li class="text-link"><a href="https://www.twitter.com/MylesBorins" class="icon-twitter2"></a></li><li class="text-link"><a href="https://www.github.com/MylesBorins" class="icon-github3"></a></li><li class="text-link"><a href="https://www.soundcloud.com/rowbit" class="icon-soundcloud"></a></li><li class="text-link"><a href="https://www.linkedin.com/in/MylesBorins" class="icon-linkedin"></a></li><li class="text-link"><a href="https://vimeo.com/MylesBorins" class="icon-vimeo2"></a></li><li class="text-link"><a href="mailto:myles.borins@gmail.com" class="icon-envelope"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"><div class="post-head group"><a href="/blog/what-exactly-is-talkpaybot-how-to-make-simple-bots-with-the-twitter-stream-api/"><h1 class="post-title">What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</h1></a><div class="post-date">Published 5/4/2015</div></div><div class="post-body markdown"><blockquote>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</title><meta name="description" content="Using streams and the twitter API to hopefully make a small difference."></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/what-exactly-is-talkpaybot-how-to-make-simple-bots-with-the-twitter-stream-api/"><h1 class="post-title">What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</h1></a><div class="post-date">Published 5/4/2015</div></div><div class="post-body markdown"><blockquote>
 <p>To truly begin to eradicate pay inequality, we need a radical discussion. So let’s talk about pay.&quot; ~ Lauren Voswinkel</p>
 </blockquote>
 <p>On April 28th 2015 <a href="https://twitter.com/laurenvoswinkel">Lauren Voswinkel</a> wrote <a href="https://modelviewculture.com/news/lets-talk-about-pay">an article</a> on model view culture that called for people to tweet their salaries using the hashtag <em>#talkpay</em> on May 1st, International Workers&#39; Day.</p>
@@ -28,11 +28,11 @@
 <p>Assuming everything is working as expected, we should see that our bot has tweet &quot;Hello World&quot;.</p>
 <p>Now that we are familiar with using the Twit library we can easily start breaking down the bot we are trying to build in to a series of steps</p>
 <ul>
-<li>  On every DM</li>
-<li>  Check for #talkpay</li>
-<li>  If #talkpay tweet it</li>
-<li>  If not #talkpay warn user</li>
-<li>  Delete All Messages after bot has processed them</li>
+<li>On every DM</li>
+<li>Check for #talkpay</li>
+<li>If #talkpay tweet it</li>
+<li>If not #talkpay warn user</li>
+<li>Delete All Messages after bot has processed them</li>
 </ul>
 <p>So lets start by figuring out how to listen to a direct message stream</p>
 <pre><code class="language-js"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">T</span><span class="p">.</span><span class="nx">stream</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
@@ -168,7 +168,7 @@
 </code></pre>
 <p>Amazing!!! We now have a very simple node.js application that is able to anonymously tweet any message it receives that includes a specific hashtag. The only step left is getting this bot into <strong>THE CLOUD</strong>.</p>
 <p>I will follow up with another write up later this week explaining how I <em>dockerized</em> this application and deployed it into the cloud painlessly on digital ocean.</p>
-</div></div><script src="/scripts/jquery/dist/jquery.min.js"></script><script src="/scripts/sticky-kit/dist/sticky-kit.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+</div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);
 
@@ -176,4 +176,4 @@ _gaq.push(['_trackPageview']);
   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();</script><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div></div></body></html>
+})();</script></body></html>
