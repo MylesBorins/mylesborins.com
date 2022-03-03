@@ -1,67 +1,373 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/deploying-a-static-site-with-grunt-and-git/"><h1 class="post-title">Deploying a Static site with Grunt and Git</h1></a><div class="post-date">Published 1/7/2014</div></div><div class="post-body markdown"><pre><code class="language-bash">git push linode
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/from-faust-to-webaudio/"><h1 class="post-title">from faust to webaudio</h1></a><div class="post-date">Published 1/13/2014</div></div><div class="post-body markdown"><blockquote>
+<p>The Web Audio API is the current standard for digital signal processing in the browser. Currently there are a number of natively compiled audio nodes capable of doing advanced synthesis. One of the available nodes the <em><strong>JavaScriptNode</strong></em> allows individuals to create their own custom unit generators in pure JavaScript.   In an attempt to test the boundaries of what can be run in a <em><strong>JavaScriptNode</strong></em> I have hacked together a compiler that can take extremely large signal flow diagrams written in the functional Faust synthesis language and create JavaScript unit generators that can interface with webaudio.</p>
+</blockquote>
+<blockquote>
+<p><em>All examples in this blog post will need to be run from a webkit based browser, preferably chrome.  Blame it on vendor specific prefixes</em></p>
+</blockquote>
+<hr class="top-top-one"><hr class="top-one"><h1>What is Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><img src="/images/faust-to-webaudio/faust-classic.png" alt="llustration by Harry Clarke for Goethes Faust"></p>
+<p><a href="http://faust.grame.fr/">FAUST</a> (Functional Audio Stream) is a functional programming language specifically designed for real-time signal processing and synthesis. FAUST targets high-performance signal processing applications and audio plug-ins for a variety of platforms and standards.</p>
+<p>The Faust compiler takes signal processing code written in the Faust language and tokenizes it into <em>Faust Intermediate Representations</em> (FIR).  From FIR a user is able to use an architecture file to compile to a number of back-ends including C++ and Java.  These architecture files can also include custom wrappers to interface with a variety of industry standard DSP platforms including <a href="http://cycling74.com/products/max/">max/msp</a>, <a href="http://supercollider.sourceforge.net/">supercollider</a>, <a href="https://en.wikipedia.org/wiki/Audio_Units">audio unit</a>, <a href="https://en.wikipedia.org/wiki/Virtual_Studio_Technology">vst</a>, and more.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>What is the Web Audio Api?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><img src="/images/faust-to-webaudio/h5_logo.png" alt="HTML 5"></p>
+<p>The <a href="https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html">Web Audio Api</a> is a high-level JavaScript API for processing and synthesizing audio in web applications.</p>
+<p>The Web Audio API comes with a number of natively compiled audio nodes capable of doing quite a bit of advanced synthesis.</p>
+<p>You can check out Hongchan Choi&#39;s <a href="https://github.com/hoch/waax">WAAX</a> library for an example of extensive work being done with native nodes.</p>
+<p>But What if you want something more?</p>
+<hr class="top-two"><h2>The JavaScriptNode</h2><hr class="bottom-two"><p>The JavaScriptNode allows individuals to create their own web audio nodes in pure JavaScript.  This allows individuals to extend the Web Audio Api with custom nodes.</p>
+<p>Web Audio Libraries such as <a href="flockingjs.org">Flocking</a> by Colin Clark and <a href="http://www.charlie-roberts.com/gibber/">Gibber</a> by Charlie Roberts make extensive use of the JavaScriptNode.</p>
+<blockquote>
+<hr class="top-three"><h3>!!! WARNING !!!</h3><hr class="bottom-three"></blockquote>
+<blockquote>
+<p>Currently native Web Audio nodes and JavaScriptNodes don&#39;t play so nicely together, most implementations of Web Audio tend to pick one or the other.  </p>
+</blockquote>
+<blockquote>
+<hr class="top-three"><h3>!!! WARNING !!!</h3><hr class="bottom-three"></blockquote>
+<hr class="top-two"><h2>What does faust look like?</h2><hr class="bottom-two"><p>Below is an example of Noise Written in Faust </p>
+<pre><code>random  = +(12345)~*(1103515245);
+noise   = random/2147483647.0;
+process = noise * vslider(&quot;Volume[style:knob]&quot;, 0, 0, 1, 0.1);
 </code></pre>
-<p>I have wanted to deploy a site with a single git push for quite some time, but could never quite figure out how to do it.  This evening I finally figured it out and it wasn&#39;t so bad.</p>
-<hr class="top-three"><h3>you can push all day</h3><hr class="bottom-three"><p>This was something that stumped me for a while... every time I tried to push to a repo on my own server rather than github I would be faced with this error</p>
-<pre><code>git push linode
+<hr class="top-two"><h2>What does a WebAudioNode look like?</h2><hr class="bottom-two"><p>Below is an example of White Noise taken from Flocking</p>
+<pre><code>flock.ugen.whiteNoise = function (inputs, output, options) {
+    var that = flock.ugen(inputs, output, options);
 
-Total 0 (delta 0), reused 0 (delta 0)
-remote: error: refusing to update checked out branch: refs/heads/master
-remote: error: By default, updating the current branch in a non-bare repository
-remote: error: is denied, because it will make the index and work tree inconsistent
-remote: error: with what you pushed, and will require &#39;git reset --hard&#39; to match
-remote: error: the work tree to HEAD.
-remote: error:
-remote: error: You can set &#39;receive.denyCurrentBranch&#39; configuration variable to
-remote: error: &#39;ignore&#39; or &#39;warn&#39; in the remote repository to allow pushing into
-remote: error: its current branch; however, this is not recommended unless you
-remote: error: arranged to update its work tree to match what you pushed in some
-remote: error: other way.
-remote: error:
-remote: error: To squelch this message and still keep the default behavior, set
-remote: error: &#39;receive.denyCurrentBranch&#39; configuration variable to &#39;refuse&#39;.
-To use@MylesBorins.com:some/dir/MylesBorins.com/.git
-! [remote rejected] master -&gt; master (branch is currently checked out)
+    that.gen = function (numSamps) {
+        var out = that.output,
+            i;
+
+        for (i = 0; i &lt; numSamps; i++) {
+            out[i] = Math.random();
+        }
+
+        that.mulAdd(numSamps);
+    };
+
+    that.onInputChanged = function () {
+        flock.onMulAddInputChanged(that);
+    };
+
+    that.onInputChanged();
+    return that;
+};
 </code></pre>
-<hr class="top-three"><h3>double down with a bare repo</h3><hr class="bottom-three"><p>The problem was that I was trying to push to a non bare repo, this just won&#39;t work.  I needed to create a second bare repo that I would push to, and use a git hook to get my cloned repo to update itself.  What took me a while to wrap my head around, was that once you create the bare repo, you can actually make a clone from that local repo, and use it as a remote.  </p>
-<p>What I particularly like about this setup is that the deployment of this static site is insular, making it so that I am not relying on github to be a central repository (a pattern I too often find myself stuck in).</p>
-<p>So to recap I have 3 repos:</p>
+<hr class="top-top-one"><hr class="top-one"><h1>But Doesn&#39;t Faust Already compile to web audio?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Indeed it does, but does it work? </p>
+<p><a href="/examples/faust2webaudio/current-noise.html">Current Faust2Webaudio Noise</a></p>
+<hr class="top-three"><h3>Why did that break?</h3><hr class="bottom-three"><p>There is only one answer... JavaScript. Unfortunately as much as I am a JavaScript fanboy there are some things the language just isn&#39;t good at, such as integer arithmetic. The algorithm to compute noise used by Faust is relying on specific integer overflow side effects in order to generate a signal.  With the current compiler simply porting directly from the <em>FIR</em> to JavaScript all numbers are represented as well... numbers (32-bit floating point numbers to be exact).</p>
+<hr class="top-top-one"><hr class="top-one"><h1>asm.js to the rescue!</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://asmjs.org/"><img src="/images/faust-to-webaudio/asmjs.jpg" alt="asm.js"></a></p>
+<p>asm.js is a strict subset of JavaScript that can be used as a low-level, efficient target language for compilers. The asm.js language provides an abstraction similar to the C/C++ virtual machine: a large binary heap with efficient loads and stores, integer and floating-point arithmetic, first-order function definitions, and function pointers.</p>
+<hr class="top-two"><h2>What does an asm.js WebAudioNode look like?</h2><hr class="bottom-two"><p>An example from the <a href="https://github.com/colinbdclark/Flocking/tree/asmjs">asmjs Flocking Branch</a></p>
+<pre><code>flock.ugen.asmSin.module = function (stdlib, foreign, heap) {
+    &quot;use asm&quot;;
+
+    var sin = stdlib.Math.sin;
+    var pi = 3.14159;
+    var out = new stdlib.Float32Array(heap);
+
+    function gen (numSamps, freq, phaseOffset, mul, add, sampleRate, phase) {
+        numSamps = numSamps|0;
+        freq = +freq;
+        phaseOffset = +phaseOffset;
+        mul = +mul;
+        add = +add;
+        sampleRate = +sampleRate;
+        phase = +phase;
+
+        var i = 0;
+
+        for (; (i | 0) &lt; (numSamps | 0); i = i + 1 | 0) {
+            out[i &gt;&gt; 2] = +(sin(phase + phaseOffset) * mul + add);
+            phase = +(phase + (freq / sampleRate * pi * 2.0));
+        }
+
+        return +phase;
+    }
+
+    return {
+        gen: gen
+    };
+};
+</code></pre>
+<p>While it would have been possible to implement a traveller to compile asm.js code from the <em>FIR</em> representation, I opted to try a slightly different path.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>introducing emscripten</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p><a href="http://emscripten.org/"><img src="/images/faust-to-webaudio/emscripten.jpg" alt="Emscripten"></a></p>
+<p>Emscripten is an LLVM to JavaScript compiler. It takes LLVM bitcode (which can be generated from C/C++ using Clang, or any other language that can be converted into LLVM bitcode) and compiles that into JavaScript, which can be run on the web (or anywhere else JavaScript can run).</p>
+<hr class="top-top-one"><hr class="top-one"><h1>one script to rule them all</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>Let&#39;s start by taking a look at the <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/build-noise.sh">bash script</a> that is used to compile noise.js</p>
+<pre><code class="language-bash"># !/bin/bash
+# tputcolors
+
+set -e
+echo &#39;Compiling From Faust -&gt; CPP&#39;
+faust -a minimal.cpp -i -uim -cn Noise  dsp/noise.dsp -o cpp/faust-noise.cpp
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Wrapping dat cpp&quot;
+sed -e &quot;s/DSP/NOISE/g&quot; -e &quot;s/Dsp/Noise/g&quot; -e &quot;s/dsp/noise/g&quot; cpp/faust-wrapper.cpp &gt;&gt; cpp/faust-noise.cpp
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Using emscripten to compile to JavaScript&quot;
+emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js \
+-s EXPORTED_FUNCTIONS=&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;,&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;, &#39;_NOISE_getNumParams&#39;, &#39;_NOISE_getNextParam&#39;]&quot;
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+echo &quot;Wrapping js&quot;
+cat js/header.js &gt; js/faust-noise.js
+cat js/faust-noise-temp.js &gt;&gt; js/faust-noise.js
+rm js/faust-noise-temp.js
+sed -e &quot;s/DSP/NOISE/g&quot; -e &quot;s/dsp/noise/g&quot; js/wrapper.js &gt;&gt; js/faust-noise.js
+echo &quot; $(tput setaf 2)Complete$(tput sgr0)&quot;
+</code></pre>
+<p>The above script can be simply thought of as the following steps</p>
 <ul>
-<li>a local repo</li>
-<li>a deployment repo (on linode)</li>
-<li>a bare repo (on linode)</li>
+<li>faust -&gt; faustIR -&gt; c++ (faust compiler)</li>
+<li>wrap c++ to break out function and do some sed</li>
+<li>c++ -&gt; llvm -&gt; js (emscripten)</li>
+<li>do some magic with sed and wrap js</li>
+<li>profit!</li>
 </ul>
-<p>On linode I created a folder for bare repos in my home directory. I added the bare repo as a remote to 
-I then moved to my local git repo and added the bare repo on linode as a remote.</p>
-<pre><code class="language-bash">[ local ~ ] ssh user@si.te
-[ linode ~ ] mkdir bare &amp;&amp; cd bare
-[ linode ~/bare ] git init --bare site.git
-~~~cntrl-d~~~
-[ local ~/github/site ] git remote add linode \
-     user@somesi.te:bare/site.git
-[ local ~/github/site ] git push linode master
-</code></pre>
-<p>Now that the bare repo has some data we can add it as a remote in the deployment repo</p>
-<pre><code class="language-bash">[ linode ~/bare ] cd /www/site/
-[ linode /www/site ] git remote add local /path/to/usr/bare/site.git
-</code></pre>
-<p>Now the last thing we need to do is make a post-update script for the bare repo to tell our deployment repo to pull from it, and run grunt.</p>
-<p>/path/to/usr/bare/site.git/hooks/post-update</p>
-<pre><code class="language-bash"># !/bin/sh
-export PATH=&quot;/a/path/gems/9.0.0.1/bin:$PATH:.&quot;
+<!-- This script will uses faust to compile a C++ file. The C++ file is then processed using sed to replace the generic references in the file **DSP** with the name of the class we are compiling **Noise**.  The C++ file is then appended with a wrapper (also processed by sed) that wraps the objects constructor, destructor, getters, setters, and public methods. The resulting file is compiled by emscripten into JavaScript.  The compiled JavaScript file   -->
 
-GIT_WORK_TREE=/www/site/
-GIT_DIR=/www/site/.git
 
-cd /www/site/
-git pull local master
+<hr class="top-two"><h2>Faust -&gt; C++</h2><hr class="bottom-two"><p>Using the faust compiler (specifically the faust2-asmjs branch) we can compile from <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/dsp/noise.dsp">faust</a> to <a href="https://github.com/TheAlphaNerd/faust2webaudio/blob/master/cpp/faust-noise.cpp">C++</a> with the following command</p>
+<pre><code>faust -a minimal.cpp -i -uim -cn Noise \
+ dsp/noise.dsp -o cpp/faust-noise.cpp
+</code></pre>
+<p>In order to get access to the various parts of a C++ class via emscripten we need to write a simple wrapper on top of our Noise class.</p>
+<pre><code class="language-c++">// Adapted From https://gist.github.com/camupod/5640386
+// compile using &quot;C&quot; linkage to avoid name obfuscation
+# include &lt;emscripten.h&gt;
+# include &lt;map&gt;
+# include &lt;string&gt;
 
-grunt build
+extern &quot;C&quot; {
+    
+    // constructor
+    void *DSP_constructor(int samplingFreq) {
+        // Init it with samplingFreq supplied... should we give a sample size here too?
+        n-&gt;init(samplingFreq);
+
+        return n;
+    }
+    
+    // destructor
+    void DSP_destructor(Dsp_wrap *n) {
+        delete n;
+    }
+
+    int DSP_compute(Dsp_wrap *n, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+        n-&gt;compute(count, inputs, outputs);
+        return 1;
+    }
+
+    int DSP_getNumInputs(Dsp_wrap *n){
+        return n-&gt;getNumInputs();
+    }
+    
+    int DSP_getNumOutputs(Dsp_wrap *n){
+        return n-&gt;getNumOutputs();
+    }
+}
 </code></pre>
-<p>Finally, after all of this work you can deploy with</p>
-<pre><code>git push linode
+<p>This wrapper will be the interface that we can call from JavaScript to interact with the emscripten virtual machine.</p>
+<p>We can then compile the resulting C++ file to asm.js using emscripten with the following command</p>
+<pre><code>emcc cpp/faust-noise.cpp -o js/faust-noise-temp.js \
+-s EXPORTED_FUNCTIONS=&quot;[&#39;_NOISE_constructor&#39;,&#39;_NOISE_destructor&#39;, \
+&#39;_NOISE_compute&#39;, &#39;_NOISE_getNumInputs&#39;, &#39;_NOISE_getNumOutputs&#39;]&quot;
 </code></pre>
-<p>and all is well in the universe.</p>
-</div><div class="pagination group"><a class="newer" href="/page/8/">Newer &#8594;</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
+<p>Finally we apply the following JavaScript wrapper in order to break out the functions we wrapped earlier in C++, and allocate the dynamic memory required for a unit generators input / output buffers.</p>
+<pre><code>(function() {
+  // This should be made to only make a new context if one does not exist
+
+  if (!faust.context)
+  {
+    faust.context = new webkitAudioContext();
+  }
+
+  var Noise_constructor = Module.cwrap(&#39;Noise_constructor&#39;, &#39;number&#39;, &#39;number&#39;);
+  var Noise_destructor = Module.cwrap(&#39;Noise_destructor&#39;, null, [&#39;number&#39;]);
+  var Noise_compute = Module.cwrap(&#39;Noise_compute&#39;, [&#39;number&#39;], [&#39;number&#39;, &#39;number&#39;, &#39;number&#39;, &#39;number&#39;]);
+  var Noise_getNumInputs = Module.cwrap(&#39;Noise_getNumInputs&#39;, &#39;number&#39;, &#39;number&#39;);
+  var Noise_getNumOutputs = Module.cwrap(&#39;Noise_getNumOutputs&#39;, &#39;number&#39;, &#39;number&#39;);
+
+  faust.noise = function () {
+    var that = {};
+    
+    that.model = {
+    };
+
+    that.ptr = Noise_constructor(faust.context.sampleRate);
+
+    // Bind to C++ Member Functions
+
+    that.getNumInputs = function () {
+      return Noise_getNumInputs(that.ptr);
+    };
+
+    that.getNumOutputs = function () {
+      return Noise_getNumOutputs(that.ptr);
+    };
+    
+    that.compute = function (e) {
+      var noiseOutChans = HEAP32.subarray(that.outs &gt;&gt; 2, (that.outs + that.numOut * that.ptrsize) &gt;&gt; 2);
+      var noiseInChans = HEAP32.subarray(that.ins &gt;&gt; 2, (that.ins + that.ins * that.ptrsize) &gt;&gt; 2);
+      var i, j;
+      for (i = 0; i &lt; that.numIn; i++)
+      {
+        var input = e.inputBuffer.getChannelData(i);
+        var noiseInput = HEAPF32.subarray(noiseInChans[i] &gt;&gt; 2, (noiseInChans[i] + that.vectorsize * that.ptrsize) &gt;&gt; 2);
+        
+        for (j = 0; j &lt; input.length; j++) {
+          noiseInput[j] = input[j];
+        }
+      }
+      
+      Noise_compute(that.ptr, that.vectorsize, that.ins, that.outs);
+      
+      for (i = 0; i &lt; that.numOut; i++)
+      {
+        var output = e.outputBuffer.getChannelData(i);
+        var noiseOutput = HEAPF32.subarray(noiseOutChans[i] &gt;&gt; 2, (noiseOutChans[i] + that.vectorsize * that.ptrsize) &gt;&gt; 2);
+        
+        for (j = 0; j &lt; output.length; j++) {
+          output[j] = noiseOutput[j];
+        }
+      }
+    };
+
+    that.destroy = function () {
+      Noise_destructor(that.ptr);
+    };
+    
+    // Connect to another node
+    that.connect = function (node) {
+      if (node.jsNode)
+      {
+        that.jsNode.connect(node.jsNode);
+      }
+      else {
+        that.jsNode.connect(node);
+      }
+      
+    };
+
+    // Bind to Web Audio
+
+    that.play = function () {
+      that.jsNode.connect(faust.context.destination);
+    };
+
+    that.pause = function () {
+      that.jsNode.disconnect(faust.context.destination);
+    };
+
+    that.init = function () {
+      var i;
+      that.ptrsize = 4; //assuming poitner in emscripten are 32bits
+      that.vectorsize = 2048;
+      that.samplesize = 4;
+      
+      // Get input / output counts
+      that.numIn = that.getNumInputs();
+      that.numOut = that.getNumOutputs();
+      
+      // Setup web audio context
+      that.jsNode = faust.context.createJavaScriptNode(that.vectorsize, that.numIn, that.numOut);
+      that.jsNode.onaudioprocess = that.compute;
+      
+      // allocate memory for input / output arrays
+      that.ins = Module._malloc(that.ptrsize * that.numIn);
+      
+      for (i = 0; i &lt; that.numIn; i++) {
+        HEAP32[(that.ins &gt;&gt; 2) + i] = Module._malloc(that.vectorsize * that.samplesize);
+      }
+      
+      that.outs = Module._malloc(that.ptrsize * that.numOut);
+      for (i = 0; i &lt; that.numOut; i++) {
+        HEAP32[(that.outs &gt;&gt; 2) + i] = Module._malloc(that.vectorsize * that.samplesize);
+      }
+    };
+
+    that.init();
+    
+
+    return that;
+  };
+}());
+</code></pre>
+<hr class="top-three"><h3><a href="/examples/faust2webaudio/">But does it work?</a></h3><hr class="bottom-three"><p>While the above wrapper will indeed work to compile a working a working Noise unit generator, it will do so without an interface that allows the user to change the process that is running in the virtual machine.  If you were to open the console you can actually look at and update the model of the Unit Generator</p>
+<pre><code class="language-js">&gt; noise.model
+  Object {Volume: 5260092}
+&gt; noise.update(&quot;Volume&quot;, 0.01)
+</code></pre>
+<p>You will notice above that the model contains an object with a key <em>Volume</em> and a value <em>5260092</em>.  The value is a pointer into the emscripten heap where the value of Volume is stored.  By accessing that place in memory we can change the value of Volume, modifying process running in the unit generator.</p>
+<p>In the case of Noise it is quite simple to keep track of a single pointer, but when trying to implement a general purpose compiler we need to be able to dynamically construct a model of any number of keys and pointers.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Fighting with Faust</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>One thing I have not yet mentioned about Faust is that the concept of UI is baked into the language.  Rather than variables one assigns UI objects such as a Horizontal Slider or Button.</p>
+<p>The generated C++ code offers you a function called buildUserInterface that will take a UI object as an argument and execute a virtual function for every type of UI element. </p>
+<p>The data I need is a JSON model of all UI elements names and pointers.  The closest C++ object that I could think of to this pattern was a map.  So I implemented a way to create a map in the heap that would populate with the necessary data.  First by making a function to insert data into the map</p>
+<pre><code class="language-c++">void insertMap(const char* label, FAUSTFLOAT* zone)
+{
+    uiMap.insert( std::pair&lt;std::string, FAUSTFLOAT*&gt;(label, zone));
+}
+</code></pre>
+<p>and then by calling said function during each virtual ui function</p>
+<pre><code class="language-c++">void addButton(const char* label, FAUSTFLOAT* zone)
+{
+    insertMap(label, zone);
+};
+
+void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT fmin, FAUSTFLOAT fmax, FAUSTFLOAT step)
+{
+    insertMap(label, zone);
+};
+</code></pre>
+<p> Unfortunately there is no easy way using emscripten to represent a map as an object.  There is some support available with <a href="https://github.com/kripken/emscripten/wiki/embind">embind</a> but I found the results less than satisfactory.  Embind would return an object that did not have any interface to list available keys.</p>
+<p>I found the solution to be implementing two meta methods: one that returned the number of entires in the map, and another that copied the key and value into pointers given as arguments.  </p>
+<pre><code>int DSP_getNumParams(Noise_wrap *n)
+{
+    return n-&gt;ui-&gt;uiMap.size();
+}
+
+FAUSTFLOAT* DSP_getNextParam(Dsp_wrap *n, char *key)
+{
+    FAUSTFLOAT* valPtr = n-&gt;ui-&gt;iter-&gt;second;
+    strcpy(key, n-&gt;ui-&gt;iter-&gt;first.c_str());
+    n-&gt;ui-&gt;iter++;
+    if (n-&gt;ui-&gt;iter == n-&gt;ui-&gt;uiMap.end())
+    {
+        n-&gt;ui-&gt;iter = n-&gt;ui-&gt;uiMap.begin();
+    }
+    return valPtr;
+}
+</code></pre>
+<p>With these functions broken out via emscripten it because easy to implement a setupModel function in JavaScript</p>
+<pre><code class="language-js">that.setupModel = function () {
+  var i;
+  var numParams = DSP_getNumParams(that.ptr);
+  for (i = 0; i &lt; numParams; i++) {
+    // Allocate keyPtr in the stack
+    var keyPtr = allocate(intArrayFromString(&#39;&#39;), &#39;i8&#39;, ALLOC_STACK);
+    var valPtr = DSP_getNextParam(that.ptr, keyPtr);
+    var key = Pointer_stringify(keyPtr);
+    that.model[key] = valPtr;
+  }
+};
+</code></pre>
+<p>With the additional code it becomes possible to compile almost any unit generator implemented in the faust language.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>more examples:</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><ul>
+<li><a href="/examples/faust2webaudio/osc.html">sine oscillator</a><ul>
+<li>Interact with <code>osc.model</code></li>
+</ul>
+</li>
+<li><a href="/examples/faust2webaudio/freeverb.html">freeverb</a><ul>
+<li>Interact with <code>freeverb.model</code> and <code>noise.model</code></li>
+</ul>
+</li>
+<li><a href="/examples/faust2webaudio/reverbDesigner.html">16th order FDN reverb</a><ul>
+<li>This one will make your browser chug, but it is an extremely complex model written by Julius Smith, just checkout out how many things are going on in <code>reverb.model</code></li>
+</ul>
+</li>
+</ul>
+<hr class="top-top-one"><hr class="top-one"><h1>what&#39;s next?</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><hr class="top-three"><h3>benchmarks</h3><hr class="bottom-three"><p>The next step with the project is to run a series of bench marks to see how the compiled code fares against both native code and other public JavaScriptNode unit generators.  If these unit generators prove to be competitive there will be a few more challenges to overcome</p>
+<hr class="top-three"><h3>dynamically linking files</h3><hr class="bottom-three"><p>Currently I am wrapping every unit generator in a closure with its own emscripten virtual machine.  This is due to not yet figuring out how to implement a single instance of the emscripten virtual machine.  When I tried loading more than one compiled file everything would explode.</p>
+<p>My current solution is only a bandaid, and I will need to find a way to dynamically link multiple js files together.  The only possible side effect of this approach would that we might miss out of certain optimizations that might be able to be done via emscripten and the google closure compiler if all js files are compiled as a single script.</p>
+<p>It might be necessary to implement a build system with a tool such as grunt to automate the process of compiling and optimizing any number of compiled emscripten compiled js files.  Having to stop and compile multiple files by hand every time you wanted to add a new unit generator would prove quite frustrating to me.</p>
+<hr class="top-three"><h3>cleaning up memory leaks</h3><hr class="bottom-three"><p>I have at least one memory leak that I know of, this should really be taken care of asap</p>
+<hr class="top-three"><h3>allow for signals to control parameters</h3><hr class="bottom-three"><p>You can&#39;t do FM synthesis without being able to connect an lfo to the frequency of another oscillator.  You also can&#39;t make a dubstep wobble without being able to connect an amplitude to a cutoff frequency on a low pass filter.  This will be a must have for any Faust compiled unit generator to be a first class citizen.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>use the force, read the <a href="https://www.github.com/MylesBorins/faust2webaudio">source</a></h1><hr class="bottom-one"><hr class="bottom-bottom-one"></div><div class="pagination group"><a class="newer" href="/page/8/">Newer &#8594;</a><a class="older" href="/page/10/">&#8592; Older</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);
 

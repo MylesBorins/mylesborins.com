@@ -1,166 +1,23 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/what-exactly-is-talkpaybot-how-to-make-simple-bots-with-the-twitter-stream-api/"><h1 class="post-title">What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</h1></a><div class="post-date">Published 5/4/2015</div></div><div class="post-body markdown"><blockquote>
-<p>To truly begin to eradicate pay inequality, we need a radical discussion. So let’s talk about pay.&quot; ~ Lauren Voswinkel</p>
-</blockquote>
-<p>On April 28th 2015 <a href="https://twitter.com/laurenvoswinkel">Lauren Voswinkel</a> wrote <a href="https://modelviewculture.com/news/lets-talk-about-pay">an article</a> on model view culture that called for people to tweet their salaries using the hashtag <em>#talkpay</em> on May 1st, International Workers&#39; Day.</p>
-<p>While I can claim that I was inspired, I did not initially feel comfortable tweeting this information for a variety of personal reasons. That was until I saw a thread involving <a href="https://twitter.com/othiym23">@othiym23</a> and <a href="https://twitter.com/addyosmani">@addyosmani</a> discussing how Forrest had been acting as a manual proxy to anonymously tweet <em>#talkpay</em> tweet all day. Specifically it was suggested a bot could make this process much simpler.</p>
-<p>My immediate reaction was &quot;I can totally build this bot, and do it with streams!&quot;</p>
-<p>From 1000 feet the process is pretty simple. Make a bot that will tweet any DM it receives that includes <em>#talkpay</em>. Twitter offers a <a href="https://dev.twitter.com/streaming/overview">stream-api</a> that makes this <a href="https://dev.twitter.com/streaming/userstreams#direct_messages">quite simple</a>.</p>
-<p>To get started the first thing I did was register a twitter handle for <a href="https://twitter.com/talkpayBot">the bot</a>. Once a twitter account is set up you have to visit <a href="https://apps.twitter.com/">apps.twitter.com</a> and <em>create a new app</em>. Since the bot will be sending and receiving Dm&#39;s it will also be necessary to modify the app permissions to <em>Read, Write and Access direct Messages</em>.</p>
-<p><img src="/images/talkpayBot/permissions.png" alt="application permissions"></p>
-<p>Once the permissions have been appropriately set you will need to regenerate the consumer Key and Secret and also create a unique access token. These four secret tokens will be necessary for you to securely communicate with the twitter api.</p>
-<p>Once the app is properly registered with twitter we can begin to program the bot in node.js using the <a href="https://www.npmjs.com/package/twit">Twit</a> library. Getting started is fairly easy. In a new folder use <code>npm init</code> to initialize the project. Install Twit <code>npm install --save twit</code>, and then create your index.js file <code>touch index.js</code>. Now that we have the skeleton for our project we can create a new object Twit that can easily communicate with the twitter api using the credentials we generated above</p>
-<pre><code class="language-js">var Twit = require(&#39;twit&#39;)
- 
-var T = new Twit({
-    consumer_key:         &#39;...&#39;,
-    consumer_secret:      &#39;...&#39;,
-    access_token:         &#39;...&#39;,
-    access_token_secret:  &#39;...&#39;
-});
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/playing-with-deep-dream-on-osx-10-9/"><h1 class="post-title">Playing with Deep Dream (on OSX 10.9).</h1></a><div class="post-date">Published 7/12/2015</div></div><div class="post-body markdown"><hr class="top-four"><h4>TLDR</h4><hr class="bottom-four"><p>pre-requirements:
+    * boot2docker installed
+    * docker installed
+    * courage</p>
+<pre><code class="language-bash">boot2docker up
+docker pull ryankennedyio/deepdream/
+git clone https://github.com/ryankennedyio/deep-dream-generator.git
+cd https://github.com/ryankennedyio/deep-dream-generator.git
+docker run -d -p 443:8888 -e &quot;PASSWORD=password&quot; -v $PWD:/src ryankennedyio/deepdream
+# you can now use boot2docker ip and visit https://{that ip}
 </code></pre>
-<p>Now that we have T object up and running you might want to play with the twitter API to make sure things are working as expected. This could include sending a &quot;Hello World&quot; tweet.</p>
-<pre><code class="language-js">T.post(&#39;statuses/update&#39;, { status: &#39;hello world!&#39; }, function(err, data, response) {
-  console.log(data);
-});
-</code></pre>
-<p>Assuming everything is working as expected, we should see that our bot has tweet &quot;Hello World&quot;.</p>
-<p>Now that we are familiar with using the Twit library we can easily start breaking down the bot we are trying to build in to a series of steps</p>
-<ul>
-<li>On every DM</li>
-<li>Check for #talkpay</li>
-<li>If #talkpay tweet it</li>
-<li>If not #talkpay warn user</li>
-<li>Delete All Messages after bot has processed them</li>
-</ul>
-<p>So lets start by figuring out how to listen to a direct message stream</p>
-<pre><code class="language-js">var stream = T.stream(&#39;user&#39;);
-
-stream.on(&#39;direct_message&#39;, function (eventMsg) {
-  var msg = eventMsg.direct_message.text;
-  var screenName = eventMsg.direct_message.sender.screen_name;
-  var msgID = eventMsg.direct_message.id_str;
-  
-  console.log(&#39;I just received a message from &#39; + screenName);
-  console.log(&#39;msg: &#39; + msg);
-  console.log(&#39;id: &#39; + msgID);
-});
-</code></pre>
-<p>Now try DM&#39;ing the bot you created. Every time it receives a message the above function will get called and the name of the sender, the content of the message, and the message ID will all be logged to the console.</p>
-<p>Now lets check for #talkpay and tweet if the phrase is included in the DM</p>
-<pre><code class="language-js">stream.on(&#39;direct_message&#39;, function (eventMsg) {
-  var msg = eventMsg.direct_message.text;
-  var screenName = eventMsg.direct_message.sender.screen_name;
-  var msgID = eventMsg.direct_message.id_str;
-  
-  if (msg.search(&#39;#talkpay&#39;) !== -1) {
-    return T.post(&#39;statuses/update&#39;, { status: msg}, function () {
-      console.log(&#39;I tweeted the message&#39;);
-    });
-  }
-});
-</code></pre>
-<p>Now we can try DM&#39;ing the bot with a message that includes <em>#talkpay</em> and the bot will do its thing! This is awesome, except it does not really warn the sender if the message didn&#39;t get tweeted. This can be accomplished with and else statement and another call to the api.</p>
-<pre><code class="language-js">stream.on(&#39;direct_message&#39;, function (eventMsg) {
-  var msg = eventMsg.direct_message.text;
-  var screenName = eventMsg.direct_message.sender.screen_name;
-  var msgID = eventMsg.direct_message.id_str;
-  
-  if (msg.search(&#39;#talkpay&#39;) !== -1) {
-    return T.post(&#39;statuses/update&#39;, { status: msg}, function () {
-      console.log(&#39;I tweeted the message&#39;);
-    });
-  }
-  
-  else {
-    return T.post(&#39;direct_messages/new&#39;, {
-      screen_name: screenName,
-      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
-    }, function () {
-      console.log(&#39;I did not tweet a thing, but I warned them&#39;);
-    });
-});
-</code></pre>
-<p>This is awesome, we can now DM the bot and it will warn us if we didn&#39;t include the appropriate Hash Tag. The only issue now is that things are not at all anonymous... the bot will keep a record of all the DM&#39;s it received.</p>
-<p>I like to consider myself inherently trustworthy, but there is no reason I should know who has tweeted the bot. By abstracting the callback function that we give to our API calls we can force all DMs to be immediately deleted after being triaged.</p>
-<pre><code class="language-js">function callbackHandler(id) {
-  T.post(&#39;direct_messages/destroy&#39;, {
-    id: id
-  }, function (err) {
-    if (err) { console.error(err); }
-  });
-}
-
-stream.on(&#39;direct_message&#39;, function (eventMsg) {
-  var msg = eventMsg.direct_message.text;
-  var screenName = eventMsg.direct_message.sender.screen_name;
-  var msgID = eventMsg.direct_message.id_str;
-  
-  if (msg.search(&#39;#talkpay&#39;) !== -1) {
-    return T.post(&#39;statuses/update&#39;, {
-      status: msg
-    }, function () {
-      callbackHandler(msgID);
-    });
-  }
-
-  else {
-    return T.post(&#39;direct_messages/new&#39;, {
-      screen_name: screenName,
-      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
-    }, function () {
-      callbackHandler(msgID);
-    });
-  }
-});
-</code></pre>
-<p>Now everything appears to be working, except that we will notice the bot will be tweeting the warning message everytime someone DMs without <em>#talkpay</em>. This is due to the fact that the direct_messages stream includes messages both from and to your user. A simple if statement can catch any instances where the incoming message is from yourself. We are going to want to make sure that message is deleted as well, otherwise the bot will maintain a list of everyone that wrote it without <em>#talkpay</em>.</p>
-<p>Below is the final code for the bot</p>
-<pre><code class="language-js">&#39;use strict&#39;;
-
-var Twit = require(&#39;twit&#39;);
-var config = require(&#39;./local.json&#39;);
-
-var T = new Twit(config);
-
-var stream = T.stream(&#39;user&#39;);
-
-function callbackHandler(id) {
-  T.post(&#39;direct_messages/destroy&#39;, {
-    id: id
-  }, function (err) {
-    if (err) { console.error(err); }
-  });
-}
-
-stream.on(&#39;direct_message&#39;, function (eventMsg) {
-  var msg = eventMsg.direct_message.text;
-  var screenName = eventMsg.direct_message.sender.screen_name;
-  var msgID = eventMsg.direct_message.id_str;
-  
-  if (screenName === &#39;talkpayBot&#39;) {
-    return callbackHandler(msgID);
-  }
-
-  else if (msg.search(&#39;#talkpay&#39;) !== -1) {
-    return T.post(&#39;statuses/update&#39;, {
-      status: msg
-    }, function () {
-      callbackHandler(msgID);
-    });
-  }
-
-  else {
-    return T.post(&#39;direct_messages/new&#39;, {
-      screen_name: screenName,
-      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
-    }, function () {
-      callbackHandler(msgID);
-    });
-  }
-});
-</code></pre>
-<p>Amazing!!! We now have a very simple node.js application that is able to anonymously tweet any message it receives that includes a specific hashtag. The only step left is getting this bot into <strong>THE CLOUD</strong>.</p>
-<p>I will follow up with another write up later this week explaining how I <em>dockerized</em> this application and deployed it into the cloud painlessly on digital ocean.</p>
+<p>⚠⚠⚠ as of the writing of this post the included image in the above repo doesn&#39;t play nice with deep dream. If you change the jpeg everything will play nice. There is a PR in to fix this :D ⚠⚠⚠</p>
+<p><strong>I recently stumbled across <a href="https://github.com/VISIONAI/clouddream/">clouddream</a> which has some really amazing examples of how to turn deep dream into a service</strong> </p>
+<p>If you have any questions or would like something expanded on please tweet <a href="https://twitter.com/MylesBorins">@MylesBorins</a> or DM me.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Getting started is a drag</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>The process of getting started with deep dream is not the simplest thing. If you start from the README found on <a href="https://github.com/google/deepdream">github</a> you will notice that you need to get <a href="http://ipython.org/">ipython</a> <a href="https://ipython.org/notebook.html">notebook</a> installed to get started. Once you get that running you are going to find a NEST of dependencies you are going to have to install</p>
+<p>From having an <a href="https://continuum.io/downloads">anaconda</a> build of python to having <a href="https://www.nvidia.com/object/cuda_home_new.html">CUDA</a> installed you are in for a bad time.</p>
+<hr class="top-top-one"><hr class="top-one"><h1>Just use docker</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>After burning a bit of time trying to bootstrap my system I opted to find a docker image that got things up and running nicely.</p>
+<p>A query or two brought me to <a href="https://registry.hub.docker.com/u/ryankennedyio/deepdream/">ryankennedyio/deepdream</a> on <a href="https://hub.docker.com/">docker hub</a>. Sadly the repo has no readme 😞. Thankfully after some Sherlocking I found the <a href="https://github.com/ryankennedyio/deep-dream-generator">repo on github</a>. The repo outlined the specific docker command that should be used to get things up and running. Everything works now and I can follow along. Below I will post my experiments... expect more as time goes on.</p>
+<p>The Creator of this repo wrote a great <a href="http://ryankennedy.io/running-the-deep-dream/">blog post</a> which goes quite a bit more in depth into getting things started.</p>
+<p><img src="/images/trippy-me.jpg" alt="trippy-me"></p>
 </div><div class="pagination group"><a class="newer" href="/page/5/">Newer &#8594;</a><a class="older" href="/page/7/">&#8592; Older</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);

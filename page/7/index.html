@@ -1,57 +1,166 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/using-grunt-to-save-your-thin-client-application-from-being-swallowed-by-your-server/"><h1 class="post-title">Using grunt to save your thin client application from being swallowed by your server</h1></a><div class="post-date">Published 3/23/2014</div></div><div class="post-body markdown"><p>Last summer I worked at a fantastic startup called <a href="http://djz.com">djz</a> as a lead front-end engineer.  The web team was small, but was a fantastic group to work with.  In preparing for the position I talked extensively with the current back-end engineer to find out what the in house stack was, and got my development machine up and running.</p>
-<p>This took about half a day before I gave up.</p>
-<p>This wasn&#39;t an extremely complicated stack, and this wasn&#39;t my first rodeo, but there were so many moving parts to get aligned that the process dragged out.  First I needed to set up a Ruby manager (I opted for rbenv rather than rvm), then I needed to get a local sql DB running, and there were a number of external dependencies that needed to be compiled to support specific gems.  One library in particular, libxml2, caused me an extremely large headache as homebrew does not link the compiled binaries and a specific ruby gem would fail consistently no matter what environmental variables I would set.  In the end I had to put the prospect of showing up to my first day of work ready to do my job, and had to show up and spend most of my first day working with the lead back-end dev to get the stack running.</p>
-<p>Did I mention yet that the front-end application I was working on was written entirely in Angular?  All of the routing and most of the templating were being handled on the client.  None of the data being used to populate the site was being served by the local rails server.  The reality set in that I was running their entire thick server application including the api server and a number of scrapers in order to serve a static site.</p>
-<p>There was a thin Angular application that had been swallowed by a behemoth rails stack, and I made it my first order of business to rip it out.  I would accomplish this task by utilizing the JavaScript task runner <a href="http://gruntjs.com/">grunt</a>.</p>
-<p><img src="/images/grunt/grunt-logo.svg" alt="Grunt.js"></p>
-<p>This was not such a bad way to get started at the company.  It gave me an opportunity to do an entire code audit, and gave me an excuse to dig into grunt, which I had wanted an excuse to play with for quite a while.  The first challenge was to figure out what steps were currently being handled by rails, and figure out how to use grunt to do them all instead.  This broke down into a number of fairly simple tasks:</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/what-exactly-is-talkpaybot-how-to-make-simple-bots-with-the-twitter-stream-api/"><h1 class="post-title">What exactly is @talkpayBot? How to make simple bots with the twitter stream API.</h1></a><div class="post-date">Published 5/4/2015</div></div><div class="post-body markdown"><blockquote>
+<p>To truly begin to eradicate pay inequality, we need a radical discussion. So let’s talk about pay.&quot; ~ Lauren Voswinkel</p>
+</blockquote>
+<p>On April 28th 2015 <a href="https://twitter.com/laurenvoswinkel">Lauren Voswinkel</a> wrote <a href="https://modelviewculture.com/news/lets-talk-about-pay">an article</a> on model view culture that called for people to tweet their salaries using the hashtag <em>#talkpay</em> on May 1st, International Workers&#39; Day.</p>
+<p>While I can claim that I was inspired, I did not initially feel comfortable tweeting this information for a variety of personal reasons. That was until I saw a thread involving <a href="https://twitter.com/othiym23">@othiym23</a> and <a href="https://twitter.com/addyosmani">@addyosmani</a> discussing how Forrest had been acting as a manual proxy to anonymously tweet <em>#talkpay</em> tweet all day. Specifically it was suggested a bot could make this process much simpler.</p>
+<p>My immediate reaction was &quot;I can totally build this bot, and do it with streams!&quot;</p>
+<p>From 1000 feet the process is pretty simple. Make a bot that will tweet any DM it receives that includes <em>#talkpay</em>. Twitter offers a <a href="https://dev.twitter.com/streaming/overview">stream-api</a> that makes this <a href="https://dev.twitter.com/streaming/userstreams#direct_messages">quite simple</a>.</p>
+<p>To get started the first thing I did was register a twitter handle for <a href="https://twitter.com/talkpayBot">the bot</a>. Once a twitter account is set up you have to visit <a href="https://apps.twitter.com/">apps.twitter.com</a> and <em>create a new app</em>. Since the bot will be sending and receiving Dm&#39;s it will also be necessary to modify the app permissions to <em>Read, Write and Access direct Messages</em>.</p>
+<p><img src="/images/talkpayBot/permissions.png" alt="application permissions"></p>
+<p>Once the permissions have been appropriately set you will need to regenerate the consumer Key and Secret and also create a unique access token. These four secret tokens will be necessary for you to securely communicate with the twitter api.</p>
+<p>Once the app is properly registered with twitter we can begin to program the bot in node.js using the <a href="https://www.npmjs.com/package/twit">Twit</a> library. Getting started is fairly easy. In a new folder use <code>npm init</code> to initialize the project. Install Twit <code>npm install --save twit</code>, and then create your index.js file <code>touch index.js</code>. Now that we have the skeleton for our project we can create a new object Twit that can easily communicate with the twitter api using the credentials we generated above</p>
+<pre><code class="language-js">var Twit = require(&#39;twit&#39;)
+ 
+var T = new Twit({
+    consumer_key:         &#39;...&#39;,
+    consumer_secret:      &#39;...&#39;,
+    access_token:         &#39;...&#39;,
+    access_token_secret:  &#39;...&#39;
+});
+</code></pre>
+<p>Now that we have T object up and running you might want to play with the twitter API to make sure things are working as expected. This could include sending a &quot;Hello World&quot; tweet.</p>
+<pre><code class="language-js">T.post(&#39;statuses/update&#39;, { status: &#39;hello world!&#39; }, function(err, data, response) {
+  console.log(data);
+});
+</code></pre>
+<p>Assuming everything is working as expected, we should see that our bot has tweet &quot;Hello World&quot;.</p>
+<p>Now that we are familiar with using the Twit library we can easily start breaking down the bot we are trying to build in to a series of steps</p>
 <ul>
-<li>Pre-Process Environmental Variables</li>
-<li>Compile HAML templates</li>
-<li>Compiles SASS / Less</li>
-<li>Launch Local development server</li>
-<li>Concatenate / Minify JS</li>
-<li>Cache-Bust Assets</li>
-<li>Update References to new tiny, smaller, uniquely named js / css files</li>
+<li>On every DM</li>
+<li>Check for #talkpay</li>
+<li>If #talkpay tweet it</li>
+<li>If not #talkpay warn user</li>
+<li>Delete All Messages after bot has processed them</li>
 </ul>
-<p>This was not a small number of things that needed to be managed, and further there was a distinct split between which processes needed to be run during local development versus tasks that were necessary for deployment.</p>
-<p>To get started I decided to use <a href="http://yeoman.io/">Yeoman</a>, a web scaffolding tool built on top of grunt and bower.  Specifically I started with the <a href="https://github.com/yeoman/generator-angular">Angular Generator</a>, seeing what a barebones project looked like.  I examined which grunt plug-ins were being used, and how they were organizing the source.</p>
-<p><img src="/images/grunt/yeoman-logo.a053.png" alt="Yeoman"></p>
-<p>Out of the box Yeoman handled a majority of our problems.  We could compile Sass, run a development server (With live reload!), and prepare our application for distribution with minification, concatenation, and cache-busting.  In fact that way in which magnification is handled with the grunt plug-ing <a href="https://github.com/yeoman/grunt-usemin">usemin</a> is quite ingenious, allowing you to wrap blocks of markup with comments to inform the builder which sections will be concatenated / minified together.</p>
-<p>There were also a handful of tasks we had not yet considered that were being taken care of including <a href="https://github.com/btford/grunt-ngmin">ng-min</a>, a utility that makes sure your angular code is minification safe (allowing you to avoid a bit of yak-shaving in your source).  Yeoman also provided a fantastic .jshintrc allowing us to easily enforce linting rules on all future code.  I made a particularly evil decision to not allow the local development server to start if your code didn&#39;t lint.</p>
-<p>The only missing parts were haml templating, Less compilation, and handling environmental variables within our code.  Haml templating ended up being a super fast solution, although it created ruby dependency and was a bit slow.   Less compilation also proved trivial to implement, you can see the entirety of the rule below.</p>
-<pre><code>recess: {
-  dist: {
-    options: {
-      compile: true
-    },
-    files: {
-      &#39;.tmp/styles/main.css&#39; : [&#39;&lt;%= yeoman.app %&gt;/styles/main.less&#39;]
-    }
+<p>So lets start by figuring out how to listen to a direct message stream</p>
+<pre><code class="language-js">var stream = T.stream(&#39;user&#39;);
+
+stream.on(&#39;direct_message&#39;, function (eventMsg) {
+  var msg = eventMsg.direct_message.text;
+  var screenName = eventMsg.direct_message.sender.screen_name;
+  var msgID = eventMsg.direct_message.id_str;
+  
+  console.log(&#39;I just received a message from &#39; + screenName);
+  console.log(&#39;msg: &#39; + msg);
+  console.log(&#39;id: &#39; + msgID);
+});
+</code></pre>
+<p>Now try DM&#39;ing the bot you created. Every time it receives a message the above function will get called and the name of the sender, the content of the message, and the message ID will all be logged to the console.</p>
+<p>Now lets check for #talkpay and tweet if the phrase is included in the DM</p>
+<pre><code class="language-js">stream.on(&#39;direct_message&#39;, function (eventMsg) {
+  var msg = eventMsg.direct_message.text;
+  var screenName = eventMsg.direct_message.sender.screen_name;
+  var msgID = eventMsg.direct_message.id_str;
+  
+  if (msg.search(&#39;#talkpay&#39;) !== -1) {
+    return T.post(&#39;statuses/update&#39;, { status: msg}, function () {
+      console.log(&#39;I tweeted the message&#39;);
+    });
   }
+});
+</code></pre>
+<p>Now we can try DM&#39;ing the bot with a message that includes <em>#talkpay</em> and the bot will do its thing! This is awesome, except it does not really warn the sender if the message didn&#39;t get tweeted. This can be accomplished with and else statement and another call to the api.</p>
+<pre><code class="language-js">stream.on(&#39;direct_message&#39;, function (eventMsg) {
+  var msg = eventMsg.direct_message.text;
+  var screenName = eventMsg.direct_message.sender.screen_name;
+  var msgID = eventMsg.direct_message.id_str;
+  
+  if (msg.search(&#39;#talkpay&#39;) !== -1) {
+    return T.post(&#39;statuses/update&#39;, { status: msg}, function () {
+      console.log(&#39;I tweeted the message&#39;);
+    });
+  }
+  
+  else {
+    return T.post(&#39;direct_messages/new&#39;, {
+      screen_name: screenName,
+      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
+    }, function () {
+      console.log(&#39;I did not tweet a thing, but I warned them&#39;);
+    });
+});
+</code></pre>
+<p>This is awesome, we can now DM the bot and it will warn us if we didn&#39;t include the appropriate Hash Tag. The only issue now is that things are not at all anonymous... the bot will keep a record of all the DM&#39;s it received.</p>
+<p>I like to consider myself inherently trustworthy, but there is no reason I should know who has tweeted the bot. By abstracting the callback function that we give to our API calls we can force all DMs to be immediately deleted after being triaged.</p>
+<pre><code class="language-js">function callbackHandler(id) {
+  T.post(&#39;direct_messages/destroy&#39;, {
+    id: id
+  }, function (err) {
+    if (err) { console.error(err); }
+  });
 }
+
+stream.on(&#39;direct_message&#39;, function (eventMsg) {
+  var msg = eventMsg.direct_message.text;
+  var screenName = eventMsg.direct_message.sender.screen_name;
+  var msgID = eventMsg.direct_message.id_str;
+  
+  if (msg.search(&#39;#talkpay&#39;) !== -1) {
+    return T.post(&#39;statuses/update&#39;, {
+      status: msg
+    }, function () {
+      callbackHandler(msgID);
+    });
+  }
+
+  else {
+    return T.post(&#39;direct_messages/new&#39;, {
+      screen_name: screenName,
+      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
+    }, function () {
+      callbackHandler(msgID);
+    });
+  }
+});
 </code></pre>
-<p>The only thing that remained to implement was processing environmental variables to allow for easy switching between different api servers.  The solution we found was a bit of a hack, but it works.  We created an app-config.js file to contain a number of top-level global objects that are used to maintain environmental variables.  The original app-config.js file has the information for all three potential servers inside of it each wrapped in comments attributing each section to a particular environment variable.</p>
-<pre><code>// @if NODE_ENV=&#39;local&#39;
-var HOSTDEETS = {
-    API_HOST: &#39;api.lvh.me:9001&#39;
-};
-// @endif
-// @if NODE_ENV=&#39;dev&#39;
-var HOSTDEETS = {
-    API_HOST: &#39;staging-api.domain.com&#39;
-};
-// @endif
-// @if NODE_ENV=&#39;prod&#39;
-var HOSTDEETS = {
-    API_HOST: &#39;api.domain.com&#39;
-};
-// @endif
+<p>Now everything appears to be working, except that we will notice the bot will be tweeting the warning message everytime someone DMs without <em>#talkpay</em>. This is due to the fact that the direct_messages stream includes messages both from and to your user. A simple if statement can catch any instances where the incoming message is from yourself. We are going to want to make sure that message is deleted as well, otherwise the bot will maintain a list of everyone that wrote it without <em>#talkpay</em>.</p>
+<p>Below is the final code for the bot</p>
+<pre><code class="language-js">&#39;use strict&#39;;
+
+var Twit = require(&#39;twit&#39;);
+var config = require(&#39;./local.json&#39;);
+
+var T = new Twit(config);
+
+var stream = T.stream(&#39;user&#39;);
+
+function callbackHandler(id) {
+  T.post(&#39;direct_messages/destroy&#39;, {
+    id: id
+  }, function (err) {
+    if (err) { console.error(err); }
+  });
+}
+
+stream.on(&#39;direct_message&#39;, function (eventMsg) {
+  var msg = eventMsg.direct_message.text;
+  var screenName = eventMsg.direct_message.sender.screen_name;
+  var msgID = eventMsg.direct_message.id_str;
+  
+  if (screenName === &#39;talkpayBot&#39;) {
+    return callbackHandler(msgID);
+  }
+
+  else if (msg.search(&#39;#talkpay&#39;) !== -1) {
+    return T.post(&#39;statuses/update&#39;, {
+      status: msg
+    }, function () {
+      callbackHandler(msgID);
+    });
+  }
+
+  else {
+    return T.post(&#39;direct_messages/new&#39;, {
+      screen_name: screenName,
+      text: &#39;ruhroh, you need to include #talkpay in your DM for me to do my thang&#39;
+    }, function () {
+      callbackHandler(msgID);
+    });
+  }
+});
 </code></pre>
-<p>We then used <a href="https://github.com/jsoverson/grunt-preprocess">grunt-preprocess</a> to create a new file that only contained the section that had the correct environmental variable.  In retrospect I think the handling of environmental variables were done in a less than ideal way.  We had played with switching to jade templating, and we could have done things much nicer by injecting values into the jade compiler, but alas when you need to ship you need to ship.</p>
-<p>In the end we were able to create an entirely separate repo for the front-end code, allowing the rails app to act as a restful api, and allowing our Angular app to act as a rich client ui.  While there is an obvious benefit to the back-end folks, no longer having to worry about the api server handling templating, the most rewarding benefit was that we turned the entire onboarding process for new front-end developers into a single line of bash.</p>
-<pre><code>npm install &amp;&amp; bower install &amp;&amp; grunt server
-</code></pre>
+<p>Amazing!!! We now have a very simple node.js application that is able to anonymously tweet any message it receives that includes a specific hashtag. The only step left is getting this bot into <strong>THE CLOUD</strong>.</p>
+<p>I will follow up with another write up later this week explaining how I <em>dockerized</em> this application and deployed it into the cloud painlessly on digital ocean.</p>
 </div><div class="pagination group"><a class="newer" href="/page/6/">Newer &#8594;</a><a class="older" href="/page/8/">&#8592; Older</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);

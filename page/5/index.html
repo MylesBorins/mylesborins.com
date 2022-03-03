@@ -1,23 +1,37 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/playing-with-deep-dream-on-osx-10-9/"><h1 class="post-title">Playing with Deep Dream (on OSX 10.9).</h1></a><div class="post-date">Published 7/12/2015</div></div><div class="post-body markdown"><hr class="top-four"><h4>TLDR</h4><hr class="bottom-four"><p>pre-requirements:
-    * boot2docker installed
-    * docker installed
-    * courage</p>
-<pre><code class="language-bash">boot2docker up
-docker pull ryankennedyio/deepdream/
-git clone https://github.com/ryankennedyio/deep-dream-generator.git
-cd https://github.com/ryankennedyio/deep-dream-generator.git
-docker run -d -p 443:8888 -e &quot;PASSWORD=password&quot; -v $PWD:/src ryankennedyio/deepdream
-# you can now use boot2docker ip and visit https://{that ip}
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="portfolio and blog of myles borins"><meta name="author" content="Myles Borins"><link rel="icon" type="image/png" href="/images/favicon.ico"><link href="/styles/main.css" rel="stylesheet"><title>MylesBorins.com</title></head><body><div id="header"><div id="header-accent"><div class="big-guy light-grey"></div><div class="medium-guy dark-grey"></div><div class="tiny-guy almost-black"></div></div></div><nav class="social-links group small" id="sticky-social"><ul class="nav-links-social"><li class="text-link"><a class="icon-twitter2" href="https://www.twitter.com/MylesBorins"></a></li><li class="text-link"><a class="icon-github3" href="https://www.github.com/MylesBorins"></a></li><li class="text-link"><a class="icon-soundcloud" href="https://www.soundcloud.com/rowbit"></a></li><li class="text-link"><a class="icon-linkedin" href="https://www.linkedin.com/in/MylesBorins"></a></li><li class="text-link"><a class="icon-vimeo2" href="https://vimeo.com/MylesBorins"></a></li><li class="text-link"><a class="icon-envelope" href="mailto:myles.borins@gmail.com"></a></li></ul></nav><div class="meta-white"><div class="center shift-up-body"> <div class="post-head group"><a href="/blog/getting-your-node-js-app-in-the-cloud-with-bluemix-in-5-minutes/"><h1 class="post-title">Getting your node.js app in the cloud with bluemix in 5 minutes</h1></a><div class="post-date">Published 12/1/2015</div></div><div class="post-body markdown"><hr class="top-four"><h4>TLDR</h4><hr class="bottom-four"><p>pre-requirements:</p>
+<ul>
+<li><a href="https://console.ng.bluemix.net/registration/">sign up for bluemix</a></li>
+<li>know some git</li>
+<li>have a node project ready to go</li>
+</ul>
+<p>First thing first you will need to cloud foundary CLI. Here are basic instructions to get started with OSX + homebrew.</p>
+<pre><code class="language-bash">$ brew tap pivotal/tap # tap it
+$ brew install cloudfoundry-cli # install it
+$ cf api https://api.ng.bluemix.net # setup bluemix api(for NA)
+$ cf login # login to bluemix
 </code></pre>
-<p>⚠⚠⚠ as of the writing of this post the included image in the above repo doesn&#39;t play nice with deep dream. If you change the jpeg everything will play nice. There is a PR in to fix this :D ⚠⚠⚠</p>
-<p><strong>I recently stumbled across <a href="https://github.com/VISIONAI/clouddream/">clouddream</a> which has some really amazing examples of how to turn deep dream into a service</strong> </p>
-<p>If you have any questions or would like something expanded on please tweet <a href="https://twitter.com/MylesBorins">@MylesBorins</a> or DM me.</p>
-<hr class="top-top-one"><hr class="top-one"><h1>Getting started is a drag</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>The process of getting started with deep dream is not the simplest thing. If you start from the README found on <a href="https://github.com/google/deepdream">github</a> you will notice that you need to get <a href="http://ipython.org/">ipython</a> <a href="https://ipython.org/notebook.html">notebook</a> installed to get started. Once you get that running you are going to find a NEST of dependencies you are going to have to install</p>
-<p>From having an <a href="https://continuum.io/downloads">anaconda</a> build of python to having <a href="https://www.nvidia.com/object/cuda_home_new.html">CUDA</a> installed you are in for a bad time.</p>
-<hr class="top-top-one"><hr class="top-one"><h1>Just use docker</h1><hr class="bottom-one"><hr class="bottom-bottom-one"><p>After burning a bit of time trying to bootstrap my system I opted to find a docker image that got things up and running nicely.</p>
-<p>A query or two brought me to <a href="https://registry.hub.docker.com/u/ryankennedyio/deepdream/">ryankennedyio/deepdream</a> on <a href="https://hub.docker.com/">docker hub</a>. Sadly the repo has no readme 😞. Thankfully after some Sherlocking I found the <a href="https://github.com/ryankennedyio/deep-dream-generator">repo on github</a>. The repo outlined the specific docker command that should be used to get things up and running. Everything works now and I can follow along. Below I will post my experiments... expect more as time goes on.</p>
-<p>The Creator of this repo wrote a great <a href="http://ryankennedy.io/running-the-deep-dream/">blog post</a> which goes quite a bit more in depth into getting things started.</p>
-<p><img src="/images/trippy-me.jpg" alt="trippy-me"></p>
+<p>Add a basic <code>manifest.yml</code> to the root of your project</p>
+<pre><code class="language-yaml">---
+applications:
+- name: name-of-your-app
+  command: npm start
+  path: .
+</code></pre>
+<p>Add a basic <code>.cfignore</code> to the root of your project</p>
+<pre><code>node_modules
+dist
+</code></pre>
+<p>Make sure that you reference the environemnt port when starting your server (below example is with express)</p>
+<pre><code class="language-js">server.listen(process.env.PORT || 3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log(&#39;Example app listening at http://%s:%s&#39;, host, port);
+});
+</code></pre>
+<p>Deploy to the cloud</p>
+<pre><code class="language-bash">$ cf push
+</code></pre>
+<p>Obviously this isn&#39;t anything super complicated, but this will get you up and running with an app in the cloud in a matter of minutes!</p>
 </div><div class="pagination group"><a class="newer" href="/page/4/">Newer &#8594;</a><a class="older" href="/page/6/">&#8592; Older</a></div></div></div><div id="footer"><div class="tiny-guy almost-black"></div><div class="medium-guy dark-grey"></div><div class="big-guy light-grey"></div><div class="center"><nav class="group"><h1 class="name"><a href="/">Myles Borins</a></h1><ul class="nav-links"><li class="text-link"><a href="/about.html">about</a></li><li class="text-link"><a href="/talks.html">talks</a></li><li class="text-link"><a href="/projects.html">projects</a></li><li class="text-link"><a href="/archives.html">archives</a></li></ul></nav></div></div><script src="/scripts/jquery.min.js"></script><script src="/scripts/sticky-kit.min.js"></script><script src="/scripts/main.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-46827582-1']);
 _gaq.push(['_trackPageview']);
