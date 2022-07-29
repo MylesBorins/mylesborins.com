@@ -1,35 +1,3 @@
-Skip to content
- •   train-27e51255 🦴 🐈 github/blob 
-✨ Feedback Switch to  Rails 7.1.0.alpha.9646456 | Ruby 3.1.2
-
-Search or jump to...
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@MylesBorins 
-MylesBorins
-/
-myles.dev
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-myles.dev/.github/workflows/publish.yml
-@MylesBorins
-MylesBorins Update publish.yml
-Latest commit d86ec61 2 minutes ago
- History
- 1 contributor
-49 lines (43 sloc)  1.01 KB
-
 name: github pages
 
 on:
@@ -79,4 +47,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-You have unread notifications
