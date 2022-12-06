@@ -6,18 +6,20 @@
   type: "talks"
 }
 
-
 # Talks
 
-##  OpenJS World (June 2022)
+## GitHub Universe (November 2022)
+[![Securing JavaScript](https://img.youtube.com/vi/GxAKWZPrtcs/0.jpg)](https://www.youtube.com/watch?v=GxAKWZPrtcs)
+
+## OpenJS World (June 2022)
 ### Securing JavaScript
 [![Securing JavaScript](https://img.youtube.com/vi/eDZHrNbyK3c/0.jpg)](https://www.youtube.com/watch?v=eDZHrNbyK3c)
 
-##  GitHub Universe (Oct 2021)
+## GitHub Universe (Oct 2021)
 ### Releases Galore
 [![Releases Galore](https://img.youtube.com/vi/EiJEFrXVVr8/0.jpg)](https://www.youtube.com/watch?v=EiJEFrXVVr8)
 
-##  GitHub Universe (Dec 2020)
+## GitHub Universe (Dec 2020)
 ### GitHub ❤️ npm  
 [![GitHub ❤️ npm](https://img.youtube.com/vi/vC8d1QEGtEQ/0.jpg)](https://www.youtube.com/watch?v=vC8d1QEGtEQ)
 
