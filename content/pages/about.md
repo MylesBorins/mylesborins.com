@@ -7,7 +7,7 @@
 
 Myles Borins is a developer, musician, artist, and maker
 
-Myles works at GitHub as an Open Source Product Manager
+Myles works at GitHub as a Director of Product for GitHub Packages and npm
 
 Myles cares about the open web and healthy communities
 
