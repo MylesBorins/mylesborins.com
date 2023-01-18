@@ -87,7 +87,7 @@
 [![Open Source Governance Models: From BDFL to Distributed Consensus](https://img.youtube.com/vi/nY64JAzHJuo/0.jpg)](https://www.youtube.com/watch?v=nY64JAzHJuo)
 
 ## DinosaureJS (June 2017)
-### The True Cost of Unmoderated Collaboration: A Story from the Tranches
+### The True Cost of Unmoderated Collaboration: A Story from the Trenches
 [![The True Cost of Unmoderated Collaboration: A Story from the Tranches](https://img.youtube.com/vi/cJOUxRf80CE/0.jpg)](https://www.youtube.com/watch?v=cJOUxRf80CE)
 
 ## Nodejs Israel (May 2017)
