@@ -68,6 +68,10 @@
 ### Deploying serverless Node.js microservices
 [![Deploying serverless Node.js microservices](https://img.youtube.com/vi/ogexnfng_hE/0.jpg)](https://www.youtube.com/watch?v=ogexnfng_hE)
 
+## JSConf Columbia (November 2017)
+### The CITGM Diaries
+[![The CITGM Diaries](https://img.youtube.com/vi/hHVMJSLwQnM/0.jpg)](https://www.youtube.com/watch?v=hHVMJSLwQnM)
+
 ## Node Interactive (October 2017)
 ### Node Wave 6
 [![Node Wave 6](https://img.youtube.com/vi/qsXtS1rZH5k/hq1.jpg)](https://www.youtube.com/watch?v=qsXtS1rZH5k)
@@ -95,7 +99,7 @@
 [![The CITGM Diaries](https://img.youtube.com/vi/0A6-d3y5kWk/0.jpg)](https://www.youtube.com/watch?v=0A6-d3y5kWk)
 
 ## Node Interactive (November 2016)
-<!-- ### Node.js Releases, How Do They Work? -->
+### Node.js Releases, How Do They Work?
 [![Node.js Releses, How Do They Work?](https://img.youtube.com/vi/8XIhvRIz2aA/0.jpg)](https://www.youtube.com/watch?v=8XIhvRIz2aA)
 
 ## JSConf Asia (November 2016)
@@ -107,7 +111,7 @@
 [![Node.js Releases, How Do They Work?](https://img.youtube.com/vi/G_mQmDsi9HI/0.jpg)](https://www.youtube.com/watch?v=G_mQmDsi9HI)
 
 ## Node Interactive EU (September 2016)
-<!-- ### The CITGM Diaries -->
+### The CITGM Diaries
 [![The CITGM Diaries](https://img.youtube.com/vi/8is8iKlo8oQ/0.jpg)](https://www.youtube.com/watch?v=8is8iKlo8oQ)
 
 ## View Source EU (September 2016)
