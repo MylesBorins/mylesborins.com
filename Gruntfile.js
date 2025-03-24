@@ -18,7 +18,7 @@ module.exports = function (grunt) {
           markedOptions: function (marked) {
             // This is the default image renderer
             // Just thought it would be good to have for reference
-            // inacse I decide to modify it
+            // incase I decide to modify it
             const renderer = Object.assign(new marked.Renderer(), {
               image: function (href, title, text) {
                 var out = '<img src="' + href + '" alt="' + text + '"';
@@ -67,7 +67,8 @@ module.exports = function (grunt) {
     },
     sass: {
       options: {
-        implementation: sass
+        implementation: sass,
+        includePath: 'node_modules/@highlightjs/cdn-assets/styles'
       },
       dist: {
         files: [{

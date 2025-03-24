@@ -54,12 +54,13 @@
 code {
   background:#F9F9FF;
   border: 1px solid hsl(0, 0%, 90%);
-  padding: 0 0.3em;
+  padding: 0 1em;
   border-radius: 3px;
   margin: 0;
   font-size: .8em;
   line-height: 1.5em;
   font-family: $codeFont;
+  white-space: pre-wrap;
 }
 
 .markdown > pre {
@@ -75,7 +76,7 @@ code {
 
   code {
     border: 0;
-    padding: 0;
+    padding: 1em;
   }
 }
 
