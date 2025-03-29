@@ -1,4 +1,4 @@
-const sass = require('node-sass');
+const sass = require('sass-embedded');
 
 module.exports = function (grunt) {
   'use strict';
