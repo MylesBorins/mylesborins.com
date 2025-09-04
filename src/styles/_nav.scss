@@ -1,21 +1,23 @@
+@use 'base';
+
 nav {
 //  border-bottom: 1px solid gainsboro;
   margin-top: 1.4em;
   margin-bottom: 0.8em;
 
   a {
-    color: $offBlack;
+    color: base.$offBlack;
     text-decoration: none;
 
     &:hover {
-      color: $offBlack;
+      color: base.$offBlack;
       text-decoration: underline;
     }
   }
   &.social-links {
     pointer-events: none;
     &.is_stuck {
-      @include breakpoint(small-phone) {
+      @include base.breakpoint(small-phone) {
         font-size: 1.2em;
       }
       pointer-events: auto;
@@ -31,7 +33,7 @@ nav {
     ul {
       opacity: 0;
       &#about-ul {
-        @include breakpoint(small-phone) {
+        @include base.breakpoint(small-phone) {
           opacity: 1;
           padding-bottom: 1em;
           font-size: 2em;
@@ -43,7 +45,7 @@ nav {
       margin-bottom: 10px;
       font-size: 1.5em;
 
-      @include breakpoint(small-phone) {
+      @include base.breakpoint(small-phone) {
         font-size: 1.2em;
         padding-top: 0.5em;
       }

@@ -1,3 +1,6 @@
+@use 'base';
+@use 'icons';
+
 .markdown {
 
   ul, ol {
@@ -14,7 +17,7 @@
     margin-left: -1.7em;
     padding-left: 1.7em;
     outline: none;
-    color: $baseTextColor;
+    color: base.$baseTextColor;
 
     &:hover {
       text-decoration: none;
@@ -43,10 +46,10 @@
   margin-left: -1.7em;
   visibility: hidden;
   font-size: 16px;
-  @include breakpoint(big-phone) {
+  @include base.breakpoint(big-phone) {
     font-size: 14px;
   }
-  @include breakpoint(small-phone) {
+  @include base.breakpoint(small-phone) {
     font-size: 12px;
   }
 }
@@ -59,13 +62,13 @@ code {
   margin: 0;
   font-size: .8em;
   line-height: 1.5em;
-  font-family: $codeFont;
+  font-family: base.$codeFont;
   white-space: pre-wrap;
 }
 
 .markdown > pre {
   white-space: normal;
-  font-family: $codeFont;
+  font-family: base.$codeFont;
   overflow: auto;
   margin: 1em 0;
 
