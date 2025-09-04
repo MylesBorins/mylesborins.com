@@ -1,15 +1,15 @@
-@import 'normalize';
-@import 'node_modules/@highlightjs/cdn-assets/styles/default';
-@import 'github';
+@use 'normalize';
+@use 'node_modules/@highlightjs/cdn-assets/styles/default';
+@use 'github';
 
-@import 'base';
-@import 'markdown';
-@import 'icons';
-@import 'nav';
-@import 'post';
+@use 'base';
+@use 'markdown';
+@use 'icons';
+@use 'nav';
+@use 'post';
 
-@import 'header';
-@import 'footer';
+@use 'header';
+@use 'footer';
 
-@import 'about';
-@import 'hacks';
+@use 'about';
+@use 'hacks';

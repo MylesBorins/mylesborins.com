@@ -1,3 +1,5 @@
+@use 'base';
+
 .post-head {
   width: 100%;
   &.group {
@@ -19,7 +21,7 @@
 .post-date {
   text-align: center;
   font-size: 1.3em;
-  color: $lightTextColor;
+  color: base.$lightTextColor;
 }
 
 .post-body {
