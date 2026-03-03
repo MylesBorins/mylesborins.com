@@ -32,6 +32,8 @@ $break-large: 1200px;
 .meta-white {
   background-color: white;
   margin-top: -2em;
+  position: relative;
+  z-index: 3;
 }
 
 .shift-up-body {
