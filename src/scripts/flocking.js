@@ -26,7 +26,7 @@
     separation: 2.0,
     alignment: 0.03,
     jitter: 60,
-    centerPull: 0.00001,
+    centerPull: 0,
     centerPullAmplitude: 0.00002,
     centerPullPeriod: 20,
     boundMargin: 5,
@@ -247,9 +247,11 @@
 
       var coh = PARAMS.cohesion + PARAMS.cohesionAmplitude * Math.sin(now * (2 * Math.PI / PARAMS.cohesionPeriod) + b.flock * 2.0);
       if (cohCount > 0) {
-        b.vx += (cohX / cohCount - b.x) * coh;
-        b.vy += (cohY / cohCount - b.y) * coh;
-        b.vz += (cohZ / cohCount - b.z) * coh;
+        var crowding = Math.max(0, cohCount - 15) * 0.002;
+        var effectiveCoh = coh - crowding;
+        b.vx += (cohX / cohCount - b.x) * effectiveCoh;
+        b.vy += (cohY / cohCount - b.y) * effectiveCoh;
+        b.vz += (cohZ / cohCount - b.z) * effectiveCoh;
       }
 
       b.vx += sepX * PARAMS.separation;
