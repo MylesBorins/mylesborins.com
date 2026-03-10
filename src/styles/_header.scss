@@ -14,6 +14,13 @@
     display: block;
     background: #000;
     aspect-ratio: 1440 / 175;
+
+    @media (max-width: 900px) {
+      aspect-ratio: 3 / 1;
+    }
+    @media (max-width: 600px) {
+      aspect-ratio: 2 / 1;
+    }
   }
   .header-name {
     position: fixed;
@@ -25,6 +32,15 @@
     font-size: 1.6vw;
     line-height: 1;
     pointer-events: none;
+
+    @media (max-width: 900px) {
+      font-size: 3vw;
+      top: calc(100vw / 3 * 0.72);
+    }
+    @media (max-width: 600px) {
+      font-size: 4vw;
+      top: calc(100vw / 2 * 0.72);
+    }
   }
   #fullscreen-btn {
     position: fixed;

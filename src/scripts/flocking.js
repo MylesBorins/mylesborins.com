@@ -15,8 +15,10 @@
   var lastTime = 0;
   var isFullscreen = false;
 
+  var isMobile = 'ontouchstart' in window || window.innerWidth < 900;
+
   var PARAMS = {
-    numBoids: 1000,
+    numBoids: isMobile ? 300 : 1000,
     numFlocks: 1,
     visualRange: 120,
     separationDist: 15,
@@ -506,6 +508,46 @@
   });
 
   canvas.addEventListener('mouseleave', function () {
+    mouse.active = false;
+    mouse.clicking = false;
+    mouse.vx = 0;
+    mouse.vy = 0;
+  });
+
+  canvas.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    var rect = canvas.getBoundingClientRect();
+    mouse.x = touch.clientX - rect.left;
+    mouse.y = touch.clientY - rect.top;
+    mouse.vx = 0;
+    mouse.vy = 0;
+    mouse.active = true;
+    mouse.clicking = true;
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    var rect = canvas.getBoundingClientRect();
+    var nx = touch.clientX - rect.left;
+    var ny = touch.clientY - rect.top;
+    if (mouse.x !== null) {
+      mouse.vx = mouse.vx * 0.6 + (nx - mouse.x) * 0.4 * 60;
+      mouse.vy = mouse.vy * 0.6 + (ny - mouse.y) * 0.4 * 60;
+    }
+    mouse.x = nx;
+    mouse.y = ny;
+    mouse.active = true;
+    mouse.clicking = false;
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function () {
+    if (mouse.x !== null) {
+      mouse.explode = true;
+      mouse.explodeX = mouse.x;
+      mouse.explodeY = mouse.y;
+    }
     mouse.active = false;
     mouse.clicking = false;
     mouse.vx = 0;
