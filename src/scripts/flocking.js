@@ -28,9 +28,10 @@
     separation: 2.0,
     alignment: 0.03,
     jitter: 60,
-    centerPull: 0,
+    centerPull: isMobile ? 0.0003 : 0,
     centerPullAmplitude: 0.00002,
     centerPullPeriod: 20,
+    centerYRatio: isMobile ? 0.38 : 0.5,
     boundMargin: 5,
     boundTurn: 2,
     speedLimit: 140,
@@ -46,8 +47,8 @@
     zDepth: 1500,
     zBoundTurn: 2,
     cameraDist: 300,
-    boidMinSize: 2,
-    boidMaxSize: 40,
+    boidMinSize: isMobile ? 1 : 2,
+    boidMaxSize: isMobile ? 20 : 40,
     depthDim: 0.4,
     colorMode: 0,
     windStrength: 0,
@@ -183,9 +184,11 @@
   function makeBoid(flockId) {
     var col = FLOCK_COLORS[flockId % FLOCK_COLORS.length];
     var vary = 0.15;
+    var spawnYCenter = height * PARAMS.centerYRatio;
+    var spawnYSpread = height * 0.4;
     return {
       x: rand(0, width),
-      y: rand(0, height),
+      y: rand(Math.max(0, spawnYCenter - spawnYSpread), Math.min(height, spawnYCenter + spawnYSpread)),
       z: rand(0, PARAMS.zDepth),
       vx: rand(-30, 30),
       vy: rand(-30, 30),
@@ -268,7 +271,7 @@
 
       var pull = PARAMS.centerPull + PARAMS.centerPullAmplitude * Math.sin(now * (2 * Math.PI / PARAMS.centerPullPeriod));
       b.vx += (width * 0.5 - b.x) * pull;
-      b.vy += (height * 0.5 - b.y) * pull;
+      b.vy += (height * PARAMS.centerYRatio - b.y) * pull;
       b.vz += (halfZ - b.z) * pull;
 
       b.vx += windX * dt;
@@ -595,6 +598,7 @@
     alignment: 0.06,
     jitter: 40,
     centerPull: 0,
+    centerYRatio: 0.5,
     boundMargin: 20,
     boundTurn: 3,
     speedLimit: 250,
