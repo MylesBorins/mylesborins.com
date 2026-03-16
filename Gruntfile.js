@@ -1,4 +1,40 @@
+const fs = require('node:fs');
+const path = require('node:path');
 const sass = require('sass-embedded');
+
+const SITE_URL = 'https://mylesborins.com';
+const SITEMAP_EXCLUDES = new Set([
+  '/404.html',
+  '/404/404/',
+  '/about/mylesborins-com-about/',
+  '/talks/talks/'
+]);
+
+function collectHtmlFiles(dir) {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      return collectHtmlFiles(entryPath);
+    }
+
+    return entry.isFile() && entry.name.endsWith('.html') ? [entryPath] : [];
+  });
+}
+
+function toPublicUrl(filePath) {
+  const relativePath = path.relative('public_html', filePath).replace(/\\/g, '/');
+
+  if (relativePath === 'index.html') {
+    return '/';
+  }
+
+  if (relativePath.endsWith('/index.html')) {
+    return `/${relativePath.slice(0, -'index.html'.length)}`;
+  }
+
+  return `/${relativePath}`;
+}
 
 module.exports = function (grunt) {
   'use strict';
@@ -157,8 +193,47 @@ module.exports = function (grunt) {
     'clean',
     'pages',
     'sass',
-    'copy'
+    'copy',
+    'seo'
   ]);
+
+  grunt.registerTask('seo', 'Generate sitemap.xml and robots.txt', function () {
+    const htmlFiles = collectHtmlFiles('public_html');
+    const urls = htmlFiles
+      .map((filePath) => ({
+        filePath,
+        url: toPublicUrl(filePath)
+      }))
+      .filter(({ url }) => !SITEMAP_EXCLUDES.has(url))
+      .sort((a, b) => a.url.localeCompare(b.url));
+
+    const sitemap = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      ...urls.map(({ filePath, url }) => {
+        const lastModified = fs.statSync(filePath).mtime.toISOString();
+        return [
+          '  <url>',
+          `    <loc>${SITE_URL}${url}</loc>`,
+          `    <lastmod>${lastModified}</lastmod>`,
+          '  </url>'
+        ].join('\n');
+      }),
+      '</urlset>'
+    ].join('\n');
+
+    const robots = [
+      'User-agent: *',
+      'Allow: /',
+      '',
+      `Sitemap: ${SITE_URL}/sitemap.xml`
+    ].join('\n');
+
+    fs.writeFileSync(path.join('public_html', 'sitemap.xml'), `${sitemap}\n`);
+    fs.writeFileSync(path.join('public_html', 'robots.txt'), `${robots}\n`);
+
+    grunt.log.writeln(`Generated SEO files for ${urls.length} URLs.`);
+  });
 
   grunt.registerTask('server', [
     'build',

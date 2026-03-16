@@ -1,5 +1,15 @@
 extends base
 
+block seo
+  - var canonicalHref = `https://mylesborins.com${data.baseUrl}${post.url}`
+  - var isDuplicateContentPage = ['about', 'talks', '404'].indexOf(post.type) !== -1
+  - if (post.type === 'about') canonicalHref = 'https://mylesborins.com/about.html'
+  - else if (post.type === 'talks') canonicalHref = 'https://mylesborins.com/talks.html'
+  - else if (post.type === '404') canonicalHref = 'https://mylesborins.com/404.html'
+  link(rel="canonical", href=canonicalHref)
+  if isDuplicateContentPage
+    meta(name="robots", content="noindex,follow")
+
 block head
   title= post.title
   if post.description

@@ -1,5 +1,10 @@
 extends ../layouts/base
 
+block seo
+  - var canonicalHref = 'https://mylesborins.com/'
+  - if (typeof currentIndex !== 'undefined' && currentIndex > 0 && pages && pages[currentIndex] && pages[currentIndex].url) canonicalHref = `https://mylesborins.com${data.baseUrl}${pages[currentIndex].url}`
+  link(rel="canonical", href=canonicalHref)
+
 block head
   title MylesBorins.com
 

@@ -32,7 +32,7 @@ But What if you want something more?
 
 The JavaScriptNode allows individuals to create their own web audio nodes in pure JavaScript.  This allows individuals to extend the Web Audio Api with custom nodes.
 
-Web Audio Libraries such as [Flocking](flockingjs.org) by Colin Clark and [Gibber](http://www.charlie-roberts.com/gibber/) by Charlie Roberts make extensive use of the JavaScriptNode.
+Web Audio Libraries such as [Flocking](https://flockingjs.org) by Colin Clark and [Gibber](http://www.charlie-roberts.com/gibber/) by Charlie Roberts make extensive use of the JavaScriptNode.
 
 >### !!! WARNING !!!
 
