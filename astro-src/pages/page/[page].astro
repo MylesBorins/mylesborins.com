@@ -1,0 +1,34 @@
+---
+import Pagination from '../../components/Pagination.astro';
+import PostHeader from '../../components/PostHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_URL, getBlogPages, type BlogPage } from '../../lib/legacy-content';
+
+export function getStaticPaths() {
+  const pages = getBlogPages();
+  return pages.slice(1).map((page) => ({
+    params: { page: String(page.index) },
+    props: {
+      page,
+      newer: pages[page.index - 1] ?? null,
+      older: pages[page.index + 1] ?? null
+    }
+  }));
+}
+
+interface Props {
+  page: BlogPage;
+  newer?: BlogPage | null;
+  older?: BlogPage | null;
+}
+
+const { page, newer = null, older = null } = Astro.props;
+---
+
+<BaseLayout canonicalUrl={`${SITE_URL}${page.url}`} title="MylesBorins.com">
+  <article class="reading-column reading-column--post">
+    <PostHeader post={page.post} />
+    <div class="markdown" set:html={page.post.contentHtml} />
+  </article>
+  <Pagination newer={newer} older={older} />
+</BaseLayout>

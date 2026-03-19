@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_URL, getSingletonPage } from '../../lib/legacy-content';
+
+const page = getSingletonPage('about');
+if (!page) throw new Error('Missing about page content');
+
+const socialLinks = [
+  ['GitHub', 'https://github.com/MylesBorins'],
+  ['LinkedIn', 'https://www.linkedin.com/in/MylesBorins'],
+  ['Bluesky', 'https://bsky.app/profile/myles.dev'],
+  ['X / Twitter', 'https://www.twitter.com/MylesBorins'],
+  ['SoundCloud', 'https://www.soundcloud.com/rowbit'],
+  ['Vimeo', 'https://vimeo.com/MylesBorins']
+];
+---
+
+<BaseLayout title="MylesBorins.com | about" canonicalUrl={`${SITE_URL}/about/`}>
+  <section class="about-page">
+    <div class="about-markdown markdown" set:html={page.contentHtml} />
+    <div class="about-links">
+      <p class="eyebrow">Elsewhere</p>
+      <ul class="social-links social-links--about" aria-label="Social links">
+        {socialLinks.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

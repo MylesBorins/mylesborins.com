@@ -1,0 +1,17 @@
+---
+interface LinkState {
+  url: string;
+}
+
+interface Props {
+  newer?: LinkState | null;
+  older?: LinkState | null;
+}
+
+const { newer = null, older = null } = Astro.props;
+---
+
+<nav class="pagination" aria-label="Pagination">
+  <div>{older && <a class="pagination-link" href={older.url}>&larr; Older</a>}</div>
+  <div>{newer && <a class="pagination-link" href={newer.url}>Newer &rarr;</a>}</div>
+</nav>

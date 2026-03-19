@@ -123,6 +123,7 @@ module.exports = function (grunt) {
           cwd: 'src',
           dest: 'public_html',
           src: [
+            'CNAME',
             '.well-known/**',
             'examples/**',
             'images/**',

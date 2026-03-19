@@ -1,0 +1,13 @@
+---
+import PostHeader from '../../components/PostHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_URL, getProjectPosts } from '../../lib/legacy-content';
+
+const projects = getProjectPosts();
+---
+
+<BaseLayout title="MylesBorins.com | projects" canonicalUrl={`${SITE_URL}/projects/`}>
+  <div class="list-page list-page--index">
+    {projects.map((post) => <article class="entry-card"><PostHeader post={post} compact /></article>)}
+  </div>
+</BaseLayout>

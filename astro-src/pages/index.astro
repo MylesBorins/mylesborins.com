@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import Pagination from '../components/Pagination.astro';
+import PostHeader from '../components/PostHeader.astro';
+import { SITE_URL, getBlogPages } from '../lib/legacy-content';
+
+const pages = getBlogPages();
+const currentPage = pages[0];
+const older = pages[1] ?? null;
+---
+
+<BaseLayout canonicalUrl={`${SITE_URL}/`} title="MylesBorins.com" pageKind="home" includeFlockingScript>
+  <Fragment slot="hero">
+    <HomeHero />
+  </Fragment>
+
+  <article>
+    <p class="home-site-signature">Myles Borins</p>
+    <PostHeader post={currentPage.post} />
+    <div class="markdown" set:html={currentPage.post.contentHtml} />
+  </article>
+  <Pagination older={older} />
+</BaseLayout>

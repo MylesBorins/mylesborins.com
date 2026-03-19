@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_URL, getSingletonPage } from '../../lib/legacy-content';
+
+const page = getSingletonPage('talks');
+if (!page) throw new Error('Missing talks page content');
+---
+
+<BaseLayout title="MylesBorins.com | talks" canonicalUrl={`${SITE_URL}/talks/`}>
+  <div class="markdown" set:html={page.contentHtml} />
+</BaseLayout>

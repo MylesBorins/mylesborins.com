@@ -1,0 +1,25 @@
+---
+import PostHeader from '../../components/PostHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProjectPosts, type LegacyEntry } from '../../lib/legacy-content';
+
+export function getStaticPaths() {
+  return getProjectPosts().map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+interface Props {
+  post: LegacyEntry;
+}
+
+const { post } = Astro.props;
+---
+
+<BaseLayout title={post.title} description={post.description} canonicalUrl={post.canonicalUrl} heroImageSrc={post.bigImage} heroImageAlt={post.bigImageAlt} heroImageMode="natural">
+  <article class="reading-column reading-column--project">
+    <PostHeader post={post} linked={false} />
+    <div class="markdown" set:html={post.contentHtml} />
+  </article>
+</BaseLayout>

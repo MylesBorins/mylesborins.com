@@ -23,3 +23,6 @@ dist
 logs/
 public_html/
 .firebase
+.astro/
+astro-public/
+dist-astro/

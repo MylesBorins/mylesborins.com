@@ -1,0 +1,20 @@
+---
+import type { LegacyEntry } from '../lib/legacy-content';
+
+interface Props {
+  post: LegacyEntry;
+  linked?: boolean;
+  compact?: boolean;
+}
+
+const { post, linked = true, compact = false } = Astro.props;
+const metaText = post.type === 'project' ? post.quarter : post.displayDate ? `Published ${post.displayDate}` : null;
+const HeadingTag = compact ? 'h2' : 'h1';
+---
+
+<header class:list={["post-head", compact && 'post-head--compact']}>
+  <HeadingTag class:list={["post-title", compact && 'post-title--compact']}>
+    {linked ? <a href={post.url}>{post.title}</a> : post.title}
+  </HeadingTag>
+  {metaText && <div class="post-date">{metaText}</div>}
+</header>

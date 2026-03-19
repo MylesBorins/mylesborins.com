@@ -82,10 +82,6 @@
 ### The hilarious misadventures of being a platform downstream from your language
 [![The hilarious misadventures of being a platform downstream from your language](https://img.youtube.com/vi/kkHdhtzM0wk/0.jpg)](https://www.youtube.com/watch?v=kkHdhtzM0wk)
 
-## Node Summit (July 2017)
-### Open Source Governance Models: From BDFL to Distributed Consensus
-[![Open Source Governance Models: From BDFL to Distributed Consensus](https://i.vimeocdn.com/video/650644764.jpg)](https://vimeo.com/230146372)
-
 ## Polyconf (July 2017)
 ### Open Source Governance Models: From BDFL to Distributed Consensus
 [![Open Source Governance Models: From BDFL to Distributed Consensus](https://img.youtube.com/vi/nY64JAzHJuo/0.jpg)](https://www.youtube.com/watch?v=nY64JAzHJuo)
@@ -126,10 +122,6 @@
 ## EmpireJS (May 2016)
 ### Node.js Releases, How Do They Work?
 [![Node.js Releases, How Do They Work?](https://img.youtube.com/vi/hFxAbNlR1ts/0.jpg)](https://www.youtube.com/watch?v=hFxAbNlR1ts)
-
-## JSConf UY (April 2016)
-### Node.js Releases, How Do They Work?
-[![Node.js Releases, How Do They Work?](https://img.youtube.com/vi/5un1I2qkojg/0.jpg)](https://www.youtube.com/watch?v=5un1I2qkojg)
 
 ## ForwardJS 4 (February 2016)
 ### Soylent Bits: Your Code is Made of People

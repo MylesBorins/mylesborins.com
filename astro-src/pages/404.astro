@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_URL, getSingletonPage } from '../lib/legacy-content';
+
+const page = getSingletonPage('404');
+if (!page) throw new Error('Missing 404 page content');
+---
+
+<BaseLayout title="404" canonicalUrl={`${SITE_URL}/404.html`} noindex>
+  <div class="markdown" set:html={page.contentHtml} />
+</BaseLayout>
