@@ -7,17 +7,15 @@
     "node": ">=20.19.1"
   },
   "scripts": {
-    "start": "npm run astro:dev",
-    "build": "npm run astro:build",
-    "clean": "node -e \"for (const p of ['dist-astro','astro-public','.astro']) { try { require('node:fs').rmSync(p, { recursive: true, force: true }); } catch {} }\"",
-    "astro:sync-public": "node scripts/sync-astro-public.mjs",
-    "astro:dev": "npm run astro:sync-public && astro dev",
-    "astro:build": "npm run astro:sync-public && astro build && node scripts/finalize-astro-build.mjs",
-    "astro:check": "astro check"
+    "start": "astro dev",
+    "build": "astro build && node scripts/finalize-astro-build.mjs",
+    "clean": "node -e \"for (const p of ['dist','.astro']) { try { require('node:fs').rmSync(p, { recursive: true, force: true }); } catch {} }\"",
+    "check": "astro check"
   },
   "license": "MIT",
   "dependencies": {
     "@highlightjs/cdn-assets": "^11.11.1",
+    "highlight.js": "^11.11.1",
     "jquery": "^3.7.1",
     "sticky-kit": "^1.1.3"
   },
@@ -25,17 +23,7 @@
     "@astrojs/check": "^0.9.7",
     "@types/node": "^25.5.0",
     "astro": "^6.0.4",
-    "grunt": "^1.6.1",
-    "grunt-cli": "1.5",
-    "grunt-contrib-clean": "^2.0.1",
-    "grunt-contrib-connect": "^5.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-pages-redux": "^2.1.0",
-    "grunt-sass": "^3.1.0",
-    "load-grunt-tasks": "^5.1.0",
     "marked": "^17.0.4",
-    "sass-embedded": "^1.92.0",
     "typescript": "^5.9.3"
   }
 }

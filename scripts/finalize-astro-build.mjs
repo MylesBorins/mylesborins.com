@@ -1,7 +1,7 @@
 import { mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
-const SITE_ROOT = 'dist-astro';
+const SITE_ROOT = 'dist';
 const SITE_URL = 'https://mylesborins.com';
 const SITEMAP_EXCLUDES = new Set([
   '/404.html'
