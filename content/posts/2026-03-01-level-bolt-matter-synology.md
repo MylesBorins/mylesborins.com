@@ -142,6 +142,11 @@ services:
     image: ghcr.io/matter-js/python-matter-server:stable
     container_name: matter-server
     restart: unless-stopped
+    sysctls:
+      - net.ipv6.conf.all.accept_ra=0
+      - net.ipv6.conf.eth0.accept_ra=0
+      - net.ipv6.conf.all.autoconf=0
+      - net.ipv6.conf.eth0.autoconf=0
     networks:
       matter-macvlan:
         ipv4_address: 192.168.50.101
@@ -168,12 +173,15 @@ networks:
 ```sh
 #!/bin/sh
 
-# Disable autoconfiguration so the static address is used as source
-sysctl -w net.ipv6.conf.eth0.autoconf=0
-sysctl -w net.ipv6.conf.eth0.accept_ra=0
+# Note: IPv6 autoconfiguration is disabled via the sysctls block in compose.
+# The sysctl binary is not available in recent versions of this image, so
+# we handle it at the compose level instead.
 
-# Add IPv6 route to Thread network via Border Router
-# Replace with your Thread prefix and border router link-local address
+# Add IPv6 route to Thread network via Border Router.
+# Replace with your Thread prefix and border router link-local address.
+# If this breaks after a network change, find the new values with:
+#   avahi-browse -r _matter._tcp | grep -A 5 "0000000000000007"  (lock's IPv6)
+#   ip -6 neigh show dev ovs_eth2 | grep router                  (border router)
 ip -6 route add YOUR_THREAD_PREFIX/48 via YOUR_BORDER_ROUTER_LINK_LOCAL dev eth0 || true
 
 # Start matter-server
@@ -181,6 +189,26 @@ exec matter-server "$@"
 ```
 
 After that, `ping6` from inside the container worked and commissioning succeeded.
+
+## What can break after a network change
+
+A few months after initial setup I found the lock had stopped responding in Home Assistant. The matter-server container was running fine but couldn't establish a CASE session with the lock. Here's what I learned debugging it.
+
+**The Thread mesh prefix can change silently.** The Google TV Streamer generates a Thread mesh-local prefix for the Thread network. This prefix can change after a firmware update or network reset -- with no notification. When it does, any hardcoded routes to the old prefix stop working.
+
+The symptom is `CASESession timed out` errors in the matter-server logs despite mDNS discovery succeeding. The lock is visible but unreachable.
+
+To find the lock's current Thread prefix and address:
+
+```bash
+avahi-browse -r _matter._tcp | grep -A 5 "0000000000000007"
+```
+
+This resolves the mDNS record and shows the actual IPv6 address the lock is advertising. The `/48` prefix of that address is what you need for the routes. Update `YOUR_THREAD_PREFIX` in entrypoint.sh and your Task Scheduler boot script to match, then restart the container.
+
+**`sysctl` may disappear from the image.** A Watchtower-triggered image update removed `sysctl` from the container, silently breaking the autoconfiguration fix. The `sysctl` lines in entrypoint.sh fail with "not found" but the script continues anyway (no `set -e`), so the server starts but IPv6 autoconf is never disabled. The fix is the `sysctls:` block in compose shown above, which applies the settings at the kernel level before the container starts and has no binary dependency.
+
+**Make sure your compose IP matches your boot script.** The macvlan shim in the Task Scheduler boot script routes to a specific container IP. Make sure `ipv4_address` in compose matches the IP in `ip route add` in your boot script, or Home Assistant won't be able to reach the container.
 
 ## How did Claude help?
 
