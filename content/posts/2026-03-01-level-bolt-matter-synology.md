@@ -219,3 +219,80 @@ Things Claude got right: identifying that macvlan was the right solution for the
 Things Claude got wrong: it concluded too early that the Google TV Streamer couldn't expose Thread routing and recommended buying hardware that turned out to be unnecessary. It also initially created the macvlan with the wrong IPv6 subnet. And there was some early confusion about Google Home developer settings vs Android developer settings.
 
 It's a decent illustration of what AI is actually useful for right now. Not replacing the expertise needed to understand what's happening, but compressing the feedback loop when you're debugging across several complex systems at once. The Level Bolt shows up in Home Assistant, commands go through, and it survives container restarts. It "just works"(tm) -- eventually.
+
+## Update: May 2026 — self-healing Thread routes
+
+A few months after getting this working I came back to find the lock offline. The Google TV Streamer had changed its Thread prefix advertisement, which invalidated the static routes in `entrypoint.sh`. Rather than manually patching things every time, I added a self-healing script.
+
+The approach: a `heal.sh` script that runs on a schedule, discovers the current Thread prefix from mDNS, updates `entrypoint.sh` if it has changed, and restarts the container. If the prefix is already correct it just ensures the host route is present.
+
+`heal.sh` (save to `/volume1/docker/matter-server/heal.sh`, `chmod +x`):
+
+```sh
+#!/bin/sh
+DEVICE_ID=YOUR_DEVICE_ID
+BORDER_ROUTER=YOUR_BORDER_ROUTER_LINK_LOCAL
+CONTAINER="matter-server"
+HOST_IFACE="ovs_eth2"
+CONTAINER_IFACE="eth0"
+ENTRYPOINT="/volume1/docker/matter-server/entrypoint.sh"
+COMPOSE_DIR="/volume1/docker/matter-server"
+
+DEVICE_ADDR=$(avahi-browse -r -t _matter._tcp 2>/dev/null | grep -A 4 "$DEVICE_ID" | grep address | grep -oP 'fd[0-9a-f:]+' | head -1)
+
+if [ -z "$DEVICE_ADDR" ]; then
+  echo "$(date): Device not found on mDNS, skipping"
+  exit 0
+fi
+
+PREFIX=$(echo "$DEVICE_ADDR" | awk -F: '{print $1":"$2":"$3"::/48"}')
+echo "$(date): Device at $DEVICE_ADDR, prefix $PREFIX"
+
+# If prefix changed, update entrypoint and restart container
+if ! grep -q "$PREFIX" "$ENTRYPOINT"; then
+  echo "$(date): New prefix detected, updating entrypoint.sh and restarting container"
+  if [ ! -f "$ENTRYPOINT.bak" ] || ! diff -q "$ENTRYPOINT" "$ENTRYPOINT.bak" > /dev/null 2>&1; then
+    cp "$ENTRYPOINT" "$ENTRYPOINT.bak"
+  fi
+  # Add host route first before restarting container
+  if ! ip -6 route show | grep -q "$PREFIX"; then
+    echo "$(date): Adding host route for $PREFIX"
+    ip -6 route add "$PREFIX" via "$BORDER_ROUTER" dev "$HOST_IFACE"
+  fi
+  cat > "$ENTRYPOINT" << EOF
+#!/bin/sh
+ip -6 route add $PREFIX via $BORDER_ROUTER dev $CONTAINER_IFACE || true
+exec matter-server "\$@"
+EOF
+  cd "$COMPOSE_DIR" && docker compose restart matter-server
+  exit 0
+fi
+
+# Add host route if missing (normal case, no prefix change)
+if ! ip -6 route show | grep -q "$PREFIX"; then
+  echo "$(date): Adding host route for $PREFIX"
+  ip -6 route add "$PREFIX" via "$BORDER_ROUTER" dev "$HOST_IFACE"
+fi
+```
+
+Replace `DEVICE_ID` with your Matter node ID (find it with `avahi-browse -r _matter._tcp | grep -i level` or similar), and `BORDER_ROUTER` with your border router's link-local address (`ip -6 neigh show dev ovs_eth2 | grep router`).
+
+Add a scheduled task in Synology Task Scheduler to run every 5 minutes:
+
+```
+/volume1/docker/matter-server/heal.sh >> /var/log/matter-heal.log 2>&1
+```
+
+Also update the boot script to call heal.sh instead of hardcoding Thread routes:
+
+```sh
+ip link add macvlan-shim link ovs_eth2 type macvlan mode bridge
+ip addr add 192.168.50.102/32 dev macvlan-shim
+ip link set macvlan-shim up
+ip route add 192.168.50.254/32 dev macvlan-shim
+sleep 30 && /volume1/docker/matter-server/heal.sh &
+```
+
+The 30 second delay gives Docker and avahi time to start before the script runs.
+
+With this in place the setup is self-healing: prefix changes are detected and fixed within 5 minutes, the container gets updated routes on restart via `entrypoint.sh`, and the host routes are kept current by the scheduled task.
