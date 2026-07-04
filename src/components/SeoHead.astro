@@ -1,0 +1,44 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  heroImageSrc?: string;
+  heroImageAlt?: string;
+}
+
+const {
+  title = 'MylesBorins.com',
+  description = 'portfolio and blog of myles borins',
+  canonicalUrl,
+  noindex = false,
+  heroImageSrc,
+  heroImageAlt = 'Myles Borins'
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://mylesborins.com');
+const resolvedCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname + Astro.url.search, siteUrl).toString();
+const resolvedOgImage = heroImageSrc
+  ? new URL(heroImageSrc, siteUrl).toString()
+  : new URL('/images/me.jpg', siteUrl).toString();
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content="Myles Borins" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:alt" content={heroImageAlt} />
+<meta property="og:url" content={resolvedCanonicalUrl} />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
+<link rel="icon" href="/images/favicon.ico" />
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+{noindex && <meta name="robots" content="noindex,follow" />}
