@@ -10,7 +10,8 @@
     "start": "astro dev",
     "build": "astro build && node scripts/finalize-astro-build.mjs",
     "clean": "node -e \"for (const p of ['dist','.astro']) { try { require('node:fs').rmSync(p, { recursive: true, force: true }); } catch {} }\"",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "node --test src/components/seo.test.mjs"
   },
   "license": "MIT",
   "dependencies": {
