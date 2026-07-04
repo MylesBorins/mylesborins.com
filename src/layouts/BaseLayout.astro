@@ -58,6 +58,15 @@ const shouldLinkCurrentSection = Boolean(currentSectionLink && !isSectionIndexPa
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Myles Borins" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={heroImageSrc || '/images/default-og-image.png'} />
+    <meta property="og:url" content={canonicalUrl || Astro.url.href} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={heroImageSrc || '/images/default-og-image.png'} />
     <link rel="icon" href="/images/favicon.ico" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     {noindex && <meta name="robots" content="noindex,follow" />}
